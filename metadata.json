@@ -1,0 +1,6 @@
+{
+  "name": "HSAP - Intranet",
+  "description": "Portal interno para colaboradores do Hospital Santo Antônio de Pádua, com atalhos e informações por setor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

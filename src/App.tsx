@@ -1,0 +1,663 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { 
+  Stethoscope, 
+  HeartPulse, 
+  UserRound, 
+  Building2, 
+  Phone, 
+  ChevronRight,
+  Hospital,
+  Info,
+  ExternalLink,
+  Search,
+  ArrowLeft,
+  FileText,
+  Calendar,
+  Clock,
+  Mail,
+  MapPin,
+  Globe,
+  Zap,
+  LogIn,
+  Microscope,
+  FlaskConical,
+  Network,
+  Table,
+  BookOpen,
+  Activity,
+  Baby,
+  Wind,
+  Home,
+  MessageSquare,
+  Pill,
+  Ambulance,
+  ClipboardList,
+  Syringe,
+  ShieldCheck,
+  GraduationCap,
+  FileSearch,
+  FileCheck,
+  LayoutDashboard,
+  Bot
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import PediatricArrestSheet from "@/src/components/PediatricArrestSheet";
+import DengueManagementModal from "@/src/components/DengueManagementModal";
+import CCIHModal from "@/src/components/CCIHModal";
+import AIChatBalloon from "@/src/components/AIChatBalloon";
+
+const SECTORS = [
+  {
+    id: "medicos",
+    title: "MÉDICOS",
+    description: "Atalhos e protocolos clínicos para o corpo médico.",
+    icon: Stethoscope,
+    color: "bg-blue-500",
+    hoverColor: "hover:bg-blue-600",
+    lightColor: "bg-blue-50",
+    textColor: "text-blue-700",
+    content: [
+      { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
+      { title: "CID", icon: BookOpen, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/pages/CIDS/CIDS.html" },
+      { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
+      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+      { title: "Intubação e Parada Cardíaca", icon: Wind, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/assets/HVN%20-%20Folha%20de%20Parada%20PEDIATRIA.pdf" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+      { title: "Ouvidoria Interna", icon: MessageSquare, url: "https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform?usp=sharing" },
+    ]
+  },
+  {
+    id: "enfermagem",
+    title: "ENFERMAGEM",
+    description: "Escalas, procedimentos e registros de enfermagem.",
+    icon: HeartPulse,
+    color: "bg-teal-500",
+    hoverColor: "hover:bg-teal-600",
+    lightColor: "bg-teal-50",
+    textColor: "text-teal-700",
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+      { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
+      { title: "Protocolos de Enfermagem", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Sinan's", icon: Info, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Ouvidoria Interna", icon: MessageSquare, url: "https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform?usp=sharing" },
+      { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
+      { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+      { title: "Formulários", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+    ]
+  },
+  {
+    id: "recepcao",
+    title: "RECEPÇÃO",
+    description: "Sistemas de atendimento e fluxo de pacientes.",
+    icon: UserRound,
+    color: "bg-indigo-500",
+    hoverColor: "hover:bg-indigo-600",
+    lightColor: "bg-indigo-50",
+    textColor: "text-indigo-700",
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Gercon", icon: FileSearch, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "SISREG", icon: FileSearch, url: "https://sisregiii.saude.gov.br/cgi-bin/index" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+      { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
+      { title: "Ouvidoria Interna", icon: MessageSquare, url: "https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform?usp=sharing" },
+      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+    ]
+  },
+  {
+    id: "administracao",
+    title: "ADMINISTRAÇÃO",
+    description: "Gestão interna, RH e processos administrativos.",
+    icon: Building2,
+    color: "bg-slate-700",
+    hoverColor: "hover:bg-slate-800",
+    lightColor: "bg-slate-50",
+    textColor: "text-slate-700",
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Auditoria Interna G.R", icon: FileCheck, url: "https://docs.google.com/forms/d/e/1FAIpQLSdWuLT1bI07cLRtK258JqGpEQHxTZC-sm75rV5kWkTJe4wlyQ/viewform?usp=header" },
+      { title: "Ouvidoria Interna", icon: MessageSquare, url: "https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform?usp=sharing" },
+      { title: "Capacitações Gerais", icon: GraduationCap, url: "https://docs.google.com/forms/d/e/1FAIpQLSeYAmacPjsPXY9e_0CAeIzQ89iyfoFhWUfLqmDWZC4pe5LLLQ/viewform?usp=sharing" },
+      { title: "Dashboard: Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
+      { title: "Dashboard: Contenções", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
+      { title: "Dashboard: Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
+      { title: "Dashboard: Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
+      { title: "Dashboard: Esterilização", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
+      { title: "Dashboard: Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
+      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+    ]
+  },
+];
+
+const CONTACTS = [
+  { sector: "Recepção Emergência", ramal: "7600", type: "Interno" },
+  { sector: "Lavanderia", ramal: "7601", type: "Interno" },
+  { sector: "Same", ramal: "7602", type: "Interno" },
+  { sector: "Nutrição", ramal: "7603", type: "Interno" },
+  { sector: "Cozinha", ramal: "7604", type: "Interno" },
+  { sector: "Hospedagem", ramal: "7605", type: "Interno" },
+  { sector: "Faturamento", ramal: "7606", type: "Interno" },
+  { sector: "Psiquiatria", ramal: "7607", type: "Interno" },
+  { sector: "Assistente Social", ramal: "7608", type: "Interno" },
+  { sector: "Supervisão Hospitalar", ramal: "7609", type: "Interno" },
+  { sector: "Tecnologia da Informação", ramal: "7610", type: "Interno" },
+  { sector: "Financeiro", ramal: "7611", type: "Interno", info: "Whats: (51) 99349-9937" },
+  { sector: "Supervisão Médica", ramal: "7612", type: "Interno" },
+  { sector: "Supervisão Enfermagem", ramal: "7613", type: "Interno" },
+  { sector: "Almoxarifado", ramal: "7615", type: "Interno" },
+  { sector: "Recepção CDI", ramal: "7616", type: "Interno" },
+  { sector: "Sala de Comando CDI", ramal: "7617", type: "Interno" },
+  { sector: "Sala de Laudos CDI", ramal: "7618", type: "Interno" },
+  { sector: "Posto de Enfermagem", ramal: "7626", type: "Interno" },
+  { sector: "Farmácia", ramal: "7627", type: "Interno" },
+  { sector: "Manutenção", ramal: "7628", type: "Interno" },
+  { sector: "CME Bloco", ramal: "7629", type: "Interno" },
+  { sector: "Posto Bloco", ramal: "7630", type: "Interno" },
+  { sector: "Oftalmo Marcações", ramal: "7636", type: "Interno" },
+  { sector: "Recursos Humanos", ramal: "7638", type: "Interno", info: "Whats: (51) 99350-2834" },
+  { sector: "Emergência", ramal: "7639", type: "Interno" },
+  { sector: "Laboratório", ramal: "7646", type: "Interno" },
+  { sector: "HSAP (Geral)", ramal: "(51) 2500 7540", type: "Externo" },
+  { sector: "SAMU", ramal: "192", type: "Externo" },
+  { sector: "AMBULARE", ramal: "(51) 3261 6161", type: "Externo", info: "0800 000 6161" },
+];
+
+export default function App() {
+  const [selectedSector, setSelectedSector] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const currentSector = SECTORS.find(s => s.id === selectedSector);
+
+  const allSystems = SECTORS.flatMap(sector => 
+    sector.content.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title }))
+  );
+
+  const filteredSystems = searchQuery.trim() === "" 
+    ? [] 
+    : allSystems.filter((item, index, self) => 
+        // Filter by title or sector
+        (item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.sectorTitle.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        // Remove duplicates (some items might be in multiple sectors)
+        self.findIndex(t => t.title === item.title && t.url === item.url) === index
+      );
+
+  return (
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-900 selection:bg-blue-100 selection:text-blue-900 flex flex-col items-center">
+      {/* Background Decoration */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-blue-50/50 blur-3xl" />
+        <div className="absolute -bottom-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-teal-50/50 blur-3xl" />
+      </div>
+
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md flex justify-center">
+        <div className="container max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setSelectedSector(null)}>
+            <div className="bg-blue-600 p-1.5 rounded-lg shadow-lg shadow-blue-200">
+              <Hospital className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-lg tracking-tight text-slate-800">
+              HSAP <span className="text-blue-600 font-medium">Portal</span>
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+              <DialogTrigger nativeButton={true} render={
+                <Button variant="ghost" size="sm" className="hidden md:flex gap-2 text-slate-600">
+                  <Search className="w-4 h-4" />
+                  <span>Buscar</span>
+                </Button>
+              } />
+              <DialogContent className="sm:max-w-[600px] w-full p-0 overflow-hidden border-none shadow-2xl">
+                <div className="flex flex-col h-[500px]">
+                  <div className="p-4 border-b bg-white flex items-center gap-3">
+                    <Search className="w-5 h-5 text-slate-400" />
+                    <Input 
+                      placeholder="Pesquisar sistemas, protocolos ou setores..." 
+                      className="border-none shadow-none focus-visible:ring-0 text-lg p-0 h-auto"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+                  <ScrollArea className="flex-grow p-2">
+                    {searchQuery.trim() === "" ? (
+                      <div className="flex flex-col items-center justify-center h-full py-20 text-slate-400">
+                        <Search className="w-12 h-12 mb-4 opacity-20" />
+                        <p>Digite algo para pesquisar...</p>
+                      </div>
+                    ) : filteredSystems.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center h-full py-20 text-slate-400">
+                        <Info className="w-12 h-12 mb-4 opacity-20" />
+                        <p>Nenhum resultado encontrado para "{searchQuery}"</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 gap-1">
+                        {filteredSystems.map((item, idx) => (
+                          <div 
+                            key={idx}
+                            className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 cursor-pointer group transition-all border border-transparent hover:border-slate-100"
+                            onClick={() => {
+                              if (item.url) {
+                                window.open(item.url, "_blank");
+                              } else if (item.isCustomFeature) {
+                                // Handle custom features like PediatricArrestSheet
+                                // For now, we just close search and select the sector
+                                setSelectedSector(item.sectorId);
+                              }
+                              setIsSearchOpen(false);
+                              setSearchQuery("");
+                            }}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="p-2 rounded-lg bg-slate-100 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                <item.icon className="w-4 h-4 text-slate-600" />
+                              </div>
+                              <div>
+                                <p className="font-medium text-slate-800">{item.title}</p>
+                                <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">{item.sectorTitle}</p>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-all" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </ScrollArea>
+                </div>
+              </DialogContent>
+            </Dialog>
+            
+            <Dialog>
+              <DialogTrigger 
+                nativeButton={true}
+                render={
+                  <Button variant="outline" size="sm" className="gap-2 border-blue-200 text-blue-700 hover:bg-blue-50">
+                    <Phone className="w-4 h-4" />
+                    <span className="hidden sm:inline">Contatos</span>
+                  </Button>
+                } 
+              />
+              <DialogContent className="sm:max-w-[700px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0">
+                <div className="p-6 flex flex-col h-full">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center gap-2">
+                      <Phone className="w-5 h-5 text-blue-600" />
+                      Lista de Ramais e Contatos
+                    </DialogTitle>
+                    <DialogDescription>
+                      Ramais internos e contatos externos do hospital.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ScrollArea className="mt-6 flex-grow pr-4 min-h-0">
+                    <div className="space-y-8 pb-4">
+                      <div>
+                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <div className="h-px flex-grow bg-slate-100" />
+                          Contatos Internos
+                          <div className="h-px flex-grow bg-slate-100" />
+                        </h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {CONTACTS.filter(c => c.type === "Interno").map((contact, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-100 transition-colors">
+                              <div className="flex-1 min-w-0 pr-2">
+                                <p className="font-semibold text-sm text-slate-800 truncate">{contact.sector}</p>
+                                {contact.info && (
+                                  <p className="text-[10px] text-blue-600 font-medium truncate">{contact.info}</p>
+                                )}
+                              </div>
+                              <Badge variant="outline" className="bg-white font-mono text-blue-600 border-blue-100 shrink-0">
+                                {contact.ramal}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                          <div className="h-px flex-grow bg-slate-100" />
+                          Contatos Externos
+                          <div className="h-px flex-grow bg-slate-100" />
+                        </h3>
+                        <div className="grid grid-cols-1 gap-3">
+                          {CONTACTS.filter(c => c.type === "Externo").map((contact, i) => (
+                            <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-blue-50/50 border border-blue-100 hover:bg-blue-50 transition-colors">
+                              <div className="flex-1 min-w-0 pr-2">
+                                <p className="font-semibold text-sm text-slate-800 truncate">{contact.sector}</p>
+                                {contact.info && (
+                                  <p className="text-[10px] text-blue-600 font-medium truncate">{contact.info}</p>
+                                )}
+                              </div>
+                              <Badge variant="default" className="bg-blue-600 font-mono text-white border-none shrink-0">
+                                {contact.ramal}
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollArea>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+      </nav>
+
+      <main className="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex-grow">
+        <AnimatePresence mode="wait">
+          {!selectedSector ? (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Hero Section */}
+              <div className="max-w-3xl mb-16">
+                <Badge variant="secondary" className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-100 border-none px-3 py-1">
+                  Portal do Colaborador
+                </Badge>
+                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+                  Bem-vindo à Intranet do <span className="text-blue-600">HSAP</span>
+                </h1>
+                <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                  Sua central de ferramentas e informações. Escolha seu setor abaixo para acessar 
+                  atalhos dedicados e informações pertinentes à sua rotina hospitalar.
+                </p>
+                
+                <div className="flex flex-wrap gap-4">
+                  <Button className="bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 px-8 py-6 text-lg rounded-xl">
+                    Começar Agora
+                  </Button>
+                  <Button variant="ghost" className="px-8 py-6 text-lg rounded-xl gap-2 text-slate-600">
+                    <Info className="w-5 h-5" />
+                    Saiba Mais
+                  </Button>
+                </div>
+              </div>
+
+              {/* Sectors Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                {SECTORS.map((sector, index) => (
+                  <motion.div
+                    key={sector.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    onClick={() => setSelectedSector(sector.id)}
+                  >
+                    <Card className="group relative overflow-hidden border-none shadow-xl shadow-slate-200/50 bg-white hover:shadow-2xl transition-all duration-300 cursor-pointer h-full flex flex-col">
+                      <div className={`absolute top-0 left-0 w-full h-1.5 ${sector.color}`} />
+                      
+                      <CardHeader className="pb-4">
+                        <div className={`w-12 h-12 rounded-2xl ${sector.lightColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                          <sector.icon className={`w-6 h-6 ${sector.textColor}`} />
+                        </div>
+                        <CardTitle className="text-xl font-bold tracking-tight group-hover:text-blue-600 transition-colors">
+                          {sector.title}
+                        </CardTitle>
+                      </CardHeader>
+                      
+                      <CardContent className="flex-grow">
+                        <CardDescription className="text-slate-500 text-sm leading-relaxed mb-6">
+                          {sector.description}
+                        </CardDescription>
+                        
+                        <div className="flex items-center text-sm font-semibold text-blue-600 group-hover:translate-x-1 transition-transform">
+                          Acessar área
+                          <ChevronRight className="w-4 h-4 ml-1" />
+                        </div>
+                      </CardContent>
+
+                      {/* Decorative background element */}
+                      <div className="absolute -right-4 -bottom-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
+                        <sector.icon className="w-32 h-32 rotate-12" />
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="sector"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-5xl mx-auto"
+            >
+              <Button 
+                variant="ghost" 
+                onClick={() => setSelectedSector(null)}
+                className="mb-8 gap-2 text-slate-500 hover:text-blue-600"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Voltar ao Início
+              </Button>
+
+              <div className="flex flex-col md:flex-row gap-8 items-start mb-12">
+                <div className={`w-20 h-20 rounded-3xl ${currentSector?.lightColor} flex items-center justify-center shadow-lg shadow-slate-200`}>
+                  {currentSector && <currentSector.icon className={`w-10 h-10 ${currentSector.textColor}`} />}
+                </div>
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-2">{currentSector?.title}</h2>
+                  <p className="text-slate-600 text-lg max-w-2xl">
+                    {currentSector?.description} Bem-vindo à sua área de trabalho dedicada.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                {currentSector?.content.map((item, i) => (
+                  <div key={i}>
+                    {item.isCustomFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-blue-200 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-amber-500" />
+                                  </CardTitle>
+                                  <CardDescription>Ferramenta de cálculo integrada</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full max-h-[98vh] overflow-hidden pt-10 pb-5 px-5 border-none shadow-2xl">
+                          <PediatricArrestSheet />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isDengueFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-blue-200 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-blue-500" />
+                                  </CardTitle>
+                                  <CardDescription>Protocolo de manejo clínico</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-5xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <DengueManagementModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isCCIHFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-teal-200 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-teal-50 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-teal-600" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-teal-500" />
+                                  </CardTitle>
+                                  <CardDescription>Protocolos e orientações SCIH</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <CCIHModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : (
+                      <a 
+                        href={item.url || "#"} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="block group h-full"
+                      >
+                        <Card className="group hover:border-blue-200 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                          <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 transition-colors">
+                              <item.icon className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
+                            </div>
+                            <div className="flex-1">
+                              <CardTitle className="text-lg flex items-center justify-between">
+                                {item.title}
+                                {item.url && item.url !== "#" && <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
+                              </CardTitle>
+                              <CardDescription>Clique para abrir o recurso</CardDescription>
+                            </div>
+                          </CardHeader>
+                        </Card>
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Info Section (Only on Home) */}
+        {!selectedSector && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-8 items-center mt-12"
+          >
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Mantenha-se Atualizado</h2>
+              <p className="text-slate-600 mb-6 max-w-xl">
+                O portal é atualizado semanalmente com novos protocolos, escalas e avisos importantes 
+                da diretoria e coordenação de cada setor.
+              </p>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  Sistemas Online
+                </div>
+                
+              </div>
+            </div>
+            <div className="w-full md:w-auto">
+              <Button variant="outline" className="w-full md:w-auto px-8 py-6 rounded-xl border-slate-200">
+                Ver Últimos Comunicados
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t py-12 w-full flex justify-center">
+        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div>
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
+                <Hospital className="w-5 h-5 text-blue-600" />
+                <span className="font-bold text-slate-800">HSAP</span>
+              </div>
+              <p className="text-sm text-slate-500 max-w-xs">
+                Hospital Santo Antônio da Patrulha. Cuidando da sua saúde com excelência e humanização.
+              </p>
+            </div>
+            
+            <div className="flex gap-8 text-sm font-medium text-slate-600">
+              <a href="#" className="hover:text-blue-600 transition-colors">Privacidade</a>
+              <a href="#" className="hover:text-blue-600 transition-colors">Suporte TI</a>
+              <a href="#" className="hover:text-blue-600 transition-colors">Ouvidoria</a>
+            </div>
+          </div>
+          
+          <Separator className="my-8" />
+          
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
+            <p>© 2023 - 2024 Hospital Santo Antônio da Patrulha. Todos os direitos reservados.</p>
+            <p>Desenvolvido por <span className="text-slate-600 font-medium">Michael de Favere Bitencourt</span></p>
+          </div>
+        </div>
+      </footer>
+
+      <AIChatBalloon />
+    </div>
+  );
+}
