@@ -310,15 +310,20 @@ export default function App() {
                               if (item.url) {
                                 window.open(item.url, "_blank");
                               } else if (item.isCustomFeature) {
-                                setIsPediatricOpen(true);
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsPediatricOpen(true), 350);
                               } else if (item.isDengueFeature) {
-                                setIsDengueOpen(true);
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsDengueOpen(true), 350);
                               } else if (item.isCCIHFeature) {
-                                setIsCCIHOpen(true);
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsCCIHOpen(true), 350);
                               } else if (item.isFormsFeature) {
-                                setIsFormsOpen(true);
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsFormsOpen(true), 350);
                               } else if (item.isSinanFeature) {
-                                setIsSinanOpen(true);
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsSinanOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -644,7 +649,7 @@ export default function App() {
                             </Card>
                           } 
                         />
-                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                        <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <CCIHModal />
                         </DialogContent>
                       </Dialog>
@@ -694,7 +699,7 @@ export default function App() {
                             </Card>
                           } 
                         />
-                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                        <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <SinanModal />
                         </DialogContent>
                       </Dialog>
