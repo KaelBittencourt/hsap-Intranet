@@ -13,6 +13,7 @@ import {
   Info
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { cn, normalizeString } from "@/lib/utils";
 
 interface Document {
   id: string;
@@ -78,11 +79,22 @@ const documents: Document[] = [
 export default function CCIHModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  React.useEffect(() => {
+    // Small delay to ensure the focus trap has finished its work
+    const timer = setTimeout(() => {
+      if (document.activeElement instanceof HTMLInputElement) {
+        document.activeElement.blur();
+      }
+    }, 10);
+    return () => clearTimeout(timer);
+  }, []);
+
   const filteredDocuments = useMemo(() => {
+    const normalizedQuery = normalizeString(searchQuery);
     return documents.filter(doc => 
-      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      doc.type.toLowerCase().includes(searchQuery.toLowerCase())
+      normalizeString(doc.title).includes(normalizedQuery) ||
+      normalizeString(doc.description).includes(normalizedQuery) ||
+      normalizeString(doc.type).includes(normalizedQuery)
     );
   }, [searchQuery]);
 
@@ -90,14 +102,11 @@ export default function CCIHModal() {
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
       <div className="relative overflow-hidden bg-white border-b border-slate-200 px-8 py-6 z-10 shadow-sm">
-        {/* Background Decorative Element */}
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-teal-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-emerald-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-teal-600 p-3 rounded-2xl shadow-xl shadow-teal-100 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+              <div className="relative bg-emerald-600 p-3 rounded-2xl shadow-xl shadow-emerald-100 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
                 <ShieldCheck className="w-7 h-7 text-white" />
               </div>
             </div>
@@ -106,30 +115,20 @@ export default function CCIHModal() {
               <div className="flex items-center gap-2 mb-1">
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">SCIH</h2>
               </div>
-              <p className="text-xs font-medium text-slate-400 uppercase tracking-[0.15em] leading-none">Serviço de Controle de Infecção Hospitalar</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 w-full max-w-md">
             <div className="relative flex-grow group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-teal-600 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
               <Input 
                 type="text" 
                 placeholder="Pesquisar documento..." 
-                className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-teal-500/20 focus:border-teal-500 h-11 rounded-xl transition-all"
+                autoComplete="off"
+                className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-11 rounded-xl transition-all"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
-          </div>
-          
-          <div className="hidden xl:flex items-center gap-4">
-            <div className="flex flex-col items-end border-r border-slate-100 pr-6 mr-2">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Repositório Local</span>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-xs font-semibold text-slate-700">Documentos Integrados</span>
-              </div>
             </div>
           </div>
         </div>
@@ -147,51 +146,49 @@ export default function CCIHModal() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: index * 0.05 }}
-                  className="group relative bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-teal-200 transition-all duration-300"
+                  onClick={() => doc.url && window.open(doc.url, "_blank")}
+                  className={cn(
+                    "group relative bg-white rounded-2xl border border-slate-200 p-5 shadow-sm transition-all duration-300 overflow-hidden",
+                    doc.url ? "hover:shadow-md hover:border-brand/30 cursor-pointer" : "opacity-80"
+                  )}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-teal-50 group-hover:text-teal-600 transition-colors">
+                  {doc.url && <div className="absolute inset-0 bg-brand-light/0 group-hover:bg-brand-light/10 transition-colors" />}
+                  
+                  <div className="relative flex items-start gap-4">
+                    <div className={cn(
+                      "p-3 rounded-xl bg-slate-50 text-slate-400 transition-colors shrink-0",
+                      doc.url ? "group-hover:bg-brand group-hover:text-white" : ""
+                    )}>
                       <FileText className="w-6 h-6" />
                     </div>
                     
                     <div className="flex-grow min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="flex items-center justify-between mb-1">
                         <span className="text-[10px] font-medium text-slate-400 flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {doc.date}
                         </span>
-                      </div>
-                      
-                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-teal-700 transition-colors mb-1 line-clamp-1">
-                        {doc.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 line-clamp-2 mb-4 leading-relaxed">
-                        {doc.description}
-                      </p>
-                      
-                      <div className="flex items-center gap-2">
                         {doc.url ? (
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            className="h-8 text-[11px] font-bold gap-2 rounded-lg border-slate-200 hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all"
-                            onClick={() => window.open(doc.url, "_blank")}
-                          >
+                          <div className="p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-brand-light text-brand">
                             <ExternalLink className="w-3 h-3" />
-                            Visualizar PDF
-                          </Button>
+                          </div>
                         ) : (
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
-                            disabled
-                            className="h-8 text-[11px] font-bold gap-2 rounded-lg border-slate-100 bg-slate-50 text-slate-400"
-                          >
+                          <span className="text-[10px] font-bold text-slate-400 uppercase flex items-center gap-1">
                             <Info className="w-3 h-3" />
-                            Documento Interno
-                          </Button>
+                            Interno
+                          </span>
                         )}
                       </div>
+                      
+                      <h3 className={cn(
+                        "text-sm font-bold text-slate-900 mb-1 line-clamp-1 transition-colors",
+                        doc.url ? "group-hover:text-brand" : ""
+                      )}>
+                        {doc.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                        {doc.description}
+                      </p>
                     </div>
                   </div>
                 </motion.div>
@@ -212,20 +209,9 @@ export default function CCIHModal() {
       </div>
 
       {/* Refined Footer */}
-      <div className="px-8 py-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div className="px-8 py-4 bg-white border-t border-slate-100 flex flex-col sm:flex-row justify-center items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span className="text-[11px] font-bold uppercase tracking-wider">Base de Dados Atualizada</span>
-          </div>
           <span className="text-[11px] text-slate-400 font-medium">Hospital Santo Antônio da Patrulha</span>
-        </div>
-        
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">HSAP Portal v2.0</span>
-          </div>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ export default function DengueManagementModal() {
     <div className="flex flex-col h-full bg-white overflow-hidden">
       <div className="flex items-center justify-between p-4 border-b bg-slate-50 print:hidden z-10">
         <div className="flex items-center gap-2">
-          <div className="bg-blue-600 p-1.5 rounded-lg">
+          <div className="bg-brand p-1.5 rounded-lg">
             <FileText className="w-5 h-5 text-white" />
           </div>
           <h2 className="text-lg font-bold text-slate-800">Manejo Clínico para Casos de Dengue</h2>

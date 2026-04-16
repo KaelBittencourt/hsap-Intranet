@@ -95,7 +95,7 @@ export default function AIChatBalloon() {
             className="shadow-2xl rounded-3xl overflow-hidden border border-slate-200 bg-white flex flex-col"
           >
             <Card className="border-none shadow-none flex flex-col h-full rounded-none">
-              <CardHeader className="bg-blue-600 text-white p-4 flex flex-row items-center justify-between space-y-0">
+              <CardHeader className="bg-brand text-white p-4 flex flex-row items-center justify-between space-y-0">
                 <div className="flex items-center gap-2">
                   <div className="bg-white/20 p-1.5 rounded-lg">
                     <Bot className="w-5 h-5" />
@@ -142,13 +142,13 @@ export default function AIChatBalloon() {
                           >
                             <div className={`flex gap-2 max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                msg.role === "user" ? "bg-slate-100" : "bg-blue-100"
+                                msg.role === "user" ? "bg-slate-100" : "bg-emerald-50"
                               }`}>
-                                {msg.role === "user" ? <User className="w-4 h-4 text-slate-600" /> : <Bot className="w-4 h-4 text-blue-600" />}
+                                {msg.role === "user" ? <User className="w-4 h-4 text-slate-600" /> : <Bot className="w-4 h-4 text-brand" />}
                               </div>
                               <div className={`p-3 rounded-2xl text-sm ${
                                 msg.role === "user" 
-                                  ? "bg-blue-600 text-white rounded-tr-none whitespace-pre-wrap" 
+                                  ? "bg-brand text-white rounded-tr-none whitespace-pre-wrap" 
                                   : "bg-slate-100 text-slate-800 rounded-tl-none"
                               }`}>
                                 {msg.role === "model" ? (
@@ -165,7 +165,7 @@ export default function AIChatBalloon() {
                         {isLoading && (
                           <div className="flex justify-start">
                             <div className="flex gap-2 items-center bg-slate-100 p-3 rounded-2xl rounded-tl-none">
-                              <Loader2 className="w-4 h-4 text-blue-600 animate-spin" />
+                              <Loader2 className="w-4 h-4 text-brand animate-spin" />
                               <span className="text-xs text-slate-500">Digitando...</span>
                             </div>
                           </div>
@@ -192,7 +192,7 @@ export default function AIChatBalloon() {
                       <Button 
                         type="submit" 
                         size="icon" 
-                        className="bg-blue-600 hover:bg-blue-700 rounded-xl flex-shrink-0"
+                        className="bg-brand hover:bg-brand-hover rounded-xl flex-shrink-0"
                         disabled={isLoading || !input.trim()}
                       >
                         <Send className="w-4 h-4" />
@@ -208,7 +208,7 @@ export default function AIChatBalloon() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 bg-blue-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:bg-blue-700 transition-colors relative group"
+        className="w-16 h-16 bg-brand rounded-full shadow-2xl flex items-center justify-center text-white hover:bg-brand-hover transition-colors relative group"
       >
         {isOpen ? <X className="w-8 h-8" /> : <MessageSquare className="w-8 h-8" />}
         {!isOpen && (

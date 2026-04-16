@@ -164,11 +164,11 @@ export default function PediatricArrestSheet() {
             >
               {/* Patient Summary */}
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 border-blue-100 text-xs">
+                <Badge variant="outline" className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border-emerald-100 text-xs">
                   <Baby className="w-3 h-3 mr-1.5" />
                   Idade: {calculations.ageYears}a {calculations.ageMonths}m
                 </Badge>
-                <Badge variant="outline" className="px-3 py-1 rounded-full bg-teal-50 text-teal-700 border-teal-100 text-xs">
+                <Badge variant="outline" className="px-3 py-1 rounded-full bg-green-50 text-green-700 border-green-100 text-xs">
                   <Zap className="w-3 h-3 mr-1.5" />
                   Peso: {calculations.effectiveWeight.toFixed(1)} kg
                 </Badge>
@@ -184,7 +184,7 @@ export default function PediatricArrestSheet() {
                 {/* Equipment Section */}
                 <section className="space-y-2">
                   <div className="flex items-center gap-2 text-slate-800 font-bold text-sm">
-                    <Stethoscope className="w-4 h-4 text-blue-600" />
+                    <Stethoscope className="w-4 h-4 text-emerald-600" />
                     <h3>Equipamentos</h3>
                   </div>
                   <div className="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm">
@@ -192,27 +192,27 @@ export default function PediatricArrestSheet() {
                       <TableBody>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Tubo ET (Sem balonete)</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.ettUncuffed}</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.ettUncuffed}</TableCell>
                         </TableRow>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Tubo ET (Com balonete)</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.ettCuffed}</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.ettCuffed}</TableCell>
                         </TableRow>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Fixação (Lábio)</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.ettDepth} cm</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.ettDepth} cm</TableCell>
                         </TableRow>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Laringoscópio (Lâmina)</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.laryngoscope}</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.laryngoscope}</TableCell>
                         </TableRow>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Sonda de Aspiração</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.suction} Fr</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.suction} Fr</TableCell>
                         </TableRow>
                         <TableRow className="h-8">
                           <TableCell className="py-1 px-3 font-medium text-xs">Sonda Gástrica</TableCell>
-                          <TableCell className="py-1 px-3 text-right font-bold text-blue-600 text-xs">{calculations.equipment.gastric} Fr</TableCell>
+                          <TableCell className="py-1 px-3 text-right font-bold text-emerald-600 text-xs">{calculations.equipment.gastric} Fr</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -281,12 +281,12 @@ export default function PediatricArrestSheet() {
                       <p className="text-xl font-bold text-orange-900">{calculations.electrical.defib2} J</p>
                     </CardContent>
                   </Card>
-                  <Card className="bg-blue-50 border-blue-100 shadow-none">
+                  <Card className="bg-emerald-50 border-emerald-100 shadow-none">
                     <CardHeader className="p-2 pb-1">
-                      <CardDescription className="text-[10px] text-blue-700 font-medium">Cardioversão (1 J/kg)</CardDescription>
+                      <CardDescription className="text-[10px] text-emerald-700 font-medium">Cardioversão (1 J/kg)</CardDescription>
                     </CardHeader>
                     <CardContent className="p-2 pt-0">
-                      <p className="text-xl font-bold text-blue-900">{calculations.electrical.cardioversion} J</p>
+                      <p className="text-xl font-bold text-emerald-900">{calculations.electrical.cardioversion} J</p>
                     </CardContent>
                   </Card>
                 </div>
