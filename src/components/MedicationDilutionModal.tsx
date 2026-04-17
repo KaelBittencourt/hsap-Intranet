@@ -3,20 +3,23 @@ import {
   Pill, 
   Search, 
   RefreshCw,
-  AlertCircle,
-  Clock,
-  Syringe,
-  Info,
-  ShieldCheck,
-  ChevronDown
+  AlertCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import Papa from "papaparse";
 import { motion, AnimatePresence } from "motion/react";
-import { cn, normalizeString } from "@/lib/utils";
+import { normalizeString } from "@/lib/utils";
 
 interface MedicationData {
   medicamento: string;
@@ -38,7 +41,6 @@ export default function MedicationDilutionModal() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -93,19 +95,16 @@ export default function MedicationDilutionModal() {
     const normalizedQuery = normalizeString(searchQuery);
     return data.filter(med => 
       normalizeString(med.medicamento).includes(normalizedQuery) ||
-      normalizeString(med.indicacao).includes(normalizedQuery)
+      normalizeString(med.indicacao).includes(normalizedQuery) || 
+      normalizeString(med.praticaAssistencial).includes(normalizedQuery)
     );
   }, [searchQuery, data]);
 
-  const toggleExpand = (index: number) => {
-    setExpandedId(expandedId === index ? null : index);
-  };
-
   return (
-    <div className="flex flex-col h-full bg-slate-50/50 overflow-hidden">
+    <div className="flex flex-col h-full bg-slate-50 overflow-hidden rounded-xl">
       {/* Header */}
-      <div className="bg-white border-b px-6 py-6 md:px-8 shadow-sm z-10 shrink-0">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="bg-white border-b px-6 py-6 shadow-sm z-10 shrink-0">
+        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5 w-full md:w-auto">
             <div className="relative group">
               <div className="absolute -inset-2 bg-emerald-500/20 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-500" />
@@ -122,7 +121,7 @@ export default function MedicationDilutionModal() {
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-widest border border-emerald-200">
                   Rotinas Assistenciais
                 </span>
-                <span className="text-xs text-slate-400 font-medium tracking-wide">Guia Prático Rápido</span>
+                <span className="text-xs text-slate-400 font-medium tracking-wide">Tabela Completa</span>
               </div>
             </div>
           </div>
@@ -131,7 +130,7 @@ export default function MedicationDilutionModal() {
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <Input 
-                placeholder="Buscar por medicamento ou indicação..." 
+                placeholder="Buscar medicamento ou indicação..." 
                 className="pl-9 h-11 bg-white border-slate-200 rounded-xl focus:ring-emerald-500/20 shadow-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -152,10 +151,10 @@ export default function MedicationDilutionModal() {
       </div>
 
       {/* Content */}
-      <ScrollArea className="flex-grow p-4 md:p-6 lg:p-8">
-        <div className="max-w-5xl mx-auto pb-10">
+      <ScrollArea className="flex-grow">
+        <div className="max-w-[1600px] mx-auto p-4 md:p-6 pb-12">
           {error && (
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center mb-8 shadow-sm">
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center shadow-sm max-w-xl mx-auto mb-6">
               <AlertCircle className="w-8 h-8 text-amber-500 mx-auto mb-3" />
               <h3 className="font-bold text-amber-900 mb-1">Aviso de Sincronização</h3>
               <p className="text-sm text-amber-700/80 mb-4">{error}</p>
@@ -169,155 +168,96 @@ export default function MedicationDilutionModal() {
             </div>
           )}
 
-          <div className="space-y-4">
-            <AnimatePresence mode="popLayout">
-              {loading ? (
-                Array.from({ length: 5 }).map((_, i) => (
-                  <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 space-y-4 shadow-sm">
-                    <div className="flex justify-between items-start">
-                      <Skeleton className="h-6 w-1/3" />
-                      <Skeleton className="h-5 w-20" />
-                    </div>
-                    <Skeleton className="h-4 w-1/4" />
-                    <Skeleton className="h-4 w-full" />
-                  </div>
-                ))
-              ) : filteredData.length > 0 ? (
-                filteredData.map((med, index) => {
-                  const isExpanded = expandedId === index;
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: Math.min(index * 0.05, 0.5) }}
-                      className={cn(
-                        "bg-white rounded-2xl border transition-all duration-300 overflow-hidden",
-                        isExpanded ? "border-emerald-300 shadow-md ring-1 ring-emerald-500/10" : "border-slate-200 shadow-sm hover:border-emerald-200"
-                      )}
-                    >
-                      {/* Card Header (Always Visible) */}
-                      <button 
-                        onClick={() => toggleExpand(index)}
-                        className="w-full relative flex items-start sm:items-center justify-between p-5 md:p-6 text-left gap-4 hover:bg-slate-50/50 transition-colors"
-                      >
-                        <div className="flex items-start sm:items-center gap-4 min-w-0">
-                          <div className={cn(
-                            "hidden sm:flex mt-1 sm:mt-0 items-center justify-center w-10 h-10 rounded-full shrink-0 transition-colors",
-                            isExpanded ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-400"
-                          )}>
-                            <Syringe className="w-5 h-5" />
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-lg md:text-xl font-bold text-slate-800 leading-tight mb-1">
-                              {med.medicamento}
-                            </h3>
-                            <div className="flex flex-wrap items-center gap-2 mt-2">
-                              {med.via && med.via !== "-" && med.via !== "_" && (
-                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">
-                                  {med.via}
-                                </span>
-                              )}
-                              {med.indicacao && med.indicacao !== "-" && med.indicacao !== "_" && (
-                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200 truncate max-w-[200px] md:max-w-md">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <Table className="min-w-[1200px] text-sm">
+                <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs truncate">Medicamento</TableHead>
+                    <TableHead className="w-[120px] font-bold text-slate-700 uppercase text-xs">Via</TableHead>
+                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Reconstituição</TableHead>
+                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Diluição</TableHead>
+                    <TableHead className="w-[150px] font-bold text-slate-700 uppercase text-xs">Tempo/Velocidade</TableHead>
+                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Estabilidade</TableHead>
+                    <TableHead className="w-[200px] font-bold text-slate-700 uppercase text-xs">Prática Assistencial</TableHead>
+                    <TableHead className="min-w-[200px] font-bold text-slate-700 uppercase text-xs">Observações</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <AnimatePresence mode="popLayout">
+                    {loading ? (
+                      Array.from({ length: 8 }).map((_, i) => (
+                        <TableRow key={i}>
+                          {Array.from({ length: 8 }).map((_, j) => (
+                            <TableCell key={j} className="py-4">
+                              <Skeleton className="h-4 w-full" />
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : filteredData.length > 0 ? (
+                      filteredData.map((med, index) => (
+                        <motion.tr
+                          key={index}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: Math.min(index * 0.02, 0.2) }}
+                          className="hover:bg-slate-50/80 transition-colors group align-top border-b border-slate-100 last:border-0"
+                        >
+                          <TableCell className="font-bold text-slate-800 py-4 whitespace-normal">
+                            {med.medicamento}
+                            {med.indicacao && med.indicacao.trim() !== "-" && med.indicacao.trim() !== "_" && (
+                              <div className="mt-1">
+                                <span className="inline-block px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-medium leading-tight">
                                   {med.indicacao}
                                 </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="shrink-0 p-2 text-slate-400 bg-slate-50 rounded-full">
-                          <ChevronDown className={cn("w-5 h-5 transition-transform duration-300", isExpanded && "rotate-180 text-emerald-600")} />
-                        </div>
-                      </button>
-
-                      {/* Expandable Content */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                            className="overflow-hidden"
-                          >
-                            <div className="p-5 md:p-6 pt-0 border-t border-slate-100 bg-emerald-50/20 text-sm">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-6">
-                                
-                                {med.diluicao && med.diluicao !== "-" && med.diluicao !== "_" && (
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Diluição
-                                    </div>
-                                    <p className="text-slate-800 leading-relaxed font-medium whitespace-pre-line">{med.diluicao}</p>
-                                  </div>
-                                )}
-                                
-                                {med.reconstituicao && med.reconstituicao !== "-" && med.reconstituicao !== "_" && (
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <RefreshCw className="w-3.5 h-3.5 text-blue-500" /> Reconstituição
-                                    </div>
-                                    <p className="text-slate-800 leading-relaxed font-medium whitespace-pre-line">{med.reconstituicao}</p>
-                                  </div>
-                                )}
-
-                                {med.velocidade && med.velocidade !== "-" && med.velocidade !== "_" && (
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <Clock className="w-3.5 h-3.5 text-amber-500" /> Tempo / Velocidade
-                                    </div>
-                                    <p className="text-slate-800 leading-relaxed whitespace-pre-line">{med.velocidade}</p>
-                                  </div>
-                                )}
-
-                                {med.estabilidade && med.estabilidade !== "-" && med.estabilidade !== "_" && (
-                                  <div className="space-y-1.5">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <Activity className="w-3.5 h-3.5 text-indigo-500" /> Estabilidade
-                                    </div>
-                                    <p className="text-slate-800 leading-relaxed whitespace-pre-line">{med.estabilidade}</p>
-                                  </div>
-                                )}
-
-                                {med.praticaAssistencial && med.praticaAssistencial !== "-" && med.praticaAssistencial !== "_" && (
-                                  <div className="space-y-1.5 md:col-span-2">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <Info className="w-3.5 h-3.5 text-rose-500" /> Prática Assistencial
-                                    </div>
-                                    <p className="text-slate-800 leading-relaxed whitespace-pre-line p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
-                                      {med.praticaAssistencial}
-                                    </p>
-                                  </div>
-                                )}
-
-                                {med.observacoes && med.observacoes !== "-" && med.observacoes !== "_" && (
-                                  <div className="space-y-1.5 md:col-span-2">
-                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                                      <AlertCircle className="w-3.5 h-3.5 text-slate-400" /> Observações
-                                    </div>
-                                    <p className="text-slate-600 leading-relaxed whitespace-pre-line text-sm italic">
-                                      {med.observacoes}
-                                    </p>
-                                  </div>
-                                )}
-
                               </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  );
-                })
-              ) : (
-                <div className="flex flex-col items-center justify-center py-24 text-slate-400 bg-white rounded-3xl border border-slate-100 shadow-sm">
-                  <Search className="w-12 h-12 mb-4 opacity-20 text-emerald-500" />
-                  <p className="font-bold text-slate-600 text-lg">Nenhum medicamento encontrado</p>
-                  <p className="text-sm mt-1">Verifique a ortografia ou tente outro termo de busca.</p>
-                </div>
-              )}
-            </AnimatePresence>
+                            )}
+                          </TableCell>
+                          <TableCell className="py-4">
+                            {med.via && med.via.trim() !== "-" && med.via.trim() !== "_" ? (
+                              <span className="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-xs border border-blue-100/50 whitespace-pre-line">
+                                {med.via}
+                              </span>
+                            ) : (
+                              <span className="text-slate-300">-</span>
+                            )}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed">
+                            {med.reconstituicao && med.reconstituicao.trim() !== "-" && med.reconstituicao.trim() !== "_" ? med.reconstituicao : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed">
+                            {med.diluicao && med.diluicao.trim() !== "-" && med.diluicao.trim() !== "_" ? med.diluicao : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed text-sm">
+                            {med.velocidade && med.velocidade.trim() !== "-" && med.velocidade.trim() !== "_" ? med.velocidade : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed text-xs">
+                            {med.estabilidade && med.estabilidade.trim() !== "-" && med.estabilidade.trim() !== "_" ? med.estabilidade : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-700 whitespace-pre-line leading-relaxed font-medium bg-emerald-50/30">
+                            {med.praticaAssistencial && med.praticaAssistencial.trim() !== "-" && med.praticaAssistencial.trim() !== "_" ? med.praticaAssistencial : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                          <TableCell className="py-4 text-slate-500 whitespace-pre-line leading-relaxed text-xs italic">
+                            {med.observacoes && med.observacoes.trim() !== "-" && med.observacoes.trim() !== "_" ? med.observacoes : <span className="text-slate-300">-</span>}
+                          </TableCell>
+                        </motion.tr>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={8} className="h-64 text-center">
+                          <div className="flex flex-col items-center justify-center text-slate-400">
+                            <Search className="w-10 h-10 mb-3 opacity-20 text-emerald-500" />
+                            <p className="font-bold text-slate-600 text-lg">Nenhum resultado</p>
+                            <p className="text-sm mt-1">Sua busca não encontrou medicamentos correspondentes.</p>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </AnimatePresence>
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </div>
       </ScrollArea>
