@@ -3,21 +3,13 @@ import {
   Pill, 
   Search, 
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Papa from "papaparse";
 import { motion, AnimatePresence } from "motion/react";
 import { normalizeString } from "@/lib/utils";
@@ -42,7 +34,7 @@ export default function MedicationDilutionModal() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMed, setSelectedMed] = useState<MedicationData | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -102,11 +94,15 @@ export default function MedicationDilutionModal() {
     );
   }, [searchQuery, data]);
 
+  const toggleExpand = (index: number) => {
+    setExpandedId(expandedId === index ? null : index);
+  };
+
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden rounded-xl">
       {/* Header */}
       <div className="bg-white border-b px-6 py-6 shadow-sm z-10 shrink-0">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-[1000px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5 w-full md:w-auto">
             <div className="relative group">
               <div className="absolute -inset-2 bg-emerald-500/20 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-500" />
@@ -123,7 +119,7 @@ export default function MedicationDilutionModal() {
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-widest border border-emerald-200">
                   Rotinas Assistenciais
                 </span>
-                <span className="text-xs text-slate-400 font-medium tracking-wide">Tabela Completa</span>
+                <span className="text-xs text-slate-400 font-medium tracking-wide">Guia Rápido</span>
               </div>
             </div>
           </div>
@@ -154,7 +150,7 @@ export default function MedicationDilutionModal() {
 
       {/* Content */}
       <ScrollArea className="flex-grow">
-        <div className="max-w-[1600px] mx-auto p-4 md:p-6 pb-12">
+        <div className="max-w-[1000px] mx-auto p-4 md:p-6 pb-12">
           {error && (
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center shadow-sm max-w-xl mx-auto mb-6">
               <AlertCircle className="w-8 h-8 text-amber-500 mx-auto mb-3" />
@@ -170,192 +166,155 @@ export default function MedicationDilutionModal() {
             </div>
           )}
 
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <Table className="min-w-[1200px] text-sm">
-                <TableHeader className="bg-slate-50 sticky top-0 z-10 shadow-sm">
-                  <TableRow className="hover:bg-transparent">
-                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs truncate">Medicamento</TableHead>
-                    <TableHead className="w-[120px] font-bold text-slate-700 uppercase text-xs">Via</TableHead>
-                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Reconstituição</TableHead>
-                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Diluição</TableHead>
-                    <TableHead className="w-[150px] font-bold text-slate-700 uppercase text-xs">Tempo/Velocidade</TableHead>
-                    <TableHead className="w-[180px] font-bold text-slate-700 uppercase text-xs">Estabilidade</TableHead>
-                    <TableHead className="w-[200px] font-bold text-slate-700 uppercase text-xs">Prática Assistencial</TableHead>
-                    <TableHead className="min-w-[200px] font-bold text-slate-700 uppercase text-xs">Observações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <AnimatePresence mode="popLayout">
-                    {loading ? (
-                      Array.from({ length: 8 }).map((_, i) => (
-                        <TableRow key={i}>
-                          {Array.from({ length: 8 }).map((_, j) => (
-                            <TableCell key={j} className="py-4">
-                              <Skeleton className="h-4 w-full" />
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))
-                    ) : filteredData.length > 0 ? (
-                      filteredData.map((med, index) => (
-                        <motion.tr
-                          key={index}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: Math.min(index * 0.02, 0.2) }}
-                          onClick={() => setSelectedMed(med)}
-                          className="hover:bg-emerald-50/50 transition-colors group align-top border-b border-slate-100 last:border-0 cursor-pointer"
-                        >
-                          <TableCell className="font-bold text-slate-800 py-4 whitespace-normal">
+          <div className="flex flex-col gap-3">
+            <AnimatePresence mode="popLayout">
+              {loading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm">
+                    <Skeleton className="h-6 w-1/3 mb-3" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                ))
+              ) : filteredData.length > 0 ? (
+                filteredData.map((med, index) => {
+                  const isExpanded = expandedId === index;
+                  
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: Math.min(index * 0.05, 0.3) }}
+                      className={`bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 ${isExpanded ? 'ring-2 ring-emerald-500/20' : 'hover:border-emerald-500/40'}`}
+                    >
+                      {/* Cabecalho do Card (Sempre Visível) */}
+                      <div 
+                        className="p-5 md:p-6 cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
+                        onClick={() => toggleExpand(index)}
+                      >
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-slate-800 mb-1 leading-tight">
                             {med.medicamento}
+                          </h3>
+                          
+                          {/* Informacoes Principais Resumidas */}
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2">
                             {med.indicacao && med.indicacao.trim() !== "-" && med.indicacao.trim() !== "_" && (
-                              <div className="mt-1">
-                                <span className="inline-block px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-medium leading-tight">
-                                  {med.indicacao}
-                                </span>
+                              <div className="text-sm">
+                                <span className="font-semibold text-slate-400 mr-1.5 uppercase tracking-wide text-xs">Indicação:</span>
+                                <span className="text-slate-600">{med.indicacao}</span>
                               </div>
                             )}
-                          </TableCell>
-                          <TableCell className="py-4">
-                            {med.via && med.via.trim() !== "-" && med.via.trim() !== "_" ? (
-                              <span className="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-xs border border-blue-100/50 whitespace-pre-line">
-                                {med.via}
-                              </span>
-                            ) : (
-                              <span className="text-slate-300">-</span>
+                            
+                            {med.via && med.via.trim() !== "-" && med.via.trim() !== "_" && (
+                              <div className="text-sm">
+                                <span className="font-semibold text-slate-400 mr-1.5 uppercase tracking-wide text-xs">Via:</span>
+                                <span className="text-blue-600 font-semibold bg-blue-50 px-2 py-0.5 rounded border border-blue-100">{med.via}</span>
+                              </div>
                             )}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed">
-                            {med.reconstituicao && med.reconstituicao.trim() !== "-" && med.reconstituicao.trim() !== "_" ? med.reconstituicao : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed">
-                            {med.diluicao && med.diluicao.trim() !== "-" && med.diluicao.trim() !== "_" ? med.diluicao : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed text-sm">
-                            {med.velocidade && med.velocidade.trim() !== "-" && med.velocidade.trim() !== "_" ? med.velocidade : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-600 whitespace-pre-line leading-relaxed text-xs">
-                            {med.estabilidade && med.estabilidade.trim() !== "-" && med.estabilidade.trim() !== "_" ? med.estabilidade : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-700 whitespace-pre-line leading-relaxed font-medium bg-emerald-50/30">
-                            {med.praticaAssistencial && med.praticaAssistencial.trim() !== "-" && med.praticaAssistencial.trim() !== "_" ? med.praticaAssistencial : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                          <TableCell className="py-4 text-slate-500 whitespace-pre-line leading-relaxed text-xs italic">
-                            {med.observacoes && med.observacoes.trim() !== "-" && med.observacoes.trim() !== "_" ? med.observacoes : <span className="text-slate-300">-</span>}
-                          </TableCell>
-                        </motion.tr>
-                      ))
-                    ) : (
-                      <TableRow>
-                        <TableCell colSpan={8} className="h-64 text-center">
-                          <div className="flex flex-col items-center justify-center text-slate-400">
-                            <Search className="w-10 h-10 mb-3 opacity-20 text-emerald-500" />
-                            <p className="font-bold text-slate-600 text-lg">Nenhum resultado</p>
-                            <p className="text-sm mt-1">Sua busca não encontrou medicamentos correspondentes.</p>
                           </div>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </AnimatePresence>
-                </TableBody>
-              </Table>
-            </div>
+                        </div>
+
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className={`shrink-0 h-9 px-4 gap-2 border transition-all duration-300 ${isExpanded ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:text-emerald-800' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleExpand(index);
+                          }}
+                        >
+                          <span className="font-medium">{isExpanded ? 'Ocultar Detalhes' : 'Ver Mais'}</span>
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                        </Button>
+                      </div>
+
+                      {/* Area Expandida (Detalhes) */}
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="border-t border-slate-100 bg-slate-50/50"
+                          >
+                            <div className="p-5 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+                              {/* Preparo e Administracao */}
+                              <div className="space-y-4">
+                                <h4 className="font-black text-slate-800 uppercase tracking-widest text-xs border-b border-emerald-100 pb-2 flex items-center gap-2">
+                                  <Pill className="w-3.5 h-3.5 text-emerald-500" /> Preparo e Administração
+                                </h4>
+                                
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Reconstituição</span>
+                                  <p className="text-slate-700 leading-relaxed font-medium">
+                                    {med.reconstituicao && med.reconstituicao.trim() !== "-" && med.reconstituicao.trim() !== "_" ? med.reconstituicao : <span className="text-slate-300">-</span>}
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Diluição</span>
+                                  <p className="text-slate-700 leading-relaxed font-medium">
+                                    {med.diluicao && med.diluicao.trim() !== "-" && med.diluicao.trim() !== "_" ? med.diluicao : <span className="text-slate-300">-</span>}
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Tempo de Infusão / Velocidade</span>
+                                  <p className="text-slate-700 leading-relaxed font-medium">
+                                    {med.velocidade && med.velocidade.trim() !== "-" && med.velocidade.trim() !== "_" ? med.velocidade : <span className="text-slate-300">-</span>}
+                                  </p>
+                                </div>
+                              </div>
+
+                              {/* Cuidados */}
+                              <div className="space-y-4">
+                                <h4 className="font-black text-slate-800 uppercase tracking-widest text-xs border-b border-emerald-100 pb-2 flex items-center gap-2">
+                                  <AlertCircle className="w-3.5 h-3.5 text-emerald-500" /> Estabilidade e Cuidados
+                                </h4>
+                                
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Estabilidade</span>
+                                  <p className="text-slate-700 leading-relaxed font-medium">
+                                    {med.estabilidade && med.estabilidade.trim() !== "-" && med.estabilidade.trim() !== "_" ? med.estabilidade : <span className="text-slate-300">-</span>}
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Prática Assistencial</span>
+                                  <div className="bg-white border border-emerald-100 p-3 rounded-lg text-slate-700 leading-relaxed shadow-sm font-medium">
+                                    {med.praticaAssistencial && med.praticaAssistencial.trim() !== "-" && med.praticaAssistencial.trim() !== "_" ? med.praticaAssistencial : <span className="text-slate-300">-</span>}
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Observações Gerais</span>
+                                  <p className="text-slate-500 text-sm leading-relaxed italic">
+                                    {med.observacoes && med.observacoes.trim() !== "-" && med.observacoes.trim() !== "_" ? med.observacoes : <span className="text-slate-300">-</span>}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  );
+                })
+              ) : (
+                <div className="bg-white rounded-xl border border-dashed border-slate-300 p-12 text-center">
+                  <div className="flex flex-col items-center justify-center text-slate-400">
+                    <Search className="w-12 h-12 mb-4 opacity-20 text-emerald-500" />
+                    <p className="font-bold text-slate-600 text-xl mb-1">Nenhum resultado encontrado</p>
+                    <p className="text-sm">Não localizamos medicamentos correspondentes à sua busca.</p>
+                  </div>
+                </div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </ScrollArea>
-
-      {/* Modal de Detalhes (Inner Modal) */}
-      <Dialog open={!!selectedMed} onOpenChange={(open) => !open && setSelectedMed(null)}>
-        <DialogContent className="sm:max-w-2xl bg-white border-slate-200 shadow-2xl p-0 overflow-hidden">
-          {selectedMed && (
-            <>
-              <DialogHeader className="bg-slate-50 border-b border-slate-100 p-6 pb-5">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-emerald-100/50 text-emerald-600 rounded-xl">
-                    <Pill className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <DialogTitle className="text-2xl font-black text-slate-800 tracking-tight uppercase">
-                      {selectedMed.medicamento}
-                    </DialogTitle>
-                    {selectedMed.indicacao && selectedMed.indicacao.trim() !== "-" && selectedMed.indicacao.trim() !== "_" && (
-                      <DialogDescription className="text-sm font-medium text-slate-500 mt-1">
-                        Indicação: <span className="text-slate-700">{selectedMed.indicacao}</span>
-                      </DialogDescription>
-                    )}
-                  </div>
-                </div>
-              </DialogHeader>
-
-              <ScrollArea className="max-h-[60vh] p-6 text-sm">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Aspectos Farmacológicos */}
-                  <div className="space-y-4">
-                    <h3 className="font-bold text-slate-900 border-b pb-2 mb-3">Preparo e Administração</h3>
-                    
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Via de Administração</span>
-                      {selectedMed.via && selectedMed.via.trim() !== "-" && selectedMed.via.trim() !== "_" ? (
-                        <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 font-semibold rounded-md border border-blue-100/50">
-                          {selectedMed.via}
-                        </span>
-                      ) : <span className="text-slate-400">-</span>}
-                    </div>
-
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Reconstituição</span>
-                      <p className="text-slate-700 leading-relaxed font-medium">
-                        {selectedMed.reconstituicao && selectedMed.reconstituicao.trim() !== "-" && selectedMed.reconstituicao.trim() !== "_" ? selectedMed.reconstituicao : <span className="text-slate-400">-</span>}
-                      </p>
-                    </div>
-
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Diluição</span>
-                      <p className="text-slate-700 leading-relaxed font-medium">
-                        {selectedMed.diluicao && selectedMed.diluicao.trim() !== "-" && selectedMed.diluicao.trim() !== "_" ? selectedMed.diluicao : <span className="text-slate-400">-</span>}
-                      </p>
-                    </div>
-
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Infusão / Velocidade</span>
-                      <p className="text-slate-700 leading-relaxed font-medium">
-                        {selectedMed.velocidade && selectedMed.velocidade.trim() !== "-" && selectedMed.velocidade.trim() !== "_" ? selectedMed.velocidade : <span className="text-slate-400">-</span>}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Cuidados e Observações */}
-                  <div className="space-y-4">
-                    <h3 className="font-bold text-slate-900 border-b pb-2 mb-3">Estabilidade e Cuidados</h3>
-                    
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Estabilidade</span>
-                      <p className="text-slate-700 leading-relaxed font-medium">
-                        {selectedMed.estabilidade && selectedMed.estabilidade.trim() !== "-" && selectedMed.estabilidade.trim() !== "_" ? selectedMed.estabilidade : <span className="text-slate-400">-</span>}
-                      </p>
-                    </div>
-
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Prática Assistencial</span>
-                      <div className="bg-emerald-50/50 border border-emerald-100 p-3 rounded-lg text-slate-700 leading-relaxed font-medium">
-                        {selectedMed.praticaAssistencial && selectedMed.praticaAssistencial.trim() !== "-" && selectedMed.praticaAssistencial.trim() !== "_" ? selectedMed.praticaAssistencial : <span className="text-slate-400">-</span>}
-                      </div>
-                    </div>
-
-                    <div>
-                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Observações Gerais</span>
-                      <p className="text-slate-500 text-sm leading-relaxed italic">
-                        {selectedMed.observacoes && selectedMed.observacoes.trim() !== "-" && selectedMed.observacoes.trim() !== "_" ? selectedMed.observacoes : <span className="text-slate-400">-</span>}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollArea>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
