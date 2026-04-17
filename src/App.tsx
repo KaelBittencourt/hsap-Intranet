@@ -67,6 +67,7 @@ import DengueManagementModal from "@/src/components/DengueManagementModal";
 import CCIHModal from "@/src/components/CCIHModal";
 import FormsModal from "@/src/components/FormsModal";
 import SinanModal from "@/src/components/SinanModal";
+import NursingProtocolsModal from "@/src/components/NursingProtocolsModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
 
@@ -135,7 +136,7 @@ const SECTORS = [
       {
         name: "Protocolos e Documentos",
         items: [
-          { title: "Protocolos de Enfermagem", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+          { title: "Protocolos de Enfermagem", icon: ClipboardList, isNursingProtocolsFeature: true },
           { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
           { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
@@ -278,6 +279,7 @@ export default function App() {
   const [isCCIHOpen, setIsCCIHOpen] = useState(false);
   const [isFormsOpen, setIsFormsOpen] = useState(false);
   const [isSinanOpen, setIsSinanOpen] = useState(false);
+  const [isNursingProtocolsOpen, setIsNursingProtocolsOpen] = useState(false);
   const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
@@ -399,6 +401,9 @@ export default function App() {
                               } else if (item.isSinanFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsSinanOpen(true), 350);
+                              } else if (item.isNursingProtocolsFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsNursingProtocolsOpen(true), 350);
                               } else if (item.isDashboardsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsDashboardsOpen(true), 350);
@@ -756,6 +761,31 @@ export default function App() {
                         />
                         <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <SinanModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isNursingProtocolsFeature ? (
+                      <Dialog open={isNursingProtocolsOpen} onOpenChange={setIsNursingProtocolsOpen}>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-emerald-500" />
+                                  </CardTitle>
+                                  <CardDescription>Repositório de protocolos de enfermagem</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <NursingProtocolsModal />
                         </DialogContent>
                       </Dialog>
                     ) : item.isDashboardsFeature ? (
