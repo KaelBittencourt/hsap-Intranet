@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import Papa from "papaparse";
 import { motion, AnimatePresence } from "motion/react";
@@ -149,8 +148,8 @@ export default function MedicationDilutionModal() {
       </div>
 
       {/* Content */}
-      <ScrollArea className="flex-grow">
-        <div className="max-w-[1000px] mx-auto p-4 md:p-6 pb-12">
+      <div className="flex-grow overflow-y-auto min-h-0 bg-slate-50/50">
+        <div className="max-w-[1000px] mx-auto p-4 md:p-6 pb-12 relative">
           {error && (
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center shadow-sm max-w-xl mx-auto mb-6">
               <AlertCircle className="w-8 h-8 text-amber-500 mx-auto mb-3" />
@@ -314,7 +313,7 @@ export default function MedicationDilutionModal() {
             </AnimatePresence>
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </div>
   );
 }
