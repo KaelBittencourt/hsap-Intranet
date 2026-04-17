@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -41,6 +42,7 @@ export default function MedicationDilutionModal() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedMed, setSelectedMed] = useState<MedicationData | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -202,7 +204,8 @@ export default function MedicationDilutionModal() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: Math.min(index * 0.02, 0.2) }}
-                          className="hover:bg-slate-50/80 transition-colors group align-top border-b border-slate-100 last:border-0"
+                          onClick={() => setSelectedMed(med)}
+                          className="hover:bg-emerald-50/50 transition-colors group align-top border-b border-slate-100 last:border-0 cursor-pointer"
                         >
                           <TableCell className="font-bold text-slate-800 py-4 whitespace-normal">
                             {med.medicamento}
@@ -261,6 +264,98 @@ export default function MedicationDilutionModal() {
           </div>
         </div>
       </ScrollArea>
+
+      {/* Modal de Detalhes (Inner Modal) */}
+      <Dialog open={!!selectedMed} onOpenChange={(open) => !open && setSelectedMed(null)}>
+        <DialogContent className="sm:max-w-2xl bg-white border-slate-200 shadow-2xl p-0 overflow-hidden">
+          {selectedMed && (
+            <>
+              <DialogHeader className="bg-slate-50 border-b border-slate-100 p-6 pb-5">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-emerald-100/50 text-emerald-600 rounded-xl">
+                    <Pill className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <DialogTitle className="text-2xl font-black text-slate-800 tracking-tight uppercase">
+                      {selectedMed.medicamento}
+                    </DialogTitle>
+                    {selectedMed.indicacao && selectedMed.indicacao.trim() !== "-" && selectedMed.indicacao.trim() !== "_" && (
+                      <DialogDescription className="text-sm font-medium text-slate-500 mt-1">
+                        Indicação: <span className="text-slate-700">{selectedMed.indicacao}</span>
+                      </DialogDescription>
+                    )}
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <ScrollArea className="max-h-[60vh] p-6 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Aspectos Farmacológicos */}
+                  <div className="space-y-4">
+                    <h3 className="font-bold text-slate-900 border-b pb-2 mb-3">Preparo e Administração</h3>
+                    
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Via de Administração</span>
+                      {selectedMed.via && selectedMed.via.trim() !== "-" && selectedMed.via.trim() !== "_" ? (
+                        <span className="inline-block px-2.5 py-1 bg-blue-50 text-blue-700 font-semibold rounded-md border border-blue-100/50">
+                          {selectedMed.via}
+                        </span>
+                      ) : <span className="text-slate-400">-</span>}
+                    </div>
+
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Reconstituição</span>
+                      <p className="text-slate-700 leading-relaxed font-medium">
+                        {selectedMed.reconstituicao && selectedMed.reconstituicao.trim() !== "-" && selectedMed.reconstituicao.trim() !== "_" ? selectedMed.reconstituicao : <span className="text-slate-400">-</span>}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Diluição</span>
+                      <p className="text-slate-700 leading-relaxed font-medium">
+                        {selectedMed.diluicao && selectedMed.diluicao.trim() !== "-" && selectedMed.diluicao.trim() !== "_" ? selectedMed.diluicao : <span className="text-slate-400">-</span>}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Infusão / Velocidade</span>
+                      <p className="text-slate-700 leading-relaxed font-medium">
+                        {selectedMed.velocidade && selectedMed.velocidade.trim() !== "-" && selectedMed.velocidade.trim() !== "_" ? selectedMed.velocidade : <span className="text-slate-400">-</span>}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Cuidados e Observações */}
+                  <div className="space-y-4">
+                    <h3 className="font-bold text-slate-900 border-b pb-2 mb-3">Estabilidade e Cuidados</h3>
+                    
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Estabilidade</span>
+                      <p className="text-slate-700 leading-relaxed font-medium">
+                        {selectedMed.estabilidade && selectedMed.estabilidade.trim() !== "-" && selectedMed.estabilidade.trim() !== "_" ? selectedMed.estabilidade : <span className="text-slate-400">-</span>}
+                      </p>
+                    </div>
+
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Prática Assistencial</span>
+                      <div className="bg-emerald-50/50 border border-emerald-100 p-3 rounded-lg text-slate-700 leading-relaxed font-medium">
+                        {selectedMed.praticaAssistencial && selectedMed.praticaAssistencial.trim() !== "-" && selectedMed.praticaAssistencial.trim() !== "_" ? selectedMed.praticaAssistencial : <span className="text-slate-400">-</span>}
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Observações Gerais</span>
+                      <p className="text-slate-500 text-sm leading-relaxed italic">
+                        {selectedMed.observacoes && selectedMed.observacoes.trim() !== "-" && selectedMed.observacoes.trim() !== "_" ? selectedMed.observacoes : <span className="text-slate-400">-</span>}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </ScrollArea>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
