@@ -103,9 +103,10 @@ export default function SinanModal() {
             </div>
             
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Sinan's</h2>
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left">Sinan's</h2>
               </div>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center md:text-left">Fichas de Notificação Compulsória</p>
             </div>
           </div>
 
@@ -128,7 +129,7 @@ export default function SinanModal() {
       {/* Documents List */}
       <div className="flex-grow overflow-y-auto p-6 md:p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <AnimatePresence mode="popLayout">
               {filteredDocuments.map((doc, index) => (
                 <motion.div
@@ -150,7 +151,7 @@ export default function SinanModal() {
                       </div>
                       
                       <div className="flex-grow min-w-0">
-                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-brand transition-colors line-clamp-2 leading-tight">
+                        <h3 className="text-xs font-bold text-slate-800 group-hover:text-brand transition-colors line-clamp-2 leading-tight">
                           {doc.title}
                         </h3>
                       </div>

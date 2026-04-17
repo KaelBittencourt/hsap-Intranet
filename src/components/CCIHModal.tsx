@@ -101,7 +101,7 @@ export default function CCIHModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-6 md:px-8 z-10 shadow-sm shrink-0">
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-8 py-6 z-10 shadow-sm">
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="relative group">
@@ -112,8 +112,8 @@ export default function CCIHModal() {
             </div>
             
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">SCIH</h2>
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">SCIH</h2>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function CCIHModal() {
       {/* Documents List */}
       <div className="flex-grow overflow-y-auto p-6 md:p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <AnimatePresence mode="popLayout">
               {filteredDocuments.map((doc, index) => (
                 <motion.div

@@ -113,7 +113,7 @@ export default function AnnouncementsModal() {
               <Megaphone className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Comunicados Oficiais</h2>
+              <h2 className="text-xl font-black text-slate-900 leading-none mb-1 uppercase tracking-tight">Comunicados Oficiais</h2>
               <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Atualizações em tempo real</p>
             </div>
           </div>

@@ -80,7 +80,7 @@ export default function FormsModal() {
             
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Formulários</h2>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">Formulários</h2>
               </div>
             </div>
           </div>

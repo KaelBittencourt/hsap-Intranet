@@ -5,12 +5,12 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import {
-  Stethoscope,
-  HeartPulse,
-  UserRound,
-  Building2,
-  Phone,
+import { 
+  Stethoscope, 
+  HeartPulse, 
+  UserRound, 
+  Building2, 
+  Phone, 
   PhoneCall,
   ChevronRight,
   Hospital,
@@ -67,14 +67,8 @@ import DengueManagementModal from "@/src/components/DengueManagementModal";
 import CCIHModal from "@/src/components/CCIHModal";
 import FormsModal from "@/src/components/FormsModal";
 import SinanModal from "@/src/components/SinanModal";
-import NursingProtocolsModal from "@/src/components/NursingProtocolsModal";
-import NotificationsAndDocsModal from "@/src/components/NotificationsAndDocsModal";
-import TomographyPreparationModal from "@/src/components/TomographyPreparationModal";
-import SkinGroupModal from "@/src/components/SkinGroupModal";
-import MedicationDilutionModal from "@/src/components/MedicationDilutionModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
-import CidModal from "@/src/components/CidModal";
 
 const SECTORS = [
   {
@@ -86,31 +80,17 @@ const SECTORS = [
     hoverColor: "hover:bg-brand-hover",
     lightColor: "bg-brand-light",
     textColor: "text-brand",
-    categories: [
-      {
-        name: "Sistemas Clínicos",
-        items: [
-          { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
-          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-          { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
-          { title: "CID", icon: BookOpen, isCidFeature: true },
-        ]
-      },
-      {
-        name: "Resultados de Exames",
-        items: [
-          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-        ]
-      },
-      {
-        name: "Protocolos e Rotinas",
-        items: [
-          { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
-          { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
-          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-        ]
-      }
+    content: [
+      { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
+      { title: "CID", icon: BookOpen, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/pages/CIDS/CIDS.html" },
+      { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
+      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+      { title: "Intubação e Parada Cardíaca", icon: Wind, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/assets/HVN%20-%20Folha%20de%20Parada%20PEDIATRIA.pdf" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
     ]
   },
   {
@@ -122,62 +102,21 @@ const SECTORS = [
     hoverColor: "hover:bg-emerald-600",
     lightColor: "bg-emerald-50",
     textColor: "text-emerald-700",
-    categories: [
-      {
-        name: "Sistemas Externos",
-        items: [
-          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-          { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
-        ]
-      },
-      {
-        name: "Resultados de Exames",
-        items: [
-          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-        ]
-      },
-      {
-        name: "Protocolos e Documentos",
-        items: [
-          { title: "Protocolos", icon: ClipboardList, isNursingProtocolsFeature: true },
-          { title: "Notificações e Documentos", icon: ClipboardList, isNotificationsAndDocsFeature: true },
-          { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
-          { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
-        ]
-      },
-      {
-        name: "Rotinas Assistenciais",
-        items: [
-          { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
-          { title: "Diluição de Medicamentos", icon: Pill, isMedicationDilutionFeature: true },
-          { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-          { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
-          { title: "Sinan's", icon: Info, isSinanFeature: true },
-        ]
-      },
-      {
-        name: "Unidade de Internação",
-        isSpecialTeam: true,
-        items: [
-          { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
-        ]
-      },
-      {
-        name: "Apoio e Encaminhamentos",
-        items: [
-          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-          { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
-          { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-          { title: "Capacitação do PGRSS", icon: GraduationCap, url: "https://classroom.google.com/u/1/c/NTIyMzc0ODc3Mjc2" },
-        ]
-      },
-      {
-        name: "Suporte Administrativo",
-        items: [
-          { title: "Solicitação de Uniforme", icon: UserRound, url: "https://docs.google.com/forms/d/e/1FAIpQLScCIGKGwA79b8bdPdBcObZazuW-HIhdaOyDpUd6v0EyuSdQvg/viewform" }
-        ]
-      }
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+      { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
+      { title: "Protocolos de Enfermagem", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Sinan's", icon: Info, isSinanFeature: true },
+      { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
+      { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+      { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
     ]
   },
   {
@@ -189,29 +128,15 @@ const SECTORS = [
     hoverColor: "hover:bg-green-600",
     lightColor: "bg-green-50",
     textColor: "text-green-700",
-    categories: [
-      {
-        name: "Regulação",
-        items: [
-          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-          { title: "Gercon", icon: FileSearch, url: "https://gerint.procempa.com.br/gerintweb/" },
-          { title: "SISREG", icon: FileSearch, url: "https://sisregiii.saude.gov.br/cgi-bin/index" },
-        ]
-      },
-      {
-        name: "Resultados de Exames",
-        items: [
-          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-        ]
-      },
-      {
-        name: "Rotinas Administrativas",
-        items: [
-          { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
-          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-        ]
-      }
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Gercon", icon: FileSearch, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "SISREG", icon: FileSearch, url: "https://sisregiii.saude.gov.br/cgi-bin/index" },
+      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+      { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
+      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
     ]
   },
   {
@@ -223,38 +148,20 @@ const SECTORS = [
     hoverColor: "hover:bg-slate-800",
     lightColor: "bg-slate-50",
     textColor: "text-slate-700",
-    categories: [
-      {
-        name: "Painéis de Bordo (Dashboards)",
-        items: [
-          { title: "Central de Dashboards", icon: LayoutDashboard, isDashboardsFeature: true },
-        ]
-      },
-      {
-        name: "Qualidade e Processos",
-        items: [
-          { title: "Auditoria Interna G.R", icon: FileCheck, url: "https://docs.google.com/forms/d/e/1FAIpQLSdWuLT1bI07cLRtK258JqGpEQHxTZC-sm75rV5kWkTJe4wlyQ/viewform?usp=header" },
-          { title: "Capacitações Gerais", icon: GraduationCap, url: "https://docs.google.com/forms/d/e/1FAIpQLSeYAmacPjsPXY9e_0CAeIzQ89iyfoFhWUfLqmDWZC4pe5LLLQ/viewform?usp=sharing" },
-        ]
-      },
-      {
-        name: "Resultados de Exames",
-        items: [
-          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-        ]
-      }
+    content: [
+      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+      { title: "Auditoria Interna G.R", icon: FileCheck, url: "https://docs.google.com/forms/d/e/1FAIpQLSdWuLT1bI07cLRtK258JqGpEQHxTZC-sm75rV5kWkTJe4wlyQ/viewform?usp=header" },
+      { title: "Capacitações Gerais", icon: GraduationCap, url: "https://docs.google.com/forms/d/e/1FAIpQLSeYAmacPjsPXY9e_0CAeIzQ89iyfoFhWUfLqmDWZC4pe5LLLQ/viewform?usp=sharing" },
+      { title: "Dashboard: Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
+      { title: "Dashboard: Contenções", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
+      { title: "Dashboard: Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
+      { title: "Dashboard: Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
+      { title: "Dashboard: Esterilização", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
+      { title: "Dashboard: Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
+      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
     ]
   },
-];
-
-const DASHBOARDS_LIST = [
-  { title: "Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
-  { title: "Contenções Psiquiátricas", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
-  { title: "Auditoria Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
-  { title: "Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
-  { title: "Esterilização em Autoclave", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
-  { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
 ];
 
 const CONTACTS = [
@@ -285,7 +192,7 @@ const CONTACTS = [
   { sector: "Recursos Humanos", ramal: "7638", type: "Interno", info: "Whats: (51) 99350-2834" },
   { sector: "Emergência", ramal: "7639", type: "Interno" },
   { sector: "Laboratório", ramal: "7646", type: "Interno" },
-  { sector: "Recepção Emergência", ramal: "(51) 2500 7540", type: "Externo" },
+  { sector: "Central de Atendimento HSAP", ramal: "(51) 2500 7540", type: "Externo" },
 ];
 
 export default function App() {
@@ -293,19 +200,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [contactSearchQuery, setContactSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isDengueOpen, setIsDengueOpen] = useState(false);
-  const [isPediatricOpen, setIsPediatricOpen] = useState(false);
-  const [isCCIHOpen, setIsCCIHOpen] = useState(false);
-  const [isFormsOpen, setIsFormsOpen] = useState(false);
-  const [isSinanOpen, setIsSinanOpen] = useState(false);
-  const [isNursingProtocolsOpen, setIsNursingProtocolsOpen] = useState(false);
-  const [isNotificationsAndDocsOpen, setIsNotificationsAndDocsOpen] = useState(false);
-  const [isTomographyPrepOpen, setIsTomographyPrepOpen] = useState(false);
-  const [isSkinGroupOpen, setIsSkinGroupOpen] = useState(false);
-  const [isMedicationDilutionOpen, setIsMedicationDilutionOpen] = useState(false);
-  const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
-  const [isCidOpen, setIsCidOpen] = useState(false);
-  const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -321,7 +215,7 @@ export default function App() {
 
   const currentSector = SECTORS.find(s => s.id === selectedSector);
 
-  const filteredContacts = CONTACTS.filter(c =>
+  const filteredContacts = CONTACTS.filter(c => 
     c.sector.toLowerCase().includes(contactSearchQuery.toLowerCase()) ||
     (c.ramal && c.ramal.toLowerCase().includes(contactSearchQuery.toLowerCase())) ||
     (c.info && c.info.toLowerCase().includes(contactSearchQuery.toLowerCase()))
@@ -330,19 +224,19 @@ export default function App() {
   const internalContacts = filteredContacts.filter(c => c.type === "Interno");
   const externalContacts = filteredContacts.filter(c => c.type === "Externo");
 
-  const allSystems = SECTORS.flatMap(sector =>
-    sector.categories.flatMap(cat => cat.items.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title, category: cat.name })))
+  const allSystems = SECTORS.flatMap(sector => 
+    sector.content.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title }))
   );
 
-  const filteredSystems = searchQuery.trim() === ""
-    ? []
-    : allSystems.filter((item, index, self) =>
-      // Filter by title or sector
-      (item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  const filteredSystems = searchQuery.trim() === "" 
+    ? [] 
+    : allSystems.filter((item, index, self) => 
+        // Filter by title or sector
+        (item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.sectorTitle.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      // Remove duplicates (some items might be in multiple sectors)
-      self.findIndex(t => t.title === item.title && t.url === item.url) === index
-    );
+        // Remove duplicates (some items might be in multiple sectors)
+        self.findIndex(t => t.title === item.title && t.url === item.url) === index
+      );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-900 selection:bg-brand-light selection:text-brand flex flex-col items-center">
@@ -367,8 +261,8 @@ export default function App() {
           <div className="flex items-center gap-4">
             <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <DialogTrigger nativeButton={true} render={
-                <Button
-                  variant="outline"
+                <Button 
+                  variant="outline" 
                   className="hidden md:flex items-center justify-start gap-3 w-64 lg:w-80 h-10 px-4 bg-slate-50 border-slate-200 text-slate-400 hover:bg-white hover:border-brand hover:text-brand transition-all rounded-xl shadow-inner-sm text-sm"
                 >
                   <Search className="w-4 h-4" />
@@ -382,8 +276,8 @@ export default function App() {
                 <div className="flex flex-col h-[500px]">
                   <div className="p-4 border-b bg-white flex items-center gap-3">
                     <Search className="w-5 h-5 text-slate-400" />
-                    <Input
-                      placeholder="Pesquisar sistemas, protocolos ou setores..."
+                    <Input 
+                      placeholder="Pesquisar sistemas, protocolos ou setores..." 
                       className="border-none shadow-none focus-visible:ring-0 text-lg p-0 h-auto"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -404,49 +298,15 @@ export default function App() {
                     ) : (
                       <div className="grid grid-cols-1 gap-1">
                         {filteredSystems.map((item, idx) => (
-                          <div
+                          <div 
                             key={idx}
                             className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 cursor-pointer group transition-all border border-transparent hover:border-slate-100"
                             onClick={() => {
                               if (item.url) {
                                 window.open(item.url, "_blank");
                               } else if (item.isCustomFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsPediatricOpen(true), 350);
-                              } else if (item.isDengueFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsDengueOpen(true), 350);
-                              } else if (item.isCCIHFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsCCIHOpen(true), 350);
-                              } else if (item.isFormsFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsFormsOpen(true), 350);
-                              } else if (item.isSinanFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsSinanOpen(true), 350);
-                              } else if (item.isNursingProtocolsFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsNursingProtocolsOpen(true), 350);
-                              } else if (item.isNotificationsAndDocsFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsNotificationsAndDocsOpen(true), 350);
-                              } else if (item.isTomographyPrepFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsTomographyPrepOpen(true), 350);
-                              } else if (item.isSkinGroupFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsSkinGroupOpen(true), 350);
-                              } else if (item.isMedicationDilutionFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsMedicationDilutionOpen(true), 350);
-                              } else if (item.isDashboardsFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsDashboardsOpen(true), 350);
-                              } else if (item.isCidFeature) {
-                                setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsCidOpen(true), 350);
-                              } else {
+                                // Handle custom features like PediatricArrestSheet
+                                // For now, we just close search and select the sector
                                 setSelectedSector(item.sectorId);
                               }
                               setIsSearchOpen(false);
@@ -471,32 +331,37 @@ export default function App() {
                 </div>
               </DialogContent>
             </Dialog>
-
+            
             <Dialog>
-              <DialogTrigger
+              <DialogTrigger 
                 nativeButton={true}
                 render={
-                  <Button variant="outline" className="gap-2 h-10 px-4 flex items-center justify-center border-brand/20 bg-brand/5 text-brand focus:bg-brand/10 hover:bg-brand hover:text-white transition-all rounded-xl shadow-inner-sm text-sm font-semibold">
+                  <Button variant="outline" size="sm" className="gap-2 border-brand/20 text-brand-hover hover:bg-brand-light">
                     <Phone className="w-4 h-4" />
                     <span className="hidden sm:inline">Contatos</span>
                   </Button>
-                }
+                } 
               />
-              <DialogContent className="sm:max-w-[500px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-white sm:rounded-2xl">
-                <div className="flex flex-col h-full">
-                  <div className="px-6 py-5 border-b border-slate-100 bg-white">
-                    <DialogHeader className="mb-4">
-                      <DialogTitle className="text-xl font-semibold text-slate-800">
-                        Contatos
+              <DialogContent className="sm:max-w-[700px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl">
+                <div className="flex flex-col h-full bg-white">
+                  <div className="p-6 border-b bg-slate-50/50">
+                    <DialogHeader className="mb-6">
+                      <DialogTitle className="flex items-center gap-2 text-2xl font-bold text-slate-900 leading-tight">
+                        <div className="bg-brand p-2 rounded-xl shadow-lg shadow-brand/20">
+                          <Phone className="w-5 h-5 text-white" />
+                        </div>
+                        Lista de Contatos
                       </DialogTitle>
-                      <DialogDescription className="hidden">Lista de contatos da intranet</DialogDescription>
+                      <DialogDescription className="text-slate-500">
+                        Consulte ramais internos e contatos de emergência externos.
+                      </DialogDescription>
                     </DialogHeader>
-
+                    
                     <div className="relative group">
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
-                      <Input
-                        placeholder="Pesquisar..."
-                        className="pl-9 h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-sm rounded-lg shadow-none"
+                      <Input 
+                        placeholder="Buscar setor ou ramal..." 
+                        className="pl-10 h-11 bg-white border-slate-200 rounded-xl focus:ring-brand/20 focus:border-brand transition-all"
                         value={contactSearchQuery}
                         onChange={(e) => setContactSearchQuery(e.target.value)}
                         autoComplete="off"
@@ -504,27 +369,31 @@ export default function App() {
                     </div>
                   </div>
 
-                  <ScrollArea className="flex-grow min-h-0 bg-white">
-                    <div className="pb-8">
+                  <ScrollArea className="flex-grow p-6 min-h-0">
+                    <div className="space-y-8 pb-4">
                       {internalContacts.length > 0 && (
                         <div>
-                          <div className="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-b border-slate-100 px-6 py-2 z-10">
-                            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                              Internos
-                            </h3>
-                          </div>
-                          <div className="px-6">
+                          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
+                            Contatos Internos
+                            <div className="h-px flex-grow bg-slate-100" />
+                          </h3>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             {internalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-row items-center justify-between py-3.5 border-b border-slate-50 last:border-none group hover:bg-slate-50/50 -mx-3 px-3 rounded-lg transition-colors cursor-default">
-                                <div className="flex flex-col">
-                                  <span className="font-medium text-slate-700 text-sm">{contact.sector}</span>
-                                  {contact.info && (
-                                    <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
-                                  )}
+                              <div key={i} className="flex flex-col p-4 rounded-2xl bg-white border border-slate-100 hover:border-brand/20 hover:shadow-md hover:shadow-brand/5 transition-all duration-300 group">
+                                <div className="flex items-start justify-between mb-2">
+                                  <p className="font-bold text-sm text-slate-800 leading-tight pr-2 group-hover:text-brand-hover transition-colors">
+                                    {contact.sector}
+                                  </p>
+                                  <Badge variant="outline" className="bg-brand-light text-brand border-brand/20 font-mono text-xs px-2 py-0.5 rounded-lg">
+                                    {contact.ramal}
+                                  </Badge>
                                 </div>
-                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-brand group-hover:text-white group-hover:shadow-md group-hover:shadow-brand/20 transition-all border border-transparent group-hover:border-brand">
-                                  {contact.ramal}
-                                </span>
+                                {contact.info && (
+                                  <div className="flex items-center gap-1.5 mt-auto">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-brand/40" />
+                                    <p className="text-[10px] text-slate-500 font-medium truncate italic">{contact.info}</p>
+                                  </div>
+                                )}
                               </div>
                             ))}
                           </div>
@@ -533,33 +402,54 @@ export default function App() {
 
                       {externalContacts.length > 0 && (
                         <div>
-                          <div className="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-y border-slate-100 px-6 py-2 z-10 mt-2">
-                            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                              Externos
-                            </h3>
-                          </div>
-                          <div className="px-6 mt-1">
+                          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
+                            Contatos Externos
+                            <div className="h-px flex-grow bg-slate-100" />
+                          </h3>
+                          <div className="grid grid-cols-1 gap-3">
                             {externalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-row items-center justify-between py-3.5 border-b border-slate-50 last:border-none group hover:bg-slate-50/50 -mx-3 px-3 rounded-lg transition-colors cursor-default">
-                                <div className="flex flex-col">
-                                  <span className="font-medium text-slate-700 text-sm">{contact.sector}</span>
+                              <div key={i} className="flex flex-col p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand/30 hover:bg-white hover:shadow-xl hover:shadow-brand/5 transition-all duration-300">
+                                <div className="flex items-center gap-4 mb-4">
+                                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-brand shrink-0">
+                                    {contact.sector.toLowerCase().includes("samu") || contact.sector.toLowerCase().includes("ambulare") ? (
+                                      <Ambulance className="w-6 h-6" />
+                                    ) : (
+                                      <PhoneCall className="w-6 h-6" />
+                                    )}
+                                  </div>
+                                  <div>
+                                    <p className="font-black text-base text-slate-900 leading-tight mb-1 uppercase tracking-tight">{contact.sector}</p>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Serviço Externo / Emergência</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="flex flex-col gap-2">
+                                  <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-100 group hover:border-brand transition-colors">
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase">Fixo</span>
+                                    <span className="text-lg font-black text-brand font-mono tracking-tighter">
+                                      {contact.ramal}
+                                    </span>
+                                  </div>
                                   {contact.info && (
-                                    <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
+                                    <div className="flex items-center justify-between p-3 rounded-xl bg-brand border border-brand group hover:opacity-90 transition-opacity">
+                                      <span className="text-[10px] font-bold text-brand-light/70 uppercase">Informação / Extra</span>
+                                      <span className="text-sm font-bold text-white font-mono">
+                                        {contact.info}
+                                      </span>
+                                    </div>
                                   )}
                                 </div>
-                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-brand group-hover:text-white group-hover:shadow-md group-hover:shadow-brand/20 transition-all border border-transparent group-hover:border-brand">
-                                  {contact.ramal}
-                                </span>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
-
+                      
                       {filteredContacts.length === 0 && (
                         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                          <p className="font-medium text-slate-600 mb-1">Nenhum resultado</p>
-                          <p className="text-sm">Não encontramos nenhum ramal para sua busca.</p>
+                          <Search className="w-12 h-12 mb-4 opacity-10" />
+                          <p className="font-medium">Nenhum contato encontrado</p>
+                          <p className="text-xs">Tente pesquisar por outro nome ou ramal.</p>
                         </div>
                       )}
                     </div>
@@ -590,7 +480,7 @@ export default function App() {
                   Bem-vindo à Intranet do <span className="text-brand">HSAP</span>
                 </h1>
                 <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-                  Sua central de ferramentas e informações. Escolha seu setor abaixo para acessar
+                  Sua central de ferramentas e informações. Escolha seu setor abaixo para acessar 
                   atalhos dedicados e informações pertinentes à sua rotina hospitalar.
                 </p>
               </div>
@@ -607,7 +497,7 @@ export default function App() {
                   >
                     <Card className="group relative overflow-hidden border-none shadow-xl shadow-slate-200/50 bg-white hover:shadow-2xl transition-all duration-300 cursor-pointer h-full flex flex-col">
                       <div className={`absolute top-0 left-0 w-full h-1.5 ${sector.color}`} />
-
+                      
                       <CardHeader className="pb-4">
                         <div className={`w-12 h-12 rounded-2xl ${sector.lightColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                           <sector.icon className={`w-6 h-6 ${sector.textColor}`} />
@@ -616,12 +506,12 @@ export default function App() {
                           {sector.title}
                         </CardTitle>
                       </CardHeader>
-
+                      
                       <CardContent className="flex-grow">
                         <CardDescription className="text-slate-500 text-sm leading-relaxed mb-6">
                           {sector.description}
                         </CardDescription>
-
+                        
                         <div className="flex items-center text-sm font-semibold text-brand group-hover:translate-x-1 transition-transform">
                           Acessar área
                           <ChevronRight className="w-4 h-4 ml-1" />
@@ -646,8 +536,8 @@ export default function App() {
               transition={{ duration: 0.3 }}
               className="max-w-5xl mx-auto"
             >
-              <Button
-                variant="ghost"
+              <Button 
+                variant="ghost" 
                 onClick={() => setSelectedSector(null)}
                 className="mb-8 gap-2 text-slate-500 hover:text-brand"
               >
@@ -667,402 +557,157 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-10">
-                {currentSector?.categories.map((category, catIdx) => (
-                  <div key={catIdx} className="w-full">
-                    <h3 className={cn(
-                      "text-xs font-bold uppercase tracking-widest mb-4 px-2 border-b pb-3 opacity-90 flex items-center gap-2",
-                      category.isSpecialTeam ? "text-rose-600 border-rose-200" : "text-slate-600 border-slate-200"
-                    )}>
-                      <span className={`w-2 h-2 rounded-full ${category.isSpecialTeam ? 'bg-rose-500' : currentSector.lightColor} border ${category.isSpecialTeam ? 'border-rose-300' : `border-[${currentSector.textColor}]`} shadow-sm`}></span>
-                      {category.name}
-                      {category.isSpecialTeam && <span className="ml-2 px-1.5 py-0.5 rounded text-[8px] bg-rose-100 text-rose-700">ESPECIALIDADE</span>}
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                      {category.items.map((item, i) => (
-                        <div key={i}>
-                          {item.isCustomFeature ? (
-                            <Dialog open={isPediatricOpen} onOpenChange={setIsPediatricOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-amber-500" />
-                                        </CardTitle>
-                                        <CardDescription>Ferramenta de cálculo integrada</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-6xl w-full max-h-[98vh] overflow-hidden pt-10 pb-5 px-5 border-none shadow-2xl">
-                                <PediatricArrestSheet />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isDengueFeature ? (
-                            <Dialog open={isDengueOpen} onOpenChange={setIsDengueOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Protocolo de manejo clínico</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-5xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <DengueManagementModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isCCIHFeature ? (
-                            <Dialog open={isCCIHOpen} onOpenChange={setIsCCIHOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Protocolos e orientações SCIH</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <CCIHModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isFormsFeature ? (
-                            <Dialog open={isFormsOpen} onOpenChange={setIsFormsOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Repositório de formulários digitais</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <FormsModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isSinanFeature ? (
-                            <Dialog open={isSinanOpen} onOpenChange={setIsSinanOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Fichas de notificação compulsória</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <SinanModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isNursingProtocolsFeature ? (
-                            <Dialog open={isNursingProtocolsOpen} onOpenChange={setIsNursingProtocolsOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-emerald-500" />
-                                        </CardTitle>
-                                        <CardDescription>Repositório de protocolos de enfermagem</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <NursingProtocolsModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isNotificationsAndDocsFeature ? (
-                            <Dialog open={isNotificationsAndDocsOpen} onOpenChange={setIsNotificationsAndDocsOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-emerald-500" />
-                                        </CardTitle>
-                                        <CardDescription>Acesse Notificações e Documentos do setor</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <NotificationsAndDocsModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isTomographyPrepFeature ? (
-                            <Dialog open={isTomographyPrepOpen} onOpenChange={setIsTomographyPrepOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-emerald-500" />
-                                        </CardTitle>
-                                        <CardDescription>Fluxo de preparo para exames de contraste</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <TomographyPreparationModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isSkinGroupFeature ? (
-                            <Dialog open={isSkinGroupOpen} onOpenChange={setIsSkinGroupOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-rose-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-rose-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-rose-100 transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-rose-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-rose-500" />
-                                        </CardTitle>
-                                        <CardDescription>Ferramentas avaliativas de lesões e pele</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <SkinGroupModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isMedicationDilutionFeature ? (
-                            <Dialog open={isMedicationDilutionOpen} onOpenChange={setIsMedicationDilutionOpen}>
-                              <DialogTrigger 
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-100 transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-emerald-500" />
-                                        </CardTitle>
-                                        <CardDescription>Consulta interativa sobre medicamentos</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                } 
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <MedicationDilutionModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isCidFeature ? (
-                            <Dialog open={isCidOpen} onOpenChange={setIsCidOpen}>
-                              <DialogTrigger 
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Consulta de procedimentos e CIDs (SUS)</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                } 
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <CidModal />
-                              </DialogContent>
-                            </Dialog>
-                          ) : item.isDashboardsFeature ? (
-                            <Dialog open={isDashboardsOpen} onOpenChange={setIsDashboardsOpen}>
-                              <DialogTrigger
-                                nativeButton={false}
-                                render={
-                                  <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                      </div>
-                                      <div className="flex-1">
-                                        <CardTitle className="text-lg flex items-center justify-between">
-                                          {item.title}
-                                          <Zap className="w-3 h-3 text-brand" />
-                                        </CardTitle>
-                                        <CardDescription>Acesse todos os indicadores e métricas</CardDescription>
-                                      </div>
-                                    </CardHeader>
-                                  </Card>
-                                }
-                              />
-                              <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl bg-[#f8fafc] sm:rounded-2xl">
-                                <div className="flex flex-col h-full bg-white">
-                                  <div className="px-6 py-5 border-b border-slate-100 bg-white shadow-sm relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                    <div>
-                                      <DialogHeader className="mb-0">
-                                        <DialogTitle className="text-xl font-bold text-slate-800 flex items-center gap-3">
-                                          <div className="p-2 bg-brand/10 text-brand rounded-lg">
-                                            <LayoutDashboard className="w-5 h-5" />
-                                          </div>
-                                          Central de Dashboards
-                                        </DialogTitle>
-                                        <DialogDescription className="mt-1">
-                                          Métricas, Painéis e Indicadores do Hospital
-                                        </DialogDescription>
-                                      </DialogHeader>
-                                    </div>
-
-                                    <div className="relative group w-full md:w-72">
-                                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
-                                      <Input
-                                        placeholder="Pesquisar dashboards..."
-                                        className="pl-9 h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-sm rounded-lg shadow-none"
-                                        value={dashboardSearchQuery}
-                                        onChange={(e) => setDashboardSearchQuery(e.target.value)}
-                                        autoComplete="off"
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <ScrollArea className="flex-grow min-h-0 bg-slate-50/50 p-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-10">
-                                      {DASHBOARDS_LIST.filter(d => d.title.toLowerCase().includes(dashboardSearchQuery.toLowerCase())).map((dash, idx) => (
-                                        <a key={idx} href={dash.url} target="_blank" rel="noopener noreferrer" className="block group">
-                                          <div className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200/60 bg-white hover:border-brand/30 hover:shadow-lg hover:shadow-brand/5 transition-all duration-300">
-                                            <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-brand text-slate-400 group-hover:text-white transition-colors duration-300 shadow-sm group-hover:scale-110">
-                                              <dash.icon className="w-6 h-6" />
-                                            </div>
-                                            <div className="flex-1">
-                                              <h4 className="font-bold text-slate-700 group-hover:text-brand transition-colors leading-tight">{dash.title}</h4>
-                                              <span className="text-[11px] font-medium text-slate-400 flex items-center mt-1.5 uppercase tracking-wide">
-                                                Abrir no Navegador <ExternalLink className="w-3 h-3 ml-1.5 opacity-50" />
-                                              </span>
-                                            </div>
-                                          </div>
-                                        </a>
-                                      ))}
-                                      {DASHBOARDS_LIST.filter(d => d.title.toLowerCase().includes(dashboardSearchQuery.toLowerCase())).length === 0 && (
-                                        <div className="col-span-full py-16 flex flex-col items-center justify-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-200">
-                                          <Search className="w-10 h-10 mb-4 text-slate-200" />
-                                          <p className="font-medium text-slate-500">Nenhum dashboard encontrado</p>
-                                          <p className="text-sm">Tente usar outros termos de pesquisa.</p>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </ScrollArea>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                {currentSector?.content.map((item, i) => (
+                  <div key={i}>
+                    {item.isCustomFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
                                 </div>
-                              </DialogContent>
-                            </Dialog>
-                          ) : (
-                            <a
-                              href={item.url || "#"}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block group h-full"
-                            >
-                              <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
-                                <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                    <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
-                                  </div>
-                                  <div className="flex-1">
-                                    <CardTitle className="text-lg flex items-center justify-between">
-                                      {item.title}
-                                      {item.url && item.url !== "#" && <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
-                                    </CardTitle>
-                                    <CardDescription>Clique para abrir o recurso</CardDescription>
-                                  </div>
-                                </CardHeader>
-                              </Card>
-                            </a>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-amber-500" />
+                                  </CardTitle>
+                                  <CardDescription>Ferramenta de cálculo integrada</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full max-h-[98vh] overflow-hidden pt-10 pb-5 px-5 border-none shadow-2xl">
+                          <PediatricArrestSheet />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isDengueFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-brand" />
+                                  </CardTitle>
+                                  <CardDescription>Protocolo de manejo clínico</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-5xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <DengueManagementModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isCCIHFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-brand" />
+                                  </CardTitle>
+                                  <CardDescription>Protocolos e orientações SCIH</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <CCIHModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isFormsFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-brand" />
+                                  </CardTitle>
+                                  <CardDescription>Repositório de formulários digitais</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <FormsModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isSinanFeature ? (
+                      <Dialog>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-brand" />
+                                  </CardTitle>
+                                  <CardDescription>Fichas de notificação compulsória</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <SinanModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : (
+                      <a 
+                        href={item.url || "#"} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="block group h-full"
+                      >
+                        <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                          <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                              <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                            </div>
+                            <div className="flex-1">
+                              <CardTitle className="text-lg flex items-center justify-between">
+                                {item.title}
+                                {item.url && item.url !== "#" && <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
+                              </CardTitle>
+                              <CardDescription>Clique para abrir o recurso</CardDescription>
+                            </div>
+                          </CardHeader>
+                        </Card>
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1081,7 +726,7 @@ export default function App() {
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Mantenha-se Atualizado</h2>
               <p className="text-slate-600 mb-6 max-w-xl">
-                A intranet é atualizada semanalmente com novos protocolos, escalas e avisos importantes
+                A intranet é atualizada semanalmente com novos protocolos, escalas e avisos importantes 
                 da diretoria e coordenação de cada setor.
               </p>
               <div className="flex gap-4">
@@ -1089,12 +734,12 @@ export default function App() {
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                   Sistemas Online
                 </div>
-
+                
               </div>
             </div>
             <div className="w-full md:w-auto">
               <Dialog>
-                <DialogTrigger
+                <DialogTrigger 
                   nativeButton={true}
                   render={
                     <Button variant="outline" className="w-full md:w-auto px-8 py-6 rounded-xl border-slate-200">
@@ -1124,10 +769,10 @@ export default function App() {
                 Hospital Santo Antônio da Patrulha. Cuidando da sua saúde com excelência e humanização.
               </p>
             </div>
-
+            
             <div className="flex items-center gap-4">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform"
+              <a 
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
@@ -1140,9 +785,9 @@ export default function App() {
               </a>
             </div>
           </div>
-
+          
           <Separator className="my-8" />
-
+          
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
             <p>© 2023 - 2024 Hospital Santo Antônio da Patrulha. Todos os direitos reservados.</p>
             <p>Desenvolvido por <span className="text-slate-600 font-medium">Michael de Favere Bitencourt</span></p>
