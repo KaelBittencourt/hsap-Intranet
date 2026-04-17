@@ -74,6 +74,7 @@ import SkinGroupModal from "@/src/components/SkinGroupModal";
 import MedicationDilutionModal from "@/src/components/MedicationDilutionModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
+import CidModal from "@/src/components/CidModal";
 
 const SECTORS = [
   {
@@ -92,7 +93,7 @@ const SECTORS = [
           { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
           { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
           { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
-          { title: "CID", icon: BookOpen, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/pages/CIDS/CIDS.html" },
+          { title: "CID", icon: BookOpen, isCidFeature: true },
         ]
       },
       {
@@ -304,6 +305,7 @@ export default function App() {
   const [isSkinGroupOpen, setIsSkinGroupOpen] = useState(false);
   const [isMedicationDilutionOpen, setIsMedicationDilutionOpen] = useState(false);
   const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
+  const [isCidOpen, setIsCidOpen] = useState(false);
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
   // Keyboard shortcut for search
@@ -442,6 +444,9 @@ export default function App() {
                               } else if (item.isDashboardsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsDashboardsOpen(true), 350);
+                              } else if (item.isCidFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsCidOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -927,6 +932,31 @@ export default function App() {
                               />
                               <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                                 <MedicationDilutionModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isCidFeature ? (
+                            <Dialog open={isCidOpen} onOpenChange={setIsCidOpen}>
+                              <DialogTrigger 
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-brand" />
+                                        </CardTitle>
+                                        <CardDescription>Consulta de procedimentos e CIDs (SUS)</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                } 
+                              />
+                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <CidModal />
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
