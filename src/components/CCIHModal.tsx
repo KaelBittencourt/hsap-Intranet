@@ -113,7 +113,7 @@ export default function CCIHModal() {
             
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none">SCIH</h2>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">SCIH</h2>
               </div>
             </div>
           </div>

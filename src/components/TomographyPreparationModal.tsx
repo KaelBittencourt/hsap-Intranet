@@ -104,7 +104,7 @@ export default function TomographyPreparationModal() {
                       </div>
                       
                       <div className="flex-grow min-w-0">
-                        <h3 className="text-xs font-bold text-slate-800 group-hover:text-emerald-600 transition-colors line-clamp-2 leading-tight">
+                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-emerald-600 transition-colors line-clamp-2 leading-tight">
                           {doc.title}
                         </h3>
                       </div>

@@ -104,7 +104,7 @@ export default function SinanModal() {
             
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left">Sinan's</h2>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Sinan's</h2>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function SinanModal() {
                       </div>
                       
                       <div className="flex-grow min-w-0">
-                        <h3 className="text-xs font-bold text-slate-800 group-hover:text-brand transition-colors line-clamp-2 leading-tight">
+                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-brand transition-colors line-clamp-2 leading-tight">
                           {doc.title}
                         </h3>
                       </div>

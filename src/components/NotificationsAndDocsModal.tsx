@@ -79,7 +79,7 @@ export default function NotificationsAndDocsModal() {
             
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">
                   {activeTab === "notificacao" ? "Notificações" : "Documentos"}
                 </h2>
               </div>

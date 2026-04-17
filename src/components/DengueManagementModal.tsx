@@ -13,7 +13,7 @@ export default function DengueManagementModal() {
           <div className="bg-brand p-1.5 rounded-lg">
             <FileText className="w-5 h-5 text-white" />
           </div>
-          <h2 className="text-lg font-bold text-slate-800">Manejo Clínico para Casos de Dengue</h2>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Manejo Clínico para Casos de Dengue</h2>
         </div>
         <div className="flex items-center gap-2">
           <div className="hidden sm:flex items-center bg-white border rounded-lg p-1 shadow-sm">

@@ -161,6 +161,12 @@ const SECTORS = [
           { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
           { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
         ]
+      },
+      {
+        name: "Suporte Administrativo",
+        items: [
+          { title: "Solicitação de Uniforme", icon: UserRound, url: "https://docs.google.com/forms/d/e/1FAIpQLScCIGKGwA79b8bdPdBcObZazuW-HIhdaOyDpUd6v0EyuSdQvg/viewform" }
+        ]
       }
     ]
   },
