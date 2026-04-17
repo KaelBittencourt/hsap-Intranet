@@ -123,6 +123,11 @@ const SECTORS = [
         items: [
           { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
           { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
+        ]
+      },
+      {
+        name: "Resultados de Exames",
+        items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
         ]
@@ -174,10 +179,15 @@ const SECTORS = [
         ]
       },
       {
-        name: "Rotinas Administrativas",
+        name: "Resultados de Exames",
         items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+        ]
+      },
+      {
+        name: "Rotinas Administrativas",
+        items: [
           { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
@@ -208,7 +218,7 @@ const SECTORS = [
         ]
       },
       {
-        name: "Apoio Técnico",
+        name: "Resultados de Exames",
         items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
