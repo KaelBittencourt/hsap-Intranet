@@ -400,7 +400,7 @@ export default function App() {
                                     <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
                                   )}
                                 </div>
-                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all border border-transparent group-hover:border-slate-200">
+                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-brand group-hover:text-white group-hover:shadow-md group-hover:shadow-brand/20 transition-all border border-transparent group-hover:border-brand">
                                   {contact.ramal}
                                 </span>
                               </div>
@@ -425,7 +425,7 @@ export default function App() {
                                     <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
                                   )}
                                 </div>
-                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all border border-transparent group-hover:border-slate-200">
+                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-brand group-hover:text-white group-hover:shadow-md group-hover:shadow-brand/20 transition-all border border-transparent group-hover:border-brand">
                                   {contact.ramal}
                                 </span>
                               </div>
