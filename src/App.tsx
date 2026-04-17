@@ -69,6 +69,7 @@ import FormsModal from "@/src/components/FormsModal";
 import SinanModal from "@/src/components/SinanModal";
 import NursingProtocolsModal from "@/src/components/NursingProtocolsModal";
 import NotificationsAndDocsModal from "@/src/components/NotificationsAndDocsModal";
+import TomographyPreparationModal from "@/src/components/TomographyPreparationModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
 
@@ -146,6 +147,7 @@ const SECTORS = [
       {
         name: "Rotinas Assistenciais",
         items: [
+          { title: "CDI - Preparo para Tomografia", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
           { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
@@ -282,6 +284,7 @@ export default function App() {
   const [isSinanOpen, setIsSinanOpen] = useState(false);
   const [isNursingProtocolsOpen, setIsNursingProtocolsOpen] = useState(false);
   const [isNotificationsAndDocsOpen, setIsNotificationsAndDocsOpen] = useState(false);
+  const [isTomographyPrepOpen, setIsTomographyPrepOpen] = useState(false);
   const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
@@ -409,6 +412,9 @@ export default function App() {
                               } else if (item.isNotificationsAndDocsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsNotificationsAndDocsOpen(true), 350);
+                              } else if (item.isTomographyPrepFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsTomographyPrepOpen(true), 350);
                               } else if (item.isDashboardsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsDashboardsOpen(true), 350);
@@ -816,6 +822,31 @@ export default function App() {
                         />
                         <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <NotificationsAndDocsModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isTomographyPrepFeature ? (
+                      <Dialog open={isTomographyPrepOpen} onOpenChange={setIsTomographyPrepOpen}>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-emerald-500" />
+                                  </CardTitle>
+                                  <CardDescription>Fluxo de preparo para exames de contraste</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <TomographyPreparationModal />
                         </DialogContent>
                       </Dialog>
                     ) : item.isDashboardsFeature ? (
