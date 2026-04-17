@@ -147,7 +147,7 @@ const SECTORS = [
       {
         name: "Rotinas Assistenciais",
         items: [
-          { title: "CDI - Preparo para Tomografia", icon: Activity, isTomographyPrepFeature: true },
+          { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
           { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
