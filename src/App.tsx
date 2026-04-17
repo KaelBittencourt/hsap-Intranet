@@ -192,7 +192,7 @@ const CONTACTS = [
   { sector: "Recursos Humanos", ramal: "7638", type: "Interno", info: "Whats: (51) 99350-2834" },
   { sector: "Emergência", ramal: "7639", type: "Interno" },
   { sector: "Laboratório", ramal: "7646", type: "Interno" },
-  { sector: "Central de Atendimento HSAP", ramal: "(51) 2500 7540", type: "Externo" },
+  { sector: "Recepção Emergência", ramal: "(51) 2500 7540", type: "Externo" },
 ];
 
 export default function App() {
