@@ -17,7 +17,7 @@ interface TomographyDocument {
 }
 
 const documents: TomographyDocument[] = [
-  { id: "1", title: "DOCUMENTO DE PREPARO PARA TOMOGRAFIA COM CONTRASTE", url: "https://drive.google.com/file/d/1rCRjE5ZswsYV-SQZjuDhTK6ZELgEoEgr/view?usp=sharing" },
+  { id: "1", title: "PREPARO PARA TOMOGRAFIA COM CONTRASTE", url: "https://drive.google.com/file/d/1rCRjE5ZswsYV-SQZjuDhTK6ZELgEoEgr/view?usp=sharing" },
   { id: "2", title: "FICHA DE ANAMNESE TOMOGRAFIA", url: "https://drive.google.com/file/d/1Fz1CjiMWLfOMoaX60FMiecsjp8xUam3J/view?usp=sharing" },
   { id: "3", title: "TERMO USO DE CONTRASTE", url: "https://drive.google.com/file/d/16ZoNQdOiuLzGrnkGziMS61hDlJHFTbJ7/view?usp=sharing" }
 ];
