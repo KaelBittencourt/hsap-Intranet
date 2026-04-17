@@ -12,7 +12,8 @@ import {
   Baby,
   Stethoscope,
   Zap,
-  Droplets
+  Droplets,
+  Activity
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -103,11 +104,11 @@ export default function PediatricArrestSheet() {
       <Card className="border-none shadow-none bg-transparent print:bg-white pt-4 px-[5px] m-0">
         <CardHeader className="pt-0 pb-2">
           <div className="flex items-center gap-2 mb-1">
-            <div className="bg-red-100 p-1.5 rounded-lg">
-              <ClipboardList className="w-5 h-5 text-red-600" />
+            <div className="bg-emerald-100 p-1.5 rounded-lg">
+              <Activity className="w-5 h-5 text-emerald-600" />
             </div>
             <div>
-              <CardTitle className="text-xl font-bold">Folha de Parada Pediatria</CardTitle>
+              <CardTitle className="text-xl font-bold">Intubação e Parada Cardíaca</CardTitle>
               <CardDescription className="text-xs">Cálculos automáticos baseados em PALS/APLS</CardDescription>
             </div>
           </div>
