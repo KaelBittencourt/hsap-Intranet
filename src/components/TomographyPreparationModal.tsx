@@ -57,7 +57,7 @@ export default function TomographyPreparationModal() {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">
-                  Preparo para Tomografia com Contraste
+                  Tomografia com Contraste
                 </h2>
               </div>
             </div>
