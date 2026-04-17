@@ -478,7 +478,7 @@ export default function App() {
                 render={
                   <Button variant="outline" className="gap-2 h-10 px-4 flex items-center justify-center border-brand/20 bg-brand/5 text-brand focus:bg-brand/10 hover:bg-brand hover:text-white transition-all rounded-xl shadow-inner-sm text-sm font-semibold">
                     <Phone className="w-4 h-4" />
-                    <span className="hidden sm:inline">Contatos / Ramais</span>
+                    <span className="hidden sm:inline">Contatos</span>
                   </Button>
                 }
               />
