@@ -70,6 +70,7 @@ import SinanModal from "@/src/components/SinanModal";
 import NursingProtocolsModal from "@/src/components/NursingProtocolsModal";
 import NotificationsAndDocsModal from "@/src/components/NotificationsAndDocsModal";
 import TomographyPreparationModal from "@/src/components/TomographyPreparationModal";
+import SkinGroupModal from "@/src/components/SkinGroupModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
 
@@ -152,6 +153,13 @@ const SECTORS = [
           { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
           { title: "Sinan's", icon: Info, isSinanFeature: true },
+        ]
+      },
+      {
+        name: "Núcleo de Internação",
+        isSpecialTeam: true,
+        items: [
+          { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
         ]
       },
       {
@@ -291,6 +299,7 @@ export default function App() {
   const [isNursingProtocolsOpen, setIsNursingProtocolsOpen] = useState(false);
   const [isNotificationsAndDocsOpen, setIsNotificationsAndDocsOpen] = useState(false);
   const [isTomographyPrepOpen, setIsTomographyPrepOpen] = useState(false);
+  const [isSkinGroupOpen, setIsSkinGroupOpen] = useState(false);
   const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
@@ -421,6 +430,9 @@ export default function App() {
                               } else if (item.isTomographyPrepFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsTomographyPrepOpen(true), 350);
+                              } else if (item.isSkinGroupFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsSkinGroupOpen(true), 350);
                               } else if (item.isDashboardsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsDashboardsOpen(true), 350);
@@ -648,9 +660,13 @@ export default function App() {
               <div className="flex flex-col gap-10">
                 {currentSector?.categories.map((category, catIdx) => (
                   <div key={catIdx} className="w-full">
-                    <h3 className="text-xs font-bold text-slate-600 uppercase tracking-widest mb-4 px-2 border-b border-slate-200 pb-3 opacity-90 flex items-center gap-2">
-                       <span className={`w-2 h-2 rounded-full ${currentSector.lightColor} border border-[${currentSector.textColor}] shadow-sm`}></span>
+                    <h3 className={cn(
+                      "text-xs font-bold uppercase tracking-widest mb-4 px-2 border-b pb-3 opacity-90 flex items-center gap-2",
+                      category.isSpecialTeam ? "text-rose-600 border-rose-200" : "text-slate-600 border-slate-200"
+                    )}>
+                       <span className={`w-2 h-2 rounded-full ${category.isSpecialTeam ? 'bg-rose-500' : currentSector.lightColor} border ${category.isSpecialTeam ? 'border-rose-300' : `border-[${currentSector.textColor}]`} shadow-sm`}></span>
                        {category.name}
+                       {category.isSpecialTeam && <span className="ml-2 px-1.5 py-0.5 rounded text-[8px] bg-rose-100 text-rose-700">ESPECIALIDADE</span>}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
                       {category.items.map((item, i) => (
@@ -853,6 +869,32 @@ export default function App() {
                         />
                         <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <TomographyPreparationModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isSkinGroupFeature ? (
+                      <Dialog open={isSkinGroupOpen} onOpenChange={setIsSkinGroupOpen}>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-rose-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                              <div className="absolute inset-0 bg-gradient-to-r from-rose-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-rose-100 transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-rose-500" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-rose-500" />
+                                  </CardTitle>
+                                  <CardDescription>Ferramentas avaliativas de lesões e pele</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                          <SkinGroupModal />
                         </DialogContent>
                       </Dialog>
                     ) : item.isDashboardsFeature ? (
