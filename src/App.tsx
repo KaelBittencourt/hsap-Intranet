@@ -136,7 +136,7 @@ const SECTORS = [
       {
         name: "Protocolos e Documentos",
         items: [
-          { title: "Protocolos de Enfermagem", icon: ClipboardList, isNursingProtocolsFeature: true },
+          { title: "Protocolos", icon: ClipboardList, isNursingProtocolsFeature: true },
           { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
           { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
