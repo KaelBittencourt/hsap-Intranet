@@ -106,6 +106,7 @@ const SECTORS = [
       { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
       { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
       { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+      { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
       { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
       { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
       { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
