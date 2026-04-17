@@ -360,29 +360,21 @@ export default function App() {
                   </Button>
                 } 
               />
-              <DialogContent className="sm:max-w-[800px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-[#f8fafc] sm:rounded-3xl">
-                <div className="flex flex-col h-full relative">
-                  {/* Decorative Header Background */}
-                  <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-brand/10 to-transparent pointer-events-none" />
-                  
-                  <div className="p-8 pb-6 bg-white/40 backdrop-blur-md border-b border-white/50 relative z-10">
-                    <DialogHeader className="mb-6">
-                      <DialogTitle className="flex items-center gap-3 text-3xl font-black text-slate-900 tracking-tight">
-                        <div className="bg-gradient-to-br from-brand to-brand-hover p-4 rounded-2xl shadow-lg shadow-brand/20">
-                          <PhoneCall className="w-7 h-7 text-white" />
-                        </div>
-                        Diretório de Contatos
+              <DialogContent className="sm:max-w-[500px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-white sm:rounded-2xl">
+                <div className="flex flex-col h-full">
+                  <div className="px-6 py-5 border-b border-slate-100 bg-white">
+                    <DialogHeader className="mb-4">
+                      <DialogTitle className="text-xl font-semibold text-slate-800">
+                         Contatos
                       </DialogTitle>
-                      <DialogDescription className="text-slate-500 text-base font-medium">
-                        Acesse rapidamente os ramais internos e serviços de emergência externos.
-                      </DialogDescription>
+                      <DialogDescription className="hidden">Lista de contatos da intranet</DialogDescription>
                     </DialogHeader>
                     
-                    <div className="relative group shadow-sm bg-white rounded-2xl">
-                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-brand transition-colors" />
+                    <div className="relative group">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
                       <Input 
-                        placeholder="Pesquisar por setor, ramal ou serviço..." 
-                        className="pl-12 h-14 bg-transparent border-slate-200 rounded-2xl focus:ring-4 focus:ring-brand/10 focus:border-brand transition-all text-base shadow-inner-sm"
+                        placeholder="Pesquisar..." 
+                        className="pl-9 h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-sm rounded-lg shadow-none"
                         value={contactSearchQuery}
                         onChange={(e) => setContactSearchQuery(e.target.value)}
                         autoComplete="off"
@@ -390,39 +382,27 @@ export default function App() {
                     </div>
                   </div>
 
-                  <ScrollArea className="flex-grow p-4 sm:p-8 min-h-0 relative z-10">
-                    <div className="space-y-10 pb-10">
+                  <ScrollArea className="flex-grow min-h-0 bg-white">
+                    <div className="pb-8">
                       {internalContacts.length > 0 && (
                         <div>
-                          <div className="flex items-center gap-4 mb-6">
-                            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest px-4 py-1.5 bg-slate-200/50 rounded-full">
-                              Ramais Internos
+                          <div className="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-b border-slate-100 px-6 py-2 z-10">
+                            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                              Internos
                             </h3>
-                            <div className="h-px flex-grow bg-gradient-to-r from-slate-200 to-transparent" />
                           </div>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <div className="px-6">
                             {internalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-col p-5 rounded-3xl bg-white border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-brand/5 hover:border-brand/30 transition-all duration-300 group cursor-default relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-16 h-16 bg-brand/5 rounded-bl-full -z-0 translate-x-8 -translate-y-8 group-hover:translate-x-0 group-hover:-translate-y-0 transition-transform duration-500 ease-out" />
-                                
-                                <div className="flex items-start justify-between mb-4 relative z-10">
-                                  <p className="font-extrabold text-sm text-slate-700 leading-snug pr-2 group-hover:text-brand transition-colors">
-                                    {contact.sector}
-                                  </p>
+                              <div key={i} className="flex flex-row items-center justify-between py-3.5 border-b border-slate-50 last:border-none group hover:bg-slate-50/50 -mx-3 px-3 rounded-lg transition-colors cursor-default">
+                                <div className="flex flex-col">
+                                  <span className="font-medium text-slate-700 text-sm">{contact.sector}</span>
+                                  {contact.info && (
+                                    <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
+                                  )}
                                 </div>
-                                
-                                <div className="mt-auto relative z-10 flex items-center justify-between">
-                                  {contact.info ? (
-                                    <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                                      <p className="text-[10px] text-slate-500 font-bold truncate">{contact.info}</p>
-                                    </div>
-                                  ) : <div />}
-                                  
-                                  <Badge variant="outline" className="bg-brand-light/50 text-brand border-brand/20 font-bold text-sm px-3 py-1.5 rounded-xl shadow-inner">
-                                    {contact.ramal}
-                                  </Badge>
-                                </div>
+                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all border border-transparent group-hover:border-slate-200">
+                                  {contact.ramal}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -431,34 +411,23 @@ export default function App() {
 
                       {externalContacts.length > 0 && (
                         <div>
-                          <div className="flex items-center gap-4 mb-6">
-                            <h3 className="text-xs font-black text-rose-400 uppercase tracking-widest px-4 py-1.5 bg-rose-50 rounded-full">
-                              Emergência / Externos
+                          <div className="sticky top-0 bg-slate-50/90 backdrop-blur-sm border-y border-slate-100 px-6 py-2 z-10 mt-2">
+                            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                              Externos
                             </h3>
-                            <div className="h-px flex-grow bg-gradient-to-r from-rose-100 to-transparent" />
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="px-6 mt-1">
                             {externalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-row items-center p-4 rounded-3xl bg-white border border-rose-100 shadow-md hover:shadow-xl hover:border-rose-300 hover:-translate-y-1 transition-all duration-300 group">
-                                <div className="w-16 h-16 rounded-2xl bg-rose-50 shadow-inner flex items-center justify-center text-rose-500 shrink-0 mr-5 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
-                                  {contact.sector.toLowerCase().includes("samu") || contact.sector.toLowerCase().includes("ambulare") ? (
-                                    <Ambulance className="w-8 h-8" />
-                                  ) : (
-                                    <Globe className="w-8 h-8" />
-                                  )}
-                                </div>
-                                <div className="flex-1">
-                                  <p className="font-black text-lg text-slate-800 leading-tight mb-1">{contact.sector}</p>
+                              <div key={i} className="flex flex-row items-center justify-between py-3.5 border-b border-slate-50 last:border-none group hover:bg-slate-50/50 -mx-3 px-3 rounded-lg transition-colors cursor-default">
+                                <div className="flex flex-col">
+                                  <span className="font-medium text-slate-700 text-sm">{contact.sector}</span>
                                   {contact.info && (
-                                    <p className="text-[11px] text-slate-500 font-semibold mb-2">{contact.info}</p>
+                                    <span className="text-[11px] text-slate-400 mt-0.5">{contact.info}</span>
                                   )}
                                 </div>
-                                <div className="bg-slate-50 px-4 py-3 rounded-2xl border border-slate-100 group-hover:bg-rose-50 transition-colors shrink-0 flex items-center gap-2">
-                                  <Phone className="w-4 h-4 text-slate-400 group-hover:text-rose-400" />
-                                  <span className="text-lg font-black text-slate-700 group-hover:text-rose-600 font-mono tracking-tight">
-                                    {contact.ramal}
-                                  </span>
-                                </div>
+                                <span className="font-mono text-sm font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all border border-transparent group-hover:border-slate-200">
+                                  {contact.ramal}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -467,11 +436,8 @@ export default function App() {
                       
                       {filteredContacts.length === 0 && (
                         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                          <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-                            <Search className="w-10 h-10 text-slate-300" />
-                          </div>
-                          <p className="font-bold text-xl text-slate-500 mb-2">Nenhum contato encontrado</p>
-                          <p className="text-sm font-medium">Tente pesquisar por outro nome ou ramal.</p>
+                          <p className="font-medium text-slate-600 mb-1">Nenhum resultado</p>
+                          <p className="text-sm">Não encontramos nenhum ramal para sua busca.</p>
                         </div>
                       )}
                     </div>
