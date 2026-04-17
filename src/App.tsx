@@ -203,12 +203,7 @@ const SECTORS = [
       {
         name: "Painéis de Bordo (Dashboards)",
         items: [
-          { title: "Dashboard: Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
-          { title: "Dashboard: Contenções", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
-          { title: "Dashboard: Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
-          { title: "Dashboard: Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
-          { title: "Dashboard: Esterilização", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
-          { title: "Dashboard: Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
+          { title: "Central de Dashboards", icon: LayoutDashboard, isDashboardsFeature: true },
         ]
       },
       {
@@ -228,6 +223,15 @@ const SECTORS = [
       }
     ]
   },
+];
+
+const DASHBOARDS_LIST = [
+  { title: "Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
+  { title: "Contenções Psiquiátricas", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
+  { title: "Auditoria Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
+  { title: "Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
+  { title: "Esterilização em Autoclave", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
+  { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
 ];
 
 const CONTACTS = [
@@ -271,6 +275,8 @@ export default function App() {
   const [isCCIHOpen, setIsCCIHOpen] = useState(false);
   const [isFormsOpen, setIsFormsOpen] = useState(false);
   const [isSinanOpen, setIsSinanOpen] = useState(false);
+  const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
+  const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -390,6 +396,9 @@ export default function App() {
                               } else if (item.isSinanFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsSinanOpen(true), 350);
+                              } else if (item.isDashboardsFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsDashboardsOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -744,6 +753,85 @@ export default function App() {
                         />
                         <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                           <SinanModal />
+                        </DialogContent>
+                      </Dialog>
+                    ) : item.isDashboardsFeature ? (
+                      <Dialog open={isDashboardsOpen} onOpenChange={setIsDashboardsOpen}>
+                        <DialogTrigger 
+                          nativeButton={false}
+                          render={
+                            <Card className="group hover:border-brand/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
+                                  <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                </div>
+                                <div className="flex-1">
+                                  <CardTitle className="text-lg flex items-center justify-between">
+                                    {item.title}
+                                    <Zap className="w-3 h-3 text-brand" />
+                                  </CardTitle>
+                                  <CardDescription>Acesse todos os indicadores e métricas</CardDescription>
+                                </div>
+                              </CardHeader>
+                            </Card>
+                          } 
+                        />
+                        <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl bg-[#f8fafc] sm:rounded-2xl">
+                          <div className="flex flex-col h-full bg-white">
+                             <div className="px-6 py-5 border-b border-slate-100 bg-white shadow-sm relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                               <div>
+                                 <DialogHeader className="mb-0">
+                                   <DialogTitle className="text-xl font-bold text-slate-800 flex items-center gap-3">
+                                     <div className="p-2 bg-brand/10 text-brand rounded-lg">
+                                       <LayoutDashboard className="w-5 h-5" />
+                                     </div>
+                                     Central de Dashboards
+                                   </DialogTitle>
+                                   <DialogDescription className="mt-1">
+                                     Métricas, Painéis e Indicadores do Hospital
+                                   </DialogDescription>
+                                 </DialogHeader>
+                               </div>
+                               
+                               <div className="relative group w-full md:w-72">
+                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
+                                 <Input 
+                                   placeholder="Pesquisar dashboards..." 
+                                   className="pl-9 h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-sm rounded-lg shadow-none"
+                                   value={dashboardSearchQuery}
+                                   onChange={(e) => setDashboardSearchQuery(e.target.value)}
+                                   autoComplete="off"
+                                 />
+                               </div>
+                             </div>
+                             
+                             <ScrollArea className="flex-grow min-h-0 bg-slate-50/50 p-6">
+                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-10">
+                                  {DASHBOARDS_LIST.filter(d => d.title.toLowerCase().includes(dashboardSearchQuery.toLowerCase())).map((dash, idx) => (
+                                    <a key={idx} href={dash.url} target="_blank" rel="noopener noreferrer" className="block group">
+                                      <div className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200/60 bg-white hover:border-brand/30 hover:shadow-lg hover:shadow-brand/5 transition-all duration-300">
+                                        <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-brand text-slate-400 group-hover:text-white transition-colors duration-300 shadow-sm group-hover:scale-110">
+                                          <dash.icon className="w-6 h-6" />
+                                        </div>
+                                        <div className="flex-1">
+                                          <h4 className="font-bold text-slate-700 group-hover:text-brand transition-colors leading-tight">{dash.title}</h4>
+                                          <span className="text-[11px] font-medium text-slate-400 flex items-center mt-1.5 uppercase tracking-wide">
+                                            Abrir no Navegador <ExternalLink className="w-3 h-3 ml-1.5 opacity-50" />
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  ))}
+                                  {DASHBOARDS_LIST.filter(d => d.title.toLowerCase().includes(dashboardSearchQuery.toLowerCase())).length === 0 && (
+                                    <div className="col-span-full py-16 flex flex-col items-center justify-center text-slate-400 bg-white rounded-2xl border border-dashed border-slate-200">
+                                      <Search className="w-10 h-10 mb-4 text-slate-200" />
+                                      <p className="font-medium text-slate-500">Nenhum dashboard encontrado</p>
+                                      <p className="text-sm">Tente usar outros termos de pesquisa.</p>
+                                    </div>
+                                  )}
+                               </div>
+                             </ScrollArea>
+                          </div>
                         </DialogContent>
                       </Dialog>
                     ) : (
