@@ -181,12 +181,6 @@ const SECTORS = [
           { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
-      },
-      {
-        name: "Ferramentas",
-        items: [
-          { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
-        ]
       }
     ]
   },
@@ -218,7 +212,6 @@ const SECTORS = [
         items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-          { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
         ]
       }
     ]
