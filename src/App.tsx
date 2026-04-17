@@ -107,8 +107,7 @@ const SECTORS = [
         name: "Protocolos e Rotinas",
         items: [
           { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
-          { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
-          { title: "Intubação e Parada Cardíaca", icon: Wind, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/assets/HVN%20-%20Folha%20de%20Parada%20PEDIATRIA.pdf" },
+          { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
       }
@@ -153,7 +152,7 @@ const SECTORS = [
           { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, isMedicationDilutionFeature: true },
           { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-          { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+          { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Sinan's", icon: Info, isSinanFeature: true },
         ]
       },
