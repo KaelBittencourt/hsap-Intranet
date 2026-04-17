@@ -62,7 +62,7 @@ export default function SkinGroupModal() {
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-700 uppercase tracking-widest border border-rose-200">
-                    Núcleo de Internação
+                    Unidade de Internação
                   </span>
                 </div>
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">

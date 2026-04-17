@@ -156,7 +156,7 @@ const SECTORS = [
         ]
       },
       {
-        name: "Núcleo de Internação",
+        name: "Unidade de Internação",
         isSpecialTeam: true,
         items: [
           { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
