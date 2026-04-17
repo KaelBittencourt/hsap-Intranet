@@ -919,13 +919,13 @@ export default function App() {
                                           {item.title}
                                           <Zap className="w-3 h-3 text-emerald-500" />
                                         </CardTitle>
-                                        <CardDescription>Consulta interativa em formato de tabela</CardDescription>
+                                        <CardDescription>Consulta interativa sobre medicamentos</CardDescription>
                                       </div>
                                     </CardHeader>
                                   </Card>
                                 } 
                               />
-                              <DialogContent className="sm:max-w-[1500px] w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                                 <MedicationDilutionModal />
                               </DialogContent>
                             </Dialog>
