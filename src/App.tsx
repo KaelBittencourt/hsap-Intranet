@@ -80,17 +80,32 @@ const SECTORS = [
     hoverColor: "hover:bg-brand-hover",
     lightColor: "bg-brand-light",
     textColor: "text-brand",
-    content: [
-      { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
-      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-      { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
-      { title: "CID", icon: BookOpen, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/pages/CIDS/CIDS.html" },
-      { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
-      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
-      { title: "Intubação e Parada Cardíaca", icon: Wind, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/assets/HVN%20-%20Folha%20de%20Parada%20PEDIATRIA.pdf" },
-      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+    categories: [
+      {
+        name: "Sistemas Clínicos",
+        items: [
+          { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
+          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
+          { title: "CID", icon: BookOpen, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/pages/CIDS/CIDS.html" },
+        ]
+      },
+      {
+        name: "Resultados de Exames",
+        items: [
+          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+        ]
+      },
+      {
+        name: "Protocolos e Rotinas",
+        items: [
+          { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
+          { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+          { title: "Intubação e Parada Cardíaca", icon: Wind, url: "https://hsap-portaldocolaborador.vercel.app/pages/medicos/assets/HVN%20-%20Folha%20de%20Parada%20PEDIATRIA.pdf" },
+          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+        ]
+      }
     ]
   },
   {
@@ -102,22 +117,42 @@ const SECTORS = [
     hoverColor: "hover:bg-emerald-600",
     lightColor: "bg-emerald-50",
     textColor: "text-emerald-700",
-    content: [
-      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-      { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
-      { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
-      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-      { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
-      { title: "Protocolos de Enfermagem", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-      { title: "Sinan's", icon: Info, isSinanFeature: true },
-      { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-      { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-      { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
-      { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
-      { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
-      { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
+    categories: [
+      {
+        name: "Sistemas Externos",
+        items: [
+          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
+          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+        ]
+      },
+      {
+        name: "Protocolos e Documentos",
+        items: [
+          { title: "Protocolos de Enfermagem", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+          { title: "Notificações e Documentos", icon: ClipboardList, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+          { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
+          { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
+        ]
+      },
+      {
+        name: "Rotinas Assistenciais",
+        items: [
+          { title: "Diluição de Medicamentos", icon: Pill, url: "https://docs.google.com/spreadsheets/d/1WV7qsgwxt7jSLkk7acqcUdUVn7IpVjLd/edit?sharingaction=ownershiptransfer#gid=1764089371" },
+          { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+          { title: "Folha de Parada Pediatria", icon: Baby, isCustomFeature: true },
+          { title: "Sinan's", icon: Info, isSinanFeature: true },
+        ]
+      },
+      {
+        name: "Apoio e Encaminhamentos",
+        items: [
+          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+          { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
+          { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+        ]
+      }
     ]
   },
   {
@@ -129,15 +164,30 @@ const SECTORS = [
     hoverColor: "hover:bg-green-600",
     lightColor: "bg-green-50",
     textColor: "text-green-700",
-    content: [
-      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-      { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
-      { title: "Gercon", icon: FileSearch, url: "https://gerint.procempa.com.br/gerintweb/" },
-      { title: "SISREG", icon: FileSearch, url: "https://sisregiii.saude.gov.br/cgi-bin/index" },
-      { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-      { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
-      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+    categories: [
+      {
+        name: "Regulação",
+        items: [
+          { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "Gercon", icon: FileSearch, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "SISREG", icon: FileSearch, url: "https://sisregiii.saude.gov.br/cgi-bin/index" },
+        ]
+      },
+      {
+        name: "Rotinas Administrativas",
+        items: [
+          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+          { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
+          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+        ]
+      },
+      {
+        name: "Ferramentas",
+        items: [
+          { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+        ]
+      }
     ]
   },
   {
@@ -149,18 +199,33 @@ const SECTORS = [
     hoverColor: "hover:bg-slate-800",
     lightColor: "bg-slate-50",
     textColor: "text-slate-700",
-    content: [
-      { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
-      { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
-      { title: "Auditoria Interna G.R", icon: FileCheck, url: "https://docs.google.com/forms/d/e/1FAIpQLSdWuLT1bI07cLRtK258JqGpEQHxTZC-sm75rV5kWkTJe4wlyQ/viewform?usp=header" },
-      { title: "Capacitações Gerais", icon: GraduationCap, url: "https://docs.google.com/forms/d/e/1FAIpQLSeYAmacPjsPXY9e_0CAeIzQ89iyfoFhWUfLqmDWZC4pe5LLLQ/viewform?usp=sharing" },
-      { title: "Dashboard: Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
-      { title: "Dashboard: Contenções", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
-      { title: "Dashboard: Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
-      { title: "Dashboard: Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
-      { title: "Dashboard: Esterilização", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
-      { title: "Dashboard: Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
-      { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+    categories: [
+      {
+        name: "Painéis de Bordo (Dashboards)",
+        items: [
+          { title: "Dashboard: Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
+          { title: "Dashboard: Contenções", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
+          { title: "Dashboard: Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
+          { title: "Dashboard: Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
+          { title: "Dashboard: Esterilização", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
+          { title: "Dashboard: Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
+        ]
+      },
+      {
+        name: "Qualidade e Processos",
+        items: [
+          { title: "Auditoria Interna G.R", icon: FileCheck, url: "https://docs.google.com/forms/d/e/1FAIpQLSdWuLT1bI07cLRtK258JqGpEQHxTZC-sm75rV5kWkTJe4wlyQ/viewform?usp=header" },
+          { title: "Capacitações Gerais", icon: GraduationCap, url: "https://docs.google.com/forms/d/e/1FAIpQLSeYAmacPjsPXY9e_0CAeIzQ89iyfoFhWUfLqmDWZC4pe5LLLQ/viewform?usp=sharing" },
+        ]
+      },
+      {
+        name: "Apoio Técnico",
+        items: [
+          { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
+          { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+          { title: "Inteligência Artificial", icon: Bot, url: "https://grok.com/" },
+        ]
+      }
     ]
   },
 ];
@@ -231,7 +296,7 @@ export default function App() {
   const externalContacts = filteredContacts.filter(c => c.type === "Externo");
 
   const allSystems = SECTORS.flatMap(sector => 
-    sector.content.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title }))
+    sector.categories.flatMap(cat => cat.items.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title, category: cat.name })))
   );
 
   const filteredSystems = searchQuery.trim() === "" 
@@ -546,9 +611,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-                {currentSector?.content.map((item, i) => (
-                  <div key={i}>
+              <div className="flex flex-col gap-10">
+                {currentSector?.categories.map((category, catIdx) => (
+                  <div key={catIdx} className="w-full">
+                    <h3 className="text-xs font-bold text-slate-600 uppercase tracking-widest mb-4 px-2 border-b border-slate-200 pb-3 opacity-90 flex items-center gap-2">
+                       <span className={`w-2 h-2 rounded-full ${currentSector.lightColor} border border-[${currentSector.textColor}] shadow-sm`}></span>
+                       {category.name}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                      {category.items.map((item, i) => (
+                        <div key={i}>
                     {item.isCustomFeature ? (
                       <Dialog open={isPediatricOpen} onOpenChange={setIsPediatricOpen}>
                         <DialogTrigger 
@@ -697,6 +769,9 @@ export default function App() {
                         </Card>
                       </a>
                     )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
