@@ -354,32 +354,35 @@ export default function App() {
               <DialogTrigger 
                 nativeButton={true}
                 render={
-                  <Button variant="outline" size="sm" className="gap-2 border-brand/20 text-brand-hover hover:bg-brand-light">
+                  <Button variant="outline" className="gap-2 h-10 px-4 flex items-center justify-center border-brand/20 bg-brand/5 text-brand focus:bg-brand/10 hover:bg-brand hover:text-white transition-all rounded-xl shadow-inner-sm text-sm font-semibold">
                     <Phone className="w-4 h-4" />
-                    <span className="hidden sm:inline">Contatos</span>
+                    <span className="hidden sm:inline">Contatos Rápidos</span>
                   </Button>
                 } 
               />
-              <DialogContent className="sm:max-w-[700px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl">
-                <div className="flex flex-col h-full bg-white">
-                  <div className="p-6 border-b bg-slate-50/50">
+              <DialogContent className="sm:max-w-[800px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-[#f8fafc] sm:rounded-3xl">
+                <div className="flex flex-col h-full relative">
+                  {/* Decorative Header Background */}
+                  <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-brand/10 to-transparent pointer-events-none" />
+                  
+                  <div className="p-8 pb-6 bg-white/40 backdrop-blur-md border-b border-white/50 relative z-10">
                     <DialogHeader className="mb-6">
-                      <DialogTitle className="flex items-center gap-2 text-2xl font-bold text-slate-900 leading-tight">
-                        <div className="bg-brand p-2 rounded-xl shadow-lg shadow-brand/20">
-                          <Phone className="w-5 h-5 text-white" />
+                      <DialogTitle className="flex items-center gap-3 text-3xl font-black text-slate-900 tracking-tight">
+                        <div className="bg-gradient-to-br from-brand to-brand-hover p-4 rounded-2xl shadow-lg shadow-brand/20">
+                          <PhoneCall className="w-7 h-7 text-white" />
                         </div>
-                        Lista de Contatos
+                        Diretório de Contatos
                       </DialogTitle>
-                      <DialogDescription className="text-slate-500">
-                        Consulte ramais internos e contatos de emergência externos.
+                      <DialogDescription className="text-slate-500 text-base font-medium">
+                        Acesse rapidamente os ramais internos e serviços de emergência externos.
                       </DialogDescription>
                     </DialogHeader>
                     
-                    <div className="relative group">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
+                    <div className="relative group shadow-sm bg-white rounded-2xl">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-brand transition-colors" />
                       <Input 
-                        placeholder="Buscar setor ou ramal..." 
-                        className="pl-10 h-11 bg-white border-slate-200 rounded-xl focus:ring-brand/20 focus:border-brand transition-all"
+                        placeholder="Pesquisar por setor, ramal ou serviço..." 
+                        className="pl-12 h-14 bg-transparent border-slate-200 rounded-2xl focus:ring-4 focus:ring-brand/10 focus:border-brand transition-all text-base shadow-inner-sm"
                         value={contactSearchQuery}
                         onChange={(e) => setContactSearchQuery(e.target.value)}
                         autoComplete="off"
@@ -387,31 +390,39 @@ export default function App() {
                     </div>
                   </div>
 
-                  <ScrollArea className="flex-grow p-6 min-h-0">
-                    <div className="space-y-8 pb-4">
+                  <ScrollArea className="flex-grow p-4 sm:p-8 min-h-0 relative z-10">
+                    <div className="space-y-10 pb-10">
                       {internalContacts.length > 0 && (
                         <div>
-                          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-                            Contatos Internos
-                            <div className="h-px flex-grow bg-slate-100" />
-                          </h3>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="flex items-center gap-4 mb-6">
+                            <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest px-4 py-1.5 bg-slate-200/50 rounded-full">
+                              Ramais Internos
+                            </h3>
+                            <div className="h-px flex-grow bg-gradient-to-r from-slate-200 to-transparent" />
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {internalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-col p-4 rounded-2xl bg-white border border-slate-100 hover:border-brand/20 hover:shadow-md hover:shadow-brand/5 transition-all duration-300 group">
-                                <div className="flex items-start justify-between mb-2">
-                                  <p className="font-bold text-sm text-slate-800 leading-tight pr-2 group-hover:text-brand-hover transition-colors">
+                              <div key={i} className="flex flex-col p-5 rounded-3xl bg-white border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-brand/5 hover:border-brand/30 transition-all duration-300 group cursor-default relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-brand/5 rounded-bl-full -z-0 translate-x-8 -translate-y-8 group-hover:translate-x-0 group-hover:-translate-y-0 transition-transform duration-500 ease-out" />
+                                
+                                <div className="flex items-start justify-between mb-4 relative z-10">
+                                  <p className="font-extrabold text-sm text-slate-700 leading-snug pr-2 group-hover:text-brand transition-colors">
                                     {contact.sector}
                                   </p>
-                                  <Badge variant="outline" className="bg-brand-light text-brand border-brand/20 font-mono text-xs px-2 py-0.5 rounded-lg">
+                                </div>
+                                
+                                <div className="mt-auto relative z-10 flex items-center justify-between">
+                                  {contact.info ? (
+                                    <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                                      <p className="text-[10px] text-slate-500 font-bold truncate">{contact.info}</p>
+                                    </div>
+                                  ) : <div />}
+                                  
+                                  <Badge variant="outline" className="bg-brand-light/50 text-brand border-brand/20 font-bold text-sm px-3 py-1.5 rounded-xl shadow-inner">
                                     {contact.ramal}
                                   </Badge>
                                 </div>
-                                {contact.info && (
-                                  <div className="flex items-center gap-1.5 mt-auto">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-brand/40" />
-                                    <p className="text-[10px] text-slate-500 font-medium truncate italic">{contact.info}</p>
-                                  </div>
-                                )}
                               </div>
                             ))}
                           </div>
@@ -420,42 +431,33 @@ export default function App() {
 
                       {externalContacts.length > 0 && (
                         <div>
-                          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-3">
-                            Contatos Externos
-                            <div className="h-px flex-grow bg-slate-100" />
-                          </h3>
-                          <div className="grid grid-cols-1 gap-3">
+                          <div className="flex items-center gap-4 mb-6">
+                            <h3 className="text-xs font-black text-rose-400 uppercase tracking-widest px-4 py-1.5 bg-rose-50 rounded-full">
+                              Emergência / Externos
+                            </h3>
+                            <div className="h-px flex-grow bg-gradient-to-r from-rose-100 to-transparent" />
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {externalContacts.map((contact, i) => (
-                              <div key={i} className="flex flex-col p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand/30 hover:bg-white hover:shadow-xl hover:shadow-brand/5 transition-all duration-300">
-                                <div className="flex items-center gap-4 mb-4">
-                                  <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-brand shrink-0">
-                                    {contact.sector.toLowerCase().includes("samu") || contact.sector.toLowerCase().includes("ambulare") ? (
-                                      <Ambulance className="w-6 h-6" />
-                                    ) : (
-                                      <PhoneCall className="w-6 h-6" />
-                                    )}
-                                  </div>
-                                  <div>
-                                    <p className="font-black text-base text-slate-900 leading-tight mb-1 uppercase tracking-tight">{contact.sector}</p>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Serviço Externo / Emergência</p>
-                                  </div>
-                                </div>
-                                
-                                <div className="flex flex-col gap-2">
-                                  <div className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-100 group hover:border-brand transition-colors">
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase">Fixo</span>
-                                    <span className="text-lg font-black text-brand font-mono tracking-tighter">
-                                      {contact.ramal}
-                                    </span>
-                                  </div>
-                                  {contact.info && (
-                                    <div className="flex items-center justify-between p-3 rounded-xl bg-brand border border-brand group hover:opacity-90 transition-opacity">
-                                      <span className="text-[10px] font-bold text-brand-light/70 uppercase">Informação / Extra</span>
-                                      <span className="text-sm font-bold text-white font-mono">
-                                        {contact.info}
-                                      </span>
-                                    </div>
+                              <div key={i} className="flex flex-row items-center p-4 rounded-3xl bg-white border border-rose-100 shadow-md hover:shadow-xl hover:border-rose-300 hover:-translate-y-1 transition-all duration-300 group">
+                                <div className="w-16 h-16 rounded-2xl bg-rose-50 shadow-inner flex items-center justify-center text-rose-500 shrink-0 mr-5 group-hover:bg-rose-500 group-hover:text-white transition-colors duration-300">
+                                  {contact.sector.toLowerCase().includes("samu") || contact.sector.toLowerCase().includes("ambulare") ? (
+                                    <Ambulance className="w-8 h-8" />
+                                  ) : (
+                                    <Globe className="w-8 h-8" />
                                   )}
+                                </div>
+                                <div className="flex-1">
+                                  <p className="font-black text-lg text-slate-800 leading-tight mb-1">{contact.sector}</p>
+                                  {contact.info && (
+                                    <p className="text-[11px] text-slate-500 font-semibold mb-2">{contact.info}</p>
+                                  )}
+                                </div>
+                                <div className="bg-slate-50 px-4 py-3 rounded-2xl border border-slate-100 group-hover:bg-rose-50 transition-colors shrink-0 flex items-center gap-2">
+                                  <Phone className="w-4 h-4 text-slate-400 group-hover:text-rose-400" />
+                                  <span className="text-lg font-black text-slate-700 group-hover:text-rose-600 font-mono tracking-tight">
+                                    {contact.ramal}
+                                  </span>
                                 </div>
                               </div>
                             ))}
@@ -465,9 +467,11 @@ export default function App() {
                       
                       {filteredContacts.length === 0 && (
                         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
-                          <Search className="w-12 h-12 mb-4 opacity-10" />
-                          <p className="font-medium">Nenhum contato encontrado</p>
-                          <p className="text-xs">Tente pesquisar por outro nome ou ramal.</p>
+                          <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6">
+                            <Search className="w-10 h-10 text-slate-300" />
+                          </div>
+                          <p className="font-bold text-xl text-slate-500 mb-2">Nenhum contato encontrado</p>
+                          <p className="text-sm font-medium">Tente pesquisar por outro nome ou ramal.</p>
                         </div>
                       )}
                     </div>
