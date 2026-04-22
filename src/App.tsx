@@ -1009,7 +1009,7 @@ export default function App() {
                                         }}
                                         onKeyDown={(e) => {
                                           if (e.key === "Enter") {
-                                            if (dashboardPassword === "0710939496") {
+                                            if (dashboardPassword === "19735") {
                                               setIsDashboardsAuthenticated(true);
                                               setDashboardPasswordError(false);
                                               setDashboardPassword("");
