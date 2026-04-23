@@ -73,6 +73,22 @@ const documents: Document[] = [
     date: "2025",
     type: "Protocolo",
     url: "https://drive.google.com/file/d/1cwuydfwvSDwOUYHuHTkBKqFg9Heukand/view?usp=sharing"
+  },
+  {
+    id: "coleta-transporte-amostras-lacen-2024",
+    title: "Coleta e Transporte de Amostras LACEN/RS (2024)",
+    description: "Orientações sobre a coleta e transporte de amostras.",
+    date: "2024",
+    type: "Manual",
+    url: "https://drive.google.com/file/d/1Hm4sWZS6-8tlr1UbGUwuv1Kt0ZQ52def/view?usp=sharing"
+  },
+  {
+    id: "nota-tecnica-contingencia-raiva",
+    title: "Nota Técnica de Contingência - Pós Exposição Raiva Humana",
+    description: "Diretrizes de contingência para profilaxia pós-exposição à raiva humana.",
+    date: "2024",
+    type: "Instrução",
+    url: "https://drive.google.com/file/d/1-qDvrgvV2eQ2stcVzGpdXH3i_-ccvMJf/view?usp=sharing"
   }
 ];
 
@@ -91,11 +107,14 @@ export default function CCIHModal() {
 
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
-    return documents.filter(doc => 
+    const filtered = documents.filter(doc => 
       normalizeString(doc.title).includes(normalizedQuery) ||
       normalizeString(doc.description).includes(normalizedQuery) ||
       normalizeString(doc.type).includes(normalizedQuery)
     );
+    
+    // Sort alphabetically by title
+    return filtered.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
   }, [searchQuery]);
 
   return (
