@@ -5,16 +5,17 @@
 
 import { useState, useMemo } from "react";
 import { motion } from "motion/react";
-import { 
-  ClipboardList, 
-  Calculator, 
+import {
+  ClipboardList,
+  Calculator,
   AlertCircle,
   Baby,
   Stethoscope,
   Zap,
   Droplets,
   Activity,
-  Printer
+  Printer,
+  MonitorSmartphone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,16 +29,17 @@ export default function PediatricArrestSheet() {
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [weight, setWeight] = useState<number>(0);
+  const [printOrientation, setPrintOrientation] = useState<"landscape" | "portrait">("landscape");
 
   const calculations = useMemo(() => {
     if (!dob) return null;
 
     const birthDate = new Date(dob);
     const today = new Date();
-    
+
     let ageYears = today.getFullYear() - birthDate.getFullYear();
     let ageMonths = today.getMonth() - birthDate.getMonth();
-    
+
     if (ageMonths < 0 || (ageMonths === 0 && today.getDate() < birthDate.getDate())) {
       ageYears--;
       ageMonths += 12;
@@ -50,7 +52,7 @@ export default function PediatricArrestSheet() {
     const ettUncuffed = ageYears < 2 ? (ageYears < 1 ? 3.5 : 4.0) : (ageYears / 4) + 4;
     const ettCuffed = ageYears < 2 ? (ageYears < 1 ? 3.0 : 3.5) : (ageYears / 4) + 3.5;
     const ettDepth = ettUncuffed * 3;
-    
+
     let laryngoscope = 1;
     if (totalMonths < 1) laryngoscope = 0;
     else if (ageYears >= 2 && ageYears < 8) laryngoscope = 2;
@@ -101,6 +103,7 @@ export default function PediatricArrestSheet() {
   }, [dob, weight]);
 
   const handlePrint = () => {
+    const orientation = printOrientation;
     const printWindow = window.open('', '_blank', 'width=800,height=600');
     if (!printWindow) return;
 
@@ -122,7 +125,7 @@ export default function PediatricArrestSheet() {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
-          @page { margin: 12mm; size: A4 portrait; }
+          @page { margin: 12mm; size: A4 ${orientation}; }
 
           .header {
             display: flex;
@@ -157,7 +160,7 @@ export default function PediatricArrestSheet() {
 
           .grid-2 {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: ${orientation === 'landscape' ? '1fr 1fr 1fr' : '1fr 1fr'};
             gap: 16px;
             margin-bottom: 16px;
           }
@@ -279,8 +282,29 @@ export default function PediatricArrestSheet() {
                 <tr><td>${calculations.drugs.glucoseType}</td><td>${calculations.drugs.glucose} mL</td></tr>
               </table>
             </div>
+
+            ${orientation === 'landscape' ? `
+            <div>
+              <div class="section-title"><span class="dot dot-amber"></span> Terapia Elétrica</div>
+              <div class="electrical-grid" style="grid-template-columns: 1fr; margin-top: 0;">
+                <div class="electrical-card card-amber">
+                  <div class="label">1ª Carga (2 J/kg)</div>
+                  <div class="value">${calculations.electrical.defib1} J</div>
+                </div>
+                <div class="electrical-card card-orange">
+                  <div class="label">2ª Carga (4 J/kg)</div>
+                  <div class="value">${calculations.electrical.defib2} J</div>
+                </div>
+                <div class="electrical-card card-emerald">
+                  <div class="label">Cardioversão (1 J/kg)</div>
+                  <div class="value">${calculations.electrical.cardioversion} J</div>
+                </div>
+              </div>
+            </div>
+            ` : ''}
           </div>
 
+          ${orientation === 'portrait' ? `
           <div class="section-title"><span class="dot dot-amber"></span> Terapia Elétrica</div>
           <div class="electrical-grid">
             <div class="electrical-card card-amber">
@@ -296,6 +320,7 @@ export default function PediatricArrestSheet() {
               <div class="value">${calculations.electrical.cardioversion} J</div>
             </div>
           </div>
+          ` : ''}
 
           <div class="footer">
             <div>
@@ -332,27 +357,55 @@ export default function PediatricArrestSheet() {
               </div>
             </div>
             {calculations && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handlePrint}
-                className="print:hidden gap-2 text-emerald-700 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-800 transition-all rounded-lg shadow-sm"
-              >
-                <Printer className="w-4 h-4" />
-                Imprimir
-              </Button>
+              <div className="print:hidden flex items-center gap-2">
+                <div className="flex items-center bg-slate-100 rounded-lg p-0.5">
+                  <button
+                    onClick={() => setPrintOrientation("landscape")}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+                      printOrientation === "landscape"
+                        ? "bg-white text-emerald-700 shadow-sm"
+                        : "text-slate-500 hover:text-slate-700"
+                    }`}
+                    title="Paisagem"
+                  >
+                    <MonitorSmartphone className="w-3.5 h-3.5 rotate-90" />
+                    Paisagem
+                  </button>
+                  <button
+                    onClick={() => setPrintOrientation("portrait")}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+                      printOrientation === "portrait"
+                        ? "bg-white text-emerald-700 shadow-sm"
+                        : "text-slate-500 hover:text-slate-700"
+                    }`}
+                    title="Retrato"
+                  >
+                    <MonitorSmartphone className="w-3.5 h-3.5" />
+                    Retrato
+                  </button>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePrint}
+                  className="gap-2 text-emerald-700 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300 hover:text-emerald-800 transition-all rounded-lg shadow-sm"
+                >
+                  <Printer className="w-4 h-4" />
+                  Imprimir
+                </Button>
+              </div>
             )}
           </div>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-white p-3 rounded-xl shadow-sm border border-slate-100 mb-2">
             <div className="space-y-1">
               <Label htmlFor="name" className="text-xs">Nome do Paciente</Label>
-              <Input 
-                id="name" 
-                placeholder="Ex: João Silva" 
-                value={name} 
+              <Input
+                id="name"
+                placeholder="Ex: João Silva"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="h-8 rounded-lg border-slate-200 text-sm"
                 autoComplete="off"
@@ -360,10 +413,10 @@ export default function PediatricArrestSheet() {
             </div>
             <div className="space-y-1">
               <Label htmlFor="dob" className="text-xs">Data de Nascimento</Label>
-              <Input 
-                id="dob" 
-                type="date" 
-                value={dob} 
+              <Input
+                id="dob"
+                type="date"
+                value={dob}
                 onChange={(e) => setDob(e.target.value)}
                 className="h-8 rounded-lg border-slate-200 text-sm"
                 autoComplete="off"
@@ -371,11 +424,11 @@ export default function PediatricArrestSheet() {
             </div>
             <div className="space-y-1">
               <Label htmlFor="weight" className="text-xs">Peso (kg)</Label>
-              <Input 
-                id="weight" 
-                type="number" 
-                placeholder="Opcional" 
-                value={weight || ""} 
+              <Input
+                id="weight"
+                type="number"
+                placeholder="Opcional"
+                value={weight || ""}
                 onChange={(e) => setWeight(parseFloat(e.target.value) || 0)}
                 className="h-8 rounded-lg border-slate-200 text-sm"
                 autoComplete="off"
@@ -389,8 +442,8 @@ export default function PediatricArrestSheet() {
               <p className="text-sm">Preencha a data de nascimento para gerar a folha</p>
             </div>
           ) : (
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }} 
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-4"
             >
