@@ -37,7 +37,6 @@ import {
   Home,
   MessageSquare,
   Pill,
-  Ambulance,
   ClipboardList,
   Syringe,
   ShieldCheck,
@@ -168,7 +167,6 @@ const SECTORS = [
         name: "Apoio e Encaminhamentos",
         items: [
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-          { title: "Solicitar Ambulância", icon: Ambulance, url: "https://mcinfor-saude.net.br/login#!/index" },
           { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Capacitação do PGRSS", icon: GraduationCap, url: "https://classroom.google.com/u/1/c/NTIyMzc0ODc3Mjc2" },
         ]
