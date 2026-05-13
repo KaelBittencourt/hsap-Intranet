@@ -17,12 +17,16 @@ interface ProtocolDocument {
 }
 
 const protocolDocuments: ProtocolDocument[] = [
-  { id: "1", title: "CIRURGIA SEGURA", url: "https://drive.google.com/file/d/11DqBZytHq3O9v70WHK3iEQUbo51PrAHQ/view?usp=sharing" },
-  { id: "2", title: "PROTOCOLO DE PREVENÇÃO DE LESÃO POR PRESSÃO - Meta 6 L", url: "https://drive.google.com/file/d/17afgOLf8GiNw_kkXjGtG7ZXSOul8Cx_d/view?usp=sharing" },
-  { id: "3", title: "PROTOCOLO DE HIGIENE DAS MÃOS HSAP", url: "https://drive.google.com/file/d/1R08zpFG4ZgD-5S-pGPSPk9Sh1FyENzsV/view?usp=sharing" },
-  { id: "4", title: "PROTOCOLO DE IDENTIFICAÇÃO DO PACIENTE", url: "https://drive.google.com/file/d/1QZElaicCaO5RrD9R9N0poBztPtfoJlNt/view?usp=sharing" },
-  { id: "5", title: "PROTOCOLO DE SEGURANÇA DA PRESCRIÇÃO, USO E ADMINISTRAÇÃO DE MEDICAMENTOS DO HSAP", url: "https://drive.google.com/file/d/1hkNe9Bc-QHzTKo4EpvfzScrGw1JgiXXI/view?usp=sharing" },
-  { id: "6", title: "PROTOCOLO PREVENÇÃO DE QUEDAS", url: "https://drive.google.com/file/d/11XFqRlcqG5cZR1ln4mAecY0D4BBjtDYn/view?usp=sharing" }
+  { id: "1", title: "ACOLHIMENTO E CLASSIFICAÇÃO DE RISCO HSAP", url: "https://drive.google.com/file/d/1nSdK_d84SFkDchAoeydH0OdlAhAnyKGX/view?usp=sharing" },
+  { id: "2", title: "AGENCIA TRANSFUSIONAL PRONTO", url: "https://drive.google.com/file/d/1ulLxQO0aYoX0ptWCRFZtu4eN7rv5RQT7/view?usp=sharing" },
+  { id: "3", title: "AVALIAÇÃO DO PACIENTE VITIMA DE TRAUMA", url: "https://drive.google.com/file/d/1ek1tSC734rp5w41JbQYsZ9hV9RJpdFfe/view?usp=sharing" },
+  { id: "4", title: "CIRURGIA SEGURA", url: "https://drive.google.com/file/d/11DqBZytHq3O9v70WHK3iEQUbo51PrAHQ/view?usp=sharing" },
+  { id: "5", title: "HIGIENE DAS MÃOS HSAP", url: "https://drive.google.com/file/d/1R08zpFG4ZgD-5S-pGPSPk9Sh1FyENzsV/view?usp=sharing" },
+  { id: "6", title: "IDENTIFICAÇÃO DO PACIENTE", url: "https://drive.google.com/file/d/1QZElaicCaO5RrD9R9N0poBztPtfoJlNt/view?usp=sharing" },
+  { id: "7", title: "PREVENÇÃO DE LESÃO POR PRESSÃO - Meta 6 L", url: "https://drive.google.com/file/d/17afgOLf8GiNw_kkXjGtG7ZXSOul8Cx_d/view?usp=sharing" },
+  { id: "8", title: "PREVENÇÃO DE QUEDAS", url: "https://drive.google.com/file/d/11XFqRlcqG5cZR1ln4mAecY0D4BBjtDYn/view?usp=sharing" },
+  { id: "9", title: "SEGURANÇA DA PRESCRIÇÃO, USO E ADMINISTRAÇÃO DE MEDICAMENTOS DO HSAP", url: "https://drive.google.com/file/d/1hkNe9Bc-QHzTKo4EpvfzScrGw1JgiXXI/view?usp=sharing" },
+  { id: "10", title: "TRANSFERENCIA DE PACIENTES ATUALIZADO 2026", url: "https://drive.google.com/file/d/1QU-iW1blQIVZMpKpkhfoJ1nRzkkYLg1R/view?usp=sharing" }
 ];
 
 export default function NursingProtocolsModal() {
