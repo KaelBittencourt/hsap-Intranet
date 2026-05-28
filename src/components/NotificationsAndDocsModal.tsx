@@ -39,7 +39,8 @@ const documentos: ItemDoc[] = [
   { id: "d2", title: "Acidente de Trabalho SEM Material Biológico", url: "https://drive.google.com/file/d/1-KZrJL-YENT9DVXwExyTZagRWJY_qgvN/view?usp=sharing" },
   { id: "d3", title: "Guia de Encaminhamento ao DML Necropsia", url: "https://drive.google.com/file/d/1zqptiQfG41CrB1xW5OAdhxny-iI_lS3E/view?usp=sharing" },
   { id: "d4", title: "Lista de Presença", url: "https://drive.google.com/file/d/1SJkpPE9vRVCLfHZBV20XYf-1DLn-ikli/view?usp=sharing" },
-  { id: "d5", title: "Termo de Validação de Medicamento Extra Hospitalar", url: "https://drive.google.com/file/d/1glPav-qtr1W68RZpglbvVQrbNENw6PNW/view?usp=sharing" }
+  { id: "d5", title: "Termo de Validação de Medicamento Extra Hospitalar", url: "https://drive.google.com/file/d/1glPav-qtr1W68RZpglbvVQrbNENw6PNW/view?usp=sharing" },
+  { id: "d6", title: "Termo de Ciência de Alta Assistida", url: "https://drive.google.com/file/d/1C7X6FnhHcg929ToV7nC0TnED12jVmM_c/view?usp=sharing" }
 ];
 
 export default function NotificationsAndDocsModal() {
