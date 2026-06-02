@@ -45,7 +45,8 @@ import {
   FileCheck,
   LayoutDashboard,
   Bot,
-  Lock
+  Lock,
+  BarChart3
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -227,6 +228,7 @@ const SECTORS = [
         name: "Painéis de Bordo (Dashboards)",
         items: [
           { title: "Central de Dashboards", icon: LayoutDashboard, isDashboardsFeature: true },
+          { title: "Ouvidoria Analytics", icon: BarChart3, url: "https://ouvidoria-analytics.vercel.app" },
         ]
       },
       {
@@ -255,6 +257,7 @@ const DASHBOARDS_LIST = [
   { title: "Esterilização em Autoclave", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
   { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
   { title: "Taxas Cirúrgicas", icon: LayoutDashboard, url: "https://dashboard-taxas-cirurgicas.vercel.app/" },
+  { title: "Ouvidoria Analytics", icon: BarChart3, url: "https://ouvidoria-analytics.vercel.app" },
 ];
 
 const CONTACTS = [
