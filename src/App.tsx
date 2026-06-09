@@ -255,9 +255,9 @@ const DASHBOARDS_LIST = [
   { title: "Auditoria Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
   { title: "Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
   { title: "Esterilização em Autoclave", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
+  { title: "CME Materiais Desinfectados", icon: LayoutDashboard, url: "https://dashboard-cme-materiais-desinfectad.vercel.app/" },
   { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
   { title: "Taxas Cirúrgicas", icon: LayoutDashboard, url: "https://dashboard-taxas-cirurgicas.vercel.app/" },
-  { title: "Ouvidoria Analytics", icon: BarChart3, url: "https://ouvidoria-analytics.vercel.app" },
 ];
 
 const CONTACTS = [
