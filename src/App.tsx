@@ -258,6 +258,7 @@ const DASHBOARDS_LIST = [
   { title: "CME Materiais Desinfectados", icon: LayoutDashboard, url: "https://dashboard-cme-materiais-desinfectad.vercel.app/" },
   { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
   { title: "Taxas Cirúrgicas", icon: LayoutDashboard, url: "https://dashboard-taxas-cirurgicas.vercel.app/" },
+  { title: "Indicadores Faturamento HSAP", icon: LayoutDashboard, url: "https://dashboard-indicadores-faturamento-h.vercel.app/" },
 ];
 
 const CONTACTS = [
