@@ -38,7 +38,6 @@ import {
   MessageSquare,
   Pill,
   ClipboardList,
-  Syringe,
   ShieldCheck,
   GraduationCap,
   FileSearch,
@@ -125,15 +124,10 @@ const SECTORS = [
     textColor: "text-emerald-700",
     categories: [
       {
-        name: "Sistemas Externos",
+        name: "Sistemas e Exames",
         items: [
           { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
           { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
-        ]
-      },
-      {
-        name: "Resultados de Exames",
-        items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
         ]
@@ -143,39 +137,37 @@ const SECTORS = [
         items: [
           { title: "Protocolos", icon: ClipboardList, isNursingProtocolsFeature: true },
           { title: "Notificações e Documentos", icon: ClipboardList, isNotificationsAndDocsFeature: true },
-          { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
           { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
         ]
       },
       {
-        name: "Rotinas Assistenciais",
+        name: "Práticas Assistenciais",
         items: [
           { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, isMedicationDilutionFeature: true },
-          { title: "Agência Transfusional", icon: Syringe, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
-          { title: "Sinan's", icon: Info, isSinanFeature: true },
-        ]
-      },
-      {
-        name: "Unidade de Internação",
-        isSpecialTeam: true,
-        items: [
           { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
         ]
       },
       {
-        name: "Apoio e Encaminhamentos",
+        name: "Vigilância e Controle de Infecção",
         items: [
-          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
-          { title: "Educação Continuada", icon: GraduationCap, url: "https://drive.google.com/drive/folders/1660u_6O-Xp67q2U66X7_6O-Xp67q2U66?usp=drive_link" },
+          { title: "Documentos SCIH", icon: ShieldCheck, isCCIHFeature: true },
+          { title: "Sinan's", icon: Info, isSinanFeature: true },
+        ]
+      },
+      {
+        name: "Educação e Capacitação",
+        items: [
           { title: "Capacitação do PGRSS", icon: GraduationCap, url: "https://classroom.google.com/u/1/c/NTIyMzc0ODc3Mjc2" },
         ]
       },
       {
-        name: "Suporte Administrativo",
+        name: "Apoio e Suporte",
         items: [
-          { title: "Solicitação de Uniforme", icon: UserRound, url: "https://docs.google.com/forms/d/e/1FAIpQLScCIGKGwA79b8bdPdBcObZazuW-HIhdaOyDpUd6v0EyuSdQvg/viewform" }
+          { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+          { title: "Solicitação de Uniforme", icon: UserRound, url: "https://docs.google.com/forms/d/e/1FAIpQLScCIGKGwA79b8bdPdBcObZazuW-HIhdaOyDpUd6v0EyuSdQvg/viewform" },
+          { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
         ]
       }
     ]
@@ -210,6 +202,7 @@ const SECTORS = [
         items: [
           { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+          { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
         ]
       }
     ]
@@ -243,6 +236,12 @@ const SECTORS = [
         items: [
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "http://192.168.0.199:8081/$/" },
+        ]
+      },
+      {
+        name: "Recursos Humanos",
+        items: [
+          { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
         ]
       }
     ]
@@ -1104,17 +1103,40 @@ export default function App() {
                               rel="noopener noreferrer"
                               className="block group h-full"
                             >
-                              <Card className="group hover:border-brand/20 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                              <Card className={cn(
+                                "group transition-all cursor-pointer shadow-sm hover:shadow-md h-full relative overflow-hidden",
+                                item.isHighlighted
+                                  ? "border-amber-300 hover:border-amber-400 bg-gradient-to-br from-amber-50/80 via-white to-orange-50/50 ring-1 ring-amber-200/50 hover:ring-amber-300/70 hover:shadow-amber-100"
+                                  : "hover:border-brand/20 border-slate-100"
+                              )}>
+                                {item.isHighlighted && (
+                                  <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-bold uppercase tracking-wider shadow-sm">
+                                    Novo
+                                  </div>
+                                )}
                                 <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-brand-light transition-colors">
-                                    <item.icon className="w-5 h-5 text-slate-400 group-hover:text-brand" />
+                                  <div className={cn(
+                                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+                                    item.isHighlighted
+                                      ? "bg-amber-100 group-hover:bg-amber-500"
+                                      : "bg-slate-50 group-hover:bg-brand-light"
+                                  )}>
+                                    <item.icon className={cn(
+                                      "w-5 h-5 transition-colors",
+                                      item.isHighlighted
+                                        ? "text-amber-600 group-hover:text-white"
+                                        : "text-slate-400 group-hover:text-brand"
+                                    )} />
                                   </div>
                                   <div className="flex-1">
-                                    <CardTitle className="text-lg flex items-center justify-between">
+                                    <CardTitle className={cn(
+                                      "text-lg flex items-center justify-between",
+                                      item.isHighlighted && "text-amber-900"
+                                    )}>
                                       {item.title}
-                                      {item.url && item.url !== "#" && <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
+                                      {item.url && item.url !== "#" && <ExternalLink className={cn("w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity", item.isHighlighted && "text-amber-500")} />}
                                     </CardTitle>
-                                    <CardDescription>Clique para abrir o recurso</CardDescription>
+                                    <CardDescription>{item.isHighlighted ? "Formulário de justificativa de ponto" : "Clique para abrir o recurso"}</CardDescription>
                                   </div>
                                 </CardHeader>
                               </Card>

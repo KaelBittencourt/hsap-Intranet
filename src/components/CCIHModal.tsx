@@ -89,6 +89,30 @@ const documents: Document[] = [
     date: "2024",
     type: "Instrução",
     url: "https://drive.google.com/file/d/1-qDvrgvV2eQ2stcVzGpdXH3i_-ccvMJf/view?usp=sharing"
+  },
+  {
+    id: "protocolo-medidas-bloqueio",
+    title: "Protocolo Medidas de Bloqueio",
+    description: "Diretrizes e medidas de bloqueio para contenção e controle de surtos e infecções.",
+    date: "2025",
+    type: "Protocolo",
+    url: "https://drive.google.com/file/d/1TdzWLkL1JocnYMQuXzDrCumjxi7Yduyq/view?usp=sharing"
+  },
+  {
+    id: "troca-manejo-dispositivos",
+    title: "Troca e Manejo de Dispositivos Hospitalares",
+    description: "Orientações sobre a troca e o manejo adequado de dispositivos hospitalares.",
+    date: "2025",
+    type: "Protocolo",
+    url: "https://drive.google.com/file/d/1JiH14_478L4UMYL6zYfJ6o30mWbEmL-T/view?usp=drive_link"
+  },
+  {
+    id: "protocolo-troca-manejo-dispositivos",
+    title: "Protocolo de Troca e Manejo de Dispositivos Hospitalares",
+    description: "Protocolo com diretrizes para a troca e manejo de dispositivos utilizados no ambiente hospitalar.",
+    date: "2025",
+    type: "Protocolo",
+    url: "https://drive.google.com/file/d/1JtJDa88OeHfbZh8h-MraE019rb_T8Xld/view?usp=drive_link"
   }
 ];
 
