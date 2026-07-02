@@ -75,6 +75,8 @@ import MedicationDilutionModal from "@/src/components/MedicationDilutionModal";
 import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
 import CidModal from "@/src/components/CidModal";
+import TransfusionReactionsModal from "@/src/components/laboratory/TransfusionReactionsModal";
+import EducationalSlidesModal from "@/src/components/laboratory/EducationalSlidesModal";
 
 const SECTORS = [
   {
@@ -246,6 +248,30 @@ const SECTORS = [
       }
     ]
   },
+  {
+    id: "laboratorio",
+    title: "LABORATÓRIO",
+    description: "Sistemas e rotinas do laboratório de análises clínicas.",
+    icon: FlaskConical,
+    color: "bg-purple-500",
+    hoverColor: "hover:bg-purple-600",
+    lightColor: "bg-purple-50",
+    textColor: "text-purple-700",
+    categories: [
+      {
+        name: "Protocolos Assistenciais",
+        items: [
+          { title: "Reações Transfusionais", icon: Activity, isTransfusionReactionsFeature: true },
+        ]
+      },
+      {
+        name: "Material Educativo",
+        items: [
+          { title: "Slides Educacionais", icon: GraduationCap, isEducationalSlidesFeature: true },
+        ]
+      }
+    ]
+  },
 ];
 
 const DASHBOARDS_LIST = [
@@ -312,6 +338,8 @@ export default function App() {
   const [dashboardPasswordError, setDashboardPasswordError] = useState(false);
   const [isCidOpen, setIsCidOpen] = useState(false);
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
+  const [isTransfusionReactionsOpen, setIsTransfusionReactionsOpen] = useState(false);
+  const [isEducationalSlidesOpen, setIsEducationalSlidesOpen] = useState(false);
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -452,6 +480,12 @@ export default function App() {
                               } else if (item.isCidFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsCidOpen(true), 350);
+                              } else if (item.isTransfusionReactionsFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsTransfusionReactionsOpen(true), 350);
+                              } else if (item.isEducationalSlidesFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsEducationalSlidesOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -602,7 +636,7 @@ export default function App() {
               </div>
 
               {/* Sectors Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-20">
                 {SECTORS.map((sector, index) => (
                   <motion.div
                     key={sector.id}
@@ -962,6 +996,58 @@ export default function App() {
                               />
                               <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
                                 <CidModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isTransfusionReactionsFeature ? (
+                            <Dialog open={isTransfusionReactionsOpen} onOpenChange={setIsTransfusionReactionsOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-purple-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-purple-500" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-purple-500" />
+                                        </CardTitle>
+                                        <CardDescription>Protocolo interativo de reações transfusionais</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-6xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <TransfusionReactionsModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isEducationalSlidesFeature ? (
+                            <Dialog open={isEducationalSlidesOpen} onOpenChange={setIsEducationalSlidesOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-purple-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-purple-500" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-purple-500" />
+                                        </CardTitle>
+                                        <CardDescription>Material educativo do laboratório</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <EducationalSlidesModal />
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
