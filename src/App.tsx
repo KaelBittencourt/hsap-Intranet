@@ -77,6 +77,7 @@ import AIChatBalloon from "@/src/components/AIChatBalloon";
 import CidModal from "@/src/components/CidModal";
 import TransfusionReactionsModal from "@/src/components/laboratory/TransfusionReactionsModal";
 import EducationalSlidesModal from "@/src/components/laboratory/EducationalSlidesModal";
+import LabTermsModal from "@/src/components/laboratory/LabTermsModal";
 
 const SECTORS = [
   {
@@ -262,12 +263,19 @@ const SECTORS = [
         name: "Protocolos Assistenciais",
         items: [
           { title: "Reações Transfusionais", icon: Activity, isTransfusionReactionsFeature: true },
+          { title: "Check List Instalação de Hemocomponentes", icon: ClipboardList, url: "https://drive.google.com/file/d/1_dzSfWEqpFtIga15ZaqsF_jsEsSBGyGe/view?usp=sharing" },
         ]
       },
       {
         name: "Material Educativo",
         items: [
           { title: "Slides Educacionais", icon: GraduationCap, isEducationalSlidesFeature: true },
+        ]
+      },
+      {
+        name: "Documentação",
+        items: [
+          { title: "Termos", icon: FileText, isLabTermsFeature: true },
         ]
       }
     ]
@@ -340,6 +348,7 @@ export default function App() {
   const [dashboardSearchQuery, setDashboardSearchQuery] = useState("");
   const [isTransfusionReactionsOpen, setIsTransfusionReactionsOpen] = useState(false);
   const [isEducationalSlidesOpen, setIsEducationalSlidesOpen] = useState(false);
+  const [isLabTermsOpen, setIsLabTermsOpen] = useState(false);
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -486,6 +495,9 @@ export default function App() {
                               } else if (item.isEducationalSlidesFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsEducationalSlidesOpen(true), 350);
+                              } else if (item.isLabTermsFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsLabTermsOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -1048,6 +1060,32 @@ export default function App() {
                               />
                               <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl">
                                 <EducationalSlidesModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isLabTermsFeature ? (
+                            <Dialog open={isLabTermsOpen} onOpenChange={setIsLabTermsOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-purple-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-purple-500" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-purple-500" />
+                                        </CardTitle>
+                                        <CardDescription>Termos de responsabilidade e consentimento</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-2xl w-full h-[70vh] max-h-[70vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <LabTermsModal />
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
