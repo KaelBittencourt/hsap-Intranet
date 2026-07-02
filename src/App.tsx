@@ -45,7 +45,8 @@ import {
   LayoutDashboard,
   Bot,
   Lock,
-  BarChart3
+  BarChart3,
+  Wrench
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -113,6 +114,12 @@ const SECTORS = [
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
+      },
+      {
+        name: "Suporte Técnico",
+        items: [
+          { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
+        ]
       }
     ]
   },
@@ -171,6 +178,7 @@ const SECTORS = [
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
           { title: "Solicitação de Uniforme", icon: UserRound, url: "https://docs.google.com/forms/d/e/1FAIpQLScCIGKGwA79b8bdPdBcObZazuW-HIhdaOyDpUd6v0EyuSdQvg/viewform" },
           { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
+          { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
         ]
       }
     ]
@@ -206,6 +214,7 @@ const SECTORS = [
           { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
           { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
+          { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
         ]
       }
     ]
@@ -246,6 +255,12 @@ const SECTORS = [
         items: [
           { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
         ]
+      },
+      {
+        name: "Suporte Técnico",
+        items: [
+          { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
+        ]
       }
     ]
   },
@@ -276,6 +291,12 @@ const SECTORS = [
         name: "Documentação",
         items: [
           { title: "Termos", icon: FileText, isLabTermsFeature: true },
+        ]
+      },
+      {
+        name: "Suporte Técnico",
+        items: [
+          { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
         ]
       }
     ]
