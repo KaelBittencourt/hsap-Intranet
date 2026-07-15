@@ -18,6 +18,10 @@ interface ItemDoc {
   url: string;
 }
 
+interface NotificationsAndDocsModalProps {
+  mode: "notificacoes" | "documentos";
+}
+
 const notificacoes: ItemDoc[] = [
   { id: "1", title: "Acidente de Trabalho", url: "https://docs.google.com/forms/d/e/1FAIpQLSebZemyYN-pdLEMmjV_9cey2Dz0OoABW5lzesMVDOqDOfjRig/viewform" },
   { id: "2", title: "Contenção Mecânica", url: "https://docs.google.com/forms/d/e/1FAIpQLSfDL4r2FkYL5eDeZ-dRzxTpsORCLWvWE5Aogk_w-14vQ2ua2g/viewform" },
@@ -43,9 +47,8 @@ const documentos: ItemDoc[] = [
   { id: "d6", title: "Termo de Validação de Medicamento Extra Hospitalar", url: "https://drive.google.com/file/d/1glPav-qtr1W68RZpglbvVQrbNENw6PNW/view?usp=sharing" }
 ];
 
-export default function NotificationsAndDocsModal() {
+export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocsModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState<"notificacao" | "documento">("notificacao");
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -56,11 +59,12 @@ export default function NotificationsAndDocsModal() {
     return () => clearTimeout(timer);
   }, []);
 
-  const currentList = activeTab === "notificacao" ? notificacoes : documentos;
+  const isNotificacoes = mode === "notificacoes";
+  const currentList = isNotificacoes ? notificacoes : documentos;
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
-    return currentList.filter(item => 
+    return currentList.filter(item =>
       normalizeString(item.title).includes(normalizedQuery)
     );
   }, [searchQuery, currentList]);
@@ -69,19 +73,19 @@ export default function NotificationsAndDocsModal() {
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
       <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-6 md:px-8 z-10 shadow-sm shrink-0">
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
               <div className="relative bg-emerald-500 p-3 rounded-2xl shadow-xl shadow-emerald-500/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500 text-white">
-                {activeTab === "notificacao" ? <BellRing className="w-7 h-7" /> : <FolderOpen className="w-7 h-7" />}
+                {isNotificacoes ? <BellRing className="w-7 h-7" /> : <FolderOpen className="w-7 h-7" />}
               </div>
             </div>
-            
+
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">
-                  {activeTab === "notificacao" ? "Notificações" : "Documentos"}
+                  {isNotificacoes ? "Notificações" : "Documentos"}
                 </h2>
               </div>
             </div>
@@ -90,9 +94,9 @@ export default function NotificationsAndDocsModal() {
           <div className="flex items-center gap-2 w-full max-w-md">
             <div className="relative flex-grow group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
-              <Input 
-                type="text" 
-                placeholder="Pesquisar..." 
+              <Input
+                type="text"
+                placeholder={isNotificacoes ? "Pesquisar notificação..." : "Pesquisar documento..."}
                 autoComplete="off"
                 className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-11 rounded-xl transition-all shadow-none"
                 value={searchQuery}
@@ -100,30 +104,6 @@ export default function NotificationsAndDocsModal() {
               />
             </div>
           </div>
-        </div>
-
-        {/* Tab Switcher */}
-        <div className="flex items-center p-1 bg-slate-100 rounded-xl w-full max-w-sm mx-auto md:mx-0">
-          <button
-            onClick={() => { setActiveTab("notificacao"); setSearchQuery(""); }}
-            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-              activeTab === "notificacao" 
-                ? "bg-white text-emerald-600 shadow-sm border border-slate-200/50" 
-                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-            }`}
-          >
-            <BellRing className="w-4 h-4" /> Notificações
-          </button>
-          <button
-            onClick={() => { setActiveTab("documento"); setSearchQuery(""); }}
-            className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-              activeTab === "documento" 
-                ? "bg-white text-emerald-600 shadow-sm border border-slate-200/50" 
-                : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
-            }`}
-          >
-            <FolderOpen className="w-4 h-4" /> Documentos
-          </button>
         </div>
       </div>
 
@@ -147,9 +127,9 @@ export default function NotificationsAndDocsModal() {
                   <div className="relative flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4 min-w-0">
                       <div className="p-3 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shrink-0">
-                        {activeTab === "notificacao" ? <Send className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
+                        {isNotificacoes ? <Send className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
                       </div>
-                      
+
                       <div className="flex-grow min-w-0">
                         <h3 className="text-sm font-bold text-slate-800 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-tight">
                           {doc.title}
@@ -165,7 +145,7 @@ export default function NotificationsAndDocsModal() {
               ))}
             </AnimatePresence>
           </div>
-          
+
           {filteredItems.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <div className="bg-slate-100 p-4 rounded-full mb-4">

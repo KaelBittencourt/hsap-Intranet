@@ -47,7 +47,9 @@ import {
   Lock,
   BarChart3,
   Wrench,
-  Monitor
+  Monitor,
+  BellRing,
+  FolderOpen
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -154,7 +156,8 @@ const SECTORS = [
         name: "Protocolos e Documentos",
         items: [
           { title: "Protocolos", icon: ClipboardList, isNursingProtocolsFeature: true },
-          { title: "Notificações e Documentos", icon: ClipboardList, isNotificationsAndDocsFeature: true },
+          { title: "Notificações", icon: BellRing, isNotificationsFeature: true },
+          { title: "Documentos", icon: FolderOpen, isDocumentsFeature: true },
           { title: "Formulários", icon: ClipboardList, isFormsFeature: true },
         ]
       },
@@ -384,7 +387,8 @@ export default function App() {
   const [isFormsOpen, setIsFormsOpen] = useState(false);
   const [isSinanOpen, setIsSinanOpen] = useState(false);
   const [isNursingProtocolsOpen, setIsNursingProtocolsOpen] = useState(false);
-  const [isNotificationsAndDocsOpen, setIsNotificationsAndDocsOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isDocumentsOpen, setIsDocumentsOpen] = useState(false);
   const [isTomographyPrepOpen, setIsTomographyPrepOpen] = useState(false);
   const [isSkinGroupOpen, setIsSkinGroupOpen] = useState(false);
   const [isMedicationDilutionOpen, setIsMedicationDilutionOpen] = useState(false);
@@ -520,9 +524,12 @@ export default function App() {
                               } else if (item.isNursingProtocolsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsNursingProtocolsOpen(true), 350);
-                              } else if (item.isNotificationsAndDocsFeature) {
+                              } else if (item.isNotificationsFeature) {
                                 setSelectedSector(item.sectorId);
-                                setTimeout(() => setIsNotificationsAndDocsOpen(true), 350);
+                                setTimeout(() => setIsNotificationsOpen(true), 350);
+                              } else if (item.isDocumentsFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsDocumentsOpen(true), 350);
                               } else if (item.isTomographyPrepFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsTomographyPrepOpen(true), 350);
@@ -935,8 +942,8 @@ export default function App() {
                                 <NursingProtocolsModal />
                               </DialogContent>
                             </Dialog>
-                          ) : item.isNotificationsAndDocsFeature ? (
-                            <Dialog open={isNotificationsAndDocsOpen} onOpenChange={setIsNotificationsAndDocsOpen}>
+                          ) : item.isNotificationsFeature ? (
+                            <Dialog open={isNotificationsOpen} onOpenChange={setIsNotificationsOpen}>
                               <DialogTrigger
                                 nativeButton={false}
                                 render={
@@ -950,14 +957,39 @@ export default function App() {
                                           {item.title}
                                           <Zap className="w-3 h-3 text-emerald-500" />
                                         </CardTitle>
-                                        <CardDescription>Acesse Notificações e Documentos do setor</CardDescription>
+                                        <CardDescription>Acesse as notificações do setor</CardDescription>
                                       </div>
                                     </CardHeader>
                                   </Card>
                                 }
                               />
                               <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
-                                <NotificationsAndDocsModal />
+                                <NotificationsAndDocsModal mode="notificacoes" />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isDocumentsFeature ? (
+                            <Dialog open={isDocumentsOpen} onOpenChange={setIsDocumentsOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-emerald-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full">
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-emerald-500" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-emerald-500" />
+                                        </CardTitle>
+                                        <CardDescription>Acesse os documentos e termos do setor</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <NotificationsAndDocsModal mode="documentos" />
                               </DialogContent>
                             </Dialog>
                           ) : item.isTomographyPrepFeature ? (
