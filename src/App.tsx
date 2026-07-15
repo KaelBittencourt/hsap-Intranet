@@ -79,6 +79,7 @@ import CidModal from "@/src/components/CidModal";
 import TransfusionReactionsModal from "@/src/components/laboratory/TransfusionReactionsModal";
 import EducationalSlidesModal from "@/src/components/laboratory/EducationalSlidesModal";
 import LabTermsModal from "@/src/components/laboratory/LabTermsModal";
+import SystemLoginTrainingModal from "@/src/components/SystemLoginTrainingModal";
 
 const SECTORS = [
   {
@@ -113,6 +114,12 @@ const SECTORS = [
           { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
+        ]
+      },
+      {
+        name: "Treinamento",
+        items: [
+          { title: "Treinamento: Acesso ao Sistema", icon: GraduationCap, isSystemLoginTrainingFeature: true },
         ]
       },
       {
@@ -370,6 +377,7 @@ export default function App() {
   const [isTransfusionReactionsOpen, setIsTransfusionReactionsOpen] = useState(false);
   const [isEducationalSlidesOpen, setIsEducationalSlidesOpen] = useState(false);
   const [isLabTermsOpen, setIsLabTermsOpen] = useState(false);
+  const [isSystemLoginTrainingOpen, setIsSystemLoginTrainingOpen] = useState(false);
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -519,6 +527,9 @@ export default function App() {
                               } else if (item.isLabTermsFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsLabTermsOpen(true), 350);
+                              } else if (item.isSystemLoginTrainingFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsSystemLoginTrainingOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -1107,6 +1118,32 @@ export default function App() {
                               />
                               <DialogContent className="sm:max-w-2xl w-full h-[70vh] max-h-[70vh] overflow-hidden p-0 border-none shadow-2xl">
                                 <LabTermsModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isSystemLoginTrainingFeature ? (
+                            <Dialog open={isSystemLoginTrainingOpen} onOpenChange={setIsSystemLoginTrainingOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-blue-500/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-blue-500" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-blue-500" />
+                                        </CardTitle>
+                                        <CardDescription>Tutorial interativo para acessar o sistema SIGH</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-xl w-full h-[85vh] max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl">
+                                <SystemLoginTrainingModal />
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
