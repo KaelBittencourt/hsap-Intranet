@@ -46,7 +46,8 @@ import {
   Bot,
   Lock,
   BarChart3,
-  Wrench
+  Wrench,
+  Monitor
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -177,6 +178,7 @@ const SECTORS = [
         name: "Educação e Capacitação",
         items: [
           { title: "Capacitação do PGRSS", icon: GraduationCap, url: "https://classroom.google.com/u/1/c/NTIyMzc0ODc3Mjc2" },
+          { title: "Treinamento: Acesso ao Sistema", icon: Monitor, isSystemLoginTrainingFeature: true },
         ]
       },
       {
@@ -223,6 +225,12 @@ const SECTORS = [
           { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
           { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
         ]
+      },
+      {
+        name: "Treinamento",
+        items: [
+          { title: "Treinamento: Acesso ao Sistema", icon: Monitor, isSystemLoginTrainingFeature: true },
+        ]
       }
     ]
   },
@@ -268,6 +276,12 @@ const SECTORS = [
         items: [
           { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
         ]
+      },
+      {
+        name: "Treinamento",
+        items: [
+          { title: "Treinamento: Acesso ao Sistema", icon: Monitor, isSystemLoginTrainingFeature: true },
+        ]
       }
     ]
   },
@@ -304,6 +318,12 @@ const SECTORS = [
         name: "Suporte Técnico",
         items: [
           { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
+        ]
+      },
+      {
+        name: "Treinamento",
+        items: [
+          { title: "Treinamento: Acesso ao Sistema", icon: Monitor, isSystemLoginTrainingFeature: true },
         ]
       }
     ]
