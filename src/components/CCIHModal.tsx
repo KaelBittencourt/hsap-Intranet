@@ -113,6 +113,14 @@ const documents: Document[] = [
     date: "2025",
     type: "Protocolo",
     url: "https://drive.google.com/file/d/1JtJDa88OeHfbZh8h-MraE019rb_T8Xld/view?usp=drive_link"
+  },
+  {
+    id: "nota-tecnica-5-2026-cgcovid",
+    title: "Nota Técnica nº 5.2026-CGCOVID-DEDT-SVSA-MS",
+    description: "Nota técnica emitida pela Coordenação-Geral de COVID-19 da SVSA/MS com orientações técnicas atualizadas.",
+    date: "2026",
+    type: "Instrução",
+    url: "https://drive.google.com/file/d/1xi1oRD7dBImg9LMayFbM1Ow5wi4YLAbh/view?usp=drive_link"
   }
 ];
 
