@@ -299,6 +299,12 @@ const SECTORS = [
     textColor: "text-purple-700",
     categories: [
       {
+        name: "Resultados de Exames",
+        items: [
+          { title: "Exames LAB", icon: FlaskConical, url: "https://madyaweb1.com.br/hsap/#/" },
+        ]
+      },
+      {
         name: "Protocolos Assistenciais",
         items: [
           { title: "Reações Transfusionais", icon: Activity, isTransfusionReactionsFeature: true },
