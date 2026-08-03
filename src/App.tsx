@@ -343,7 +343,7 @@ const DASHBOARDS_LIST = [
   { title: "Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
   { title: "Contenções Psiquiátricas", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
   { title: "Auditoria Cateter Venoso", icon: LayoutDashboard, url: "https://dashboard-auditoria-cateter.vercel.app/" },
-  { title: "Gestão de Risco", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
+  { title: "Auditoria Núcleo de Segurança do Paciente", icon: LayoutDashboard, url: "https://dashboard-auditoria-interna-gestao.vercel.app/" },
   { title: "Esterilização em Autoclave", icon: LayoutDashboard, url: "https://dashboard-esterilizacao-em-autoclav.vercel.app/" },
   { title: "CME Materiais Desinfectados", icon: LayoutDashboard, url: "https://dashboard-cme-materiais-desinfectad.vercel.app/" },
   { title: "Internações em Saúde Mental", icon: LayoutDashboard, url: "https://dashboard-internacoes-em-saude-ment.vercel.app/" },
