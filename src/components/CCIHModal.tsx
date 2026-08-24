@@ -121,6 +121,30 @@ const documents: Document[] = [
     date: "2026",
     type: "Instrução",
     url: "https://drive.google.com/file/d/1xi1oRD7dBImg9LMayFbM1Ow5wi4YLAbh/view?usp=drive_link"
+  },
+  {
+    id: "protocolo-precaucoes-sindrome-gripal",
+    title: "Protocolo de Orientações Técnicas sobre Precauções em Pacientes com Síndrome Gripal e Síndrome Respiratória Aguda Grave",
+    description: "Orientações técnicas sobre precauções no atendimento de pacientes com síndrome gripal e síndrome respiratória aguda grave.",
+    date: "2025",
+    type: "Protocolo",
+    url: "https://drive.google.com/file/d/1cmxgdVE_I2gbgACuzJiZaZxvg_-t-D52/view?usp=sharing"
+  },
+  {
+    id: "protocolo-tuberculose-pulmonar",
+    title: "Protocolo Assistencial de Tuberculose Pulmonar",
+    description: "Diretrizes e condutas assistenciais para o manejo de pacientes com tuberculose pulmonar.",
+    date: "2025",
+    type: "Protocolo",
+    url: "https://drive.google.com/file/d/1ScM4VbM7hDKmMtnthM0Q-n6BDTg67sKl/view?usp=sharing"
+  },
+  {
+    id: "plano-higienizacao-maos",
+    title: "Plano de Higienização das Mãos",
+    description: "Plano institucional com orientações e estratégias para a correta higienização das mãos no ambiente hospitalar.",
+    date: "2025",
+    type: "Programa",
+    url: "https://drive.google.com/file/d/13B3jtzLicjytSk2DfwmYH2BXYbYlPK5D/view?usp=sharing"
   }
 ];
 
