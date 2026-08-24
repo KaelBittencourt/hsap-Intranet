@@ -116,6 +116,7 @@ const SECTORS = [
         items: [
           { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
+          { title: "Folha de Diluição de Medicamentos PED", icon: Pill, url: "https://drive.google.com/file/d/1fyy39wjeWZOJhmvqL_0q2B2HPQUAqRzD/view?usp=sharing" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
       },
@@ -166,6 +167,7 @@ const SECTORS = [
         items: [
           { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, isMedicationDilutionFeature: true },
+          { title: "Folha de Diluição de Medicamentos PED", icon: Pill, url: "https://drive.google.com/file/d/1fyy39wjeWZOJhmvqL_0q2B2HPQUAqRzD/view?usp=sharing" },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
         ]
