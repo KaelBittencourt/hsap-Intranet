@@ -72,7 +72,7 @@ function DialogContent({
             render={
               <button
                 type="button"
-                className="absolute top-3 right-3 z-50 rounded-full h-8 w-8 bg-slate-100/90 text-slate-500 hover:text-slate-900 hover:bg-slate-200/90 backdrop-blur-sm transition-all flex items-center justify-center cursor-pointer shadow-sm border border-slate-200/60"
+                className="lg:hidden absolute top-3 right-3 z-50 rounded-full h-8 w-8 bg-slate-100/90 text-slate-500 hover:text-slate-900 hover:bg-slate-200/90 backdrop-blur-sm transition-all flex items-center justify-center cursor-pointer shadow-sm border border-slate-200/60"
                 aria-label="Fechar"
               >
                 <XIcon className="w-4 h-4" />
