@@ -72,33 +72,31 @@ export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocs
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-6 md:px-8 z-10 shadow-sm shrink-0">
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-emerald-500 p-3 rounded-2xl shadow-xl shadow-emerald-500/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500 text-white">
-                {isNotificacoes ? <BellRing className="w-7 h-7" /> : <FolderOpen className="w-7 h-7" />}
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-4 py-3.5 pr-14 md:px-8 md:py-5 md:pr-16 z-10 shadow-xs shrink-0">
+        <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="relative group shrink-0">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
+              <div className="relative bg-emerald-500 p-2 sm:p-2.5 rounded-xl shadow-md text-white">
+                {isNotificacoes ? <BellRing className="w-4 h-4 sm:w-5 sm:h-5" /> : <FolderOpen className="w-4 h-4 sm:w-5 sm:h-5" />}
               </div>
             </div>
 
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">
-                  {isNotificacoes ? "Notificações" : "Documentos"}
-                </h2>
-              </div>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
+                {isNotificacoes ? "Notificações" : "Documentos"}
+              </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full max-w-md">
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:max-w-xs md:max-w-sm">
             <div className="relative flex-grow group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
               <Input
                 type="text"
-                placeholder={isNotificacoes ? "Pesquisar notificação..." : "Pesquisar documento..."}
+                placeholder="Pesquisar..."
                 autoComplete="off"
-                className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-11 rounded-xl transition-all shadow-none"
+                className="pl-8 sm:pl-9 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-8 sm:h-9 md:h-10 rounded-lg sm:rounded-xl transition-all shadow-none text-xs sm:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -108,9 +106,9 @@ export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocs
       </div>
 
       {/* List content */}
-      <div className="flex-grow overflow-y-auto p-6 md:p-8">
+      <div className="flex-grow overflow-y-auto p-3.5 sm:p-6 md:p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-2.5 sm:gap-3">
             <AnimatePresence mode="popLayout">
               {filteredItems.map((doc, index) => (
                 <motion.div
@@ -120,25 +118,25 @@ export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocs
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: index * 0.02 }}
                   onClick={() => window.open(doc.url, "_blank")}
-                  className="group relative bg-white rounded-2xl border border-slate-200 p-4 md:p-5 shadow-sm hover:shadow-md hover:border-emerald-500/30 transition-all duration-300 cursor-pointer overflow-hidden"
+                  className="group relative bg-white rounded-xl sm:rounded-2xl border border-slate-200 p-3 sm:p-4 md:p-5 shadow-xs hover:shadow-md hover:border-emerald-500/30 transition-all duration-300 cursor-pointer overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-emerald-50/0 group-hover:bg-emerald-50/50 transition-colors" />
 
-                  <div className="relative flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-4 min-w-0">
-                      <div className="p-3 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shrink-0">
-                        {isNotificacoes ? <Send className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
+                  <div className="relative flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-slate-50 text-slate-400 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300 shrink-0">
+                        {isNotificacoes ? <Send className="w-4 h-4 sm:w-5 sm:h-5" /> : <FileText className="w-4 h-4 sm:w-5 sm:h-5" />}
                       </div>
 
                       <div className="flex-grow min-w-0">
-                        <h3 className="text-sm font-bold text-slate-800 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-tight">
+                        <h3 className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
                           {doc.title}
                         </h3>
                       </div>
                     </div>
 
-                    <div className="p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-emerald-100 text-emerald-600 shrink-0 hidden md:block">
-                      <ExternalLink className="w-4 h-4" />
+                    <div className="p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-emerald-100 text-emerald-600 shrink-0 hidden sm:block">
+                      <ExternalLink className="w-3.5 h-3.5" />
                     </div>
                   </div>
                 </motion.div>

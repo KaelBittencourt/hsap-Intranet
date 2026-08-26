@@ -106,24 +106,24 @@ export default function AnnouncementsModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Header */}
-      <div className="bg-white border-b px-6 py-6 shadow-sm z-10">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="bg-brand p-2.5 rounded-2xl shadow-lg shadow-brand/20">
-              <Megaphone className="w-6 h-6 text-white" />
+      <div className="bg-white border-b px-4 py-3.5 pr-14 md:px-6 md:py-5 md:pr-16 shadow-xs z-10">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="bg-brand p-2 sm:p-2.5 rounded-xl shadow-md shrink-0">
+              <Megaphone className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Comunicados Oficiais</h2>
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Atualizações em tempo real</p>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase">Comunicados Oficiais</h2>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Atualizações em tempo real</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="relative flex-grow md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:max-w-xs md:max-w-sm">
+            <div className="relative flex-grow">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
               <Input 
-                placeholder="Filtrar por texto..." 
-                className="pl-9 h-10 bg-slate-50 border-slate-200 rounded-xl focus:ring-brand/20"
+                placeholder="Filtrar..." 
+                className="pl-8 sm:pl-9 h-8 sm:h-9 md:h-10 bg-slate-50 border-slate-200 rounded-lg sm:rounded-xl focus:ring-brand/20 text-xs sm:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoComplete="off"
@@ -132,11 +132,11 @@ export default function AnnouncementsModal() {
             <Button 
               variant="outline" 
               size="icon" 
-              className="h-10 w-10 rounded-xl"
+              className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-lg sm:rounded-xl shrink-0"
               onClick={fetchAnnouncements}
               disabled={loading}
             >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${loading ? 'animate-spin' : ''}`} />
             </Button>
           </div>
         </div>

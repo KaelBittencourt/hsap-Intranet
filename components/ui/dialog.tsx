@@ -47,11 +47,20 @@ function DialogContent({
 }) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogOverlay className="bg-black/40 backdrop-blur-xs" />
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          // Base: janela flutuante centralizada em todas as telas, com margem visível de 1rem em cada lado no mobile
+          "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2",
+          "w-[calc(100%-2rem)] max-w-[calc(100%-2rem)] rounded-2xl bg-popover text-sm text-popover-foreground outline-none",
+          "shadow-2xl ring-1 ring-slate-900/10 border border-slate-200/80 overflow-hidden",
+          // Desktop: largura padrão que é complementada por sm:max-w-*
+          "sm:w-full sm:max-w-sm",
+          // Animações suaves
+          "duration-200",
+          "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95",
+          "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -61,22 +70,22 @@ function DialogContent({
           <DialogPrimitive.Close
             data-slot="dialog-close"
             render={
-              <Button
-                variant="ghost"
-                className="absolute top-2 right-2"
-                size="icon-sm"
-              />
+              <button
+                type="button"
+                className="absolute top-3 right-3 z-50 rounded-full h-8 w-8 bg-slate-100/90 text-slate-500 hover:text-slate-900 hover:bg-slate-200/90 backdrop-blur-sm transition-all flex items-center justify-center cursor-pointer shadow-sm border border-slate-200/60"
+                aria-label="Fechar"
+              >
+                <XIcon className="w-4 h-4" />
+                <span className="sr-only">Close</span>
+              </button>
             }
-          >
-            <XIcon
-            />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
+          />
         )}
       </DialogPrimitive.Popup>
     </DialogPortal>
   )
 }
+
 
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (

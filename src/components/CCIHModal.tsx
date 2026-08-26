@@ -176,31 +176,29 @@ export default function CCIHModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-6 md:px-8 z-10 shadow-sm shrink-0">
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-emerald-600 p-3 rounded-2xl shadow-xl shadow-emerald-100 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                <ShieldCheck className="w-7 h-7 text-white" />
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-4 py-3.5 pr-14 md:px-8 md:py-5 md:pr-16 z-10 shadow-xs shrink-0">
+        <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="relative group shrink-0">
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-green-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
+              <div className="relative bg-emerald-600 p-2 sm:p-2.5 rounded-xl shadow-md text-white">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </div>
             
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">SCIH</h2>
-              </div>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase">SCIH</h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full max-w-md">
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:max-w-xs md:max-w-sm">
             <div className="relative flex-grow group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 group-focus-within:text-emerald-600 transition-colors" />
               <Input 
                 type="text" 
-                placeholder="Pesquisar documento..." 
+                placeholder="Pesquisar..." 
                 autoComplete="off"
-                className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-11 rounded-xl transition-all"
+                className="pl-8 sm:pl-9 bg-slate-50 border-slate-200 focus:bg-white focus:ring-emerald-500/20 focus:border-emerald-500 h-8 sm:h-9 md:h-10 rounded-lg sm:rounded-xl transition-all text-xs sm:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -210,9 +208,9 @@ export default function CCIHModal() {
       </div>
 
       {/* Documents List */}
-      <div className="flex-grow overflow-y-auto p-6 md:p-8">
+      <div className="flex-grow overflow-y-auto p-3.5 sm:p-6 md:p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 gap-2.5 sm:gap-3">
             <AnimatePresence mode="popLayout">
               {filteredDocuments.map((doc, index) => (
                 <motion.div
@@ -223,45 +221,45 @@ export default function CCIHModal() {
                   transition={{ delay: index * 0.05 }}
                   onClick={() => doc.url && window.open(doc.url, "_blank")}
                   className={cn(
-                    "group relative bg-white rounded-2xl border border-slate-200 p-5 shadow-sm transition-all duration-300 overflow-hidden",
+                    "group relative bg-white rounded-xl sm:rounded-2xl border border-slate-200 p-3.5 sm:p-4 md:p-5 shadow-xs transition-all duration-300 overflow-hidden",
                     doc.url ? "hover:shadow-md hover:border-brand/30 cursor-pointer" : "opacity-80"
                   )}
                 >
                   {doc.url && <div className="absolute inset-0 bg-brand-light/0 group-hover:bg-brand-light/10 transition-colors" />}
                   
-                  <div className="relative flex items-start gap-4">
+                  <div className="relative flex items-start gap-3 sm:gap-4">
                     <div className={cn(
-                      "p-3 rounded-xl bg-slate-50 text-slate-400 transition-colors shrink-0",
+                      "p-2 sm:p-2.5 rounded-lg sm:rounded-xl bg-slate-50 text-slate-400 transition-colors shrink-0",
                       doc.url ? "group-hover:bg-brand group-hover:text-white" : ""
                     )}>
-                      <FileText className="w-6 h-6" />
+                      <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     
                     <div className="flex-grow min-w-0">
-                      <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center justify-between mb-0.5">
                         <span className="text-[10px] font-medium text-slate-400 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
+                          <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           {doc.date}
                         </span>
                         {doc.url ? (
-                          <div className="p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-brand-light text-brand">
+                          <div className="p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-brand-light text-brand hidden sm:block">
                             <ExternalLink className="w-3 h-3" />
                           </div>
                         ) : (
                           <span className="text-[10px] font-bold text-slate-400 uppercase flex items-center gap-1">
-                            <Info className="w-3 h-3" />
+                            <Info className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                             Interno
                           </span>
                         )}
                       </div>
                       
                       <h3 className={cn(
-                        "text-sm font-bold text-slate-900 mb-1 line-clamp-1 transition-colors",
+                        "text-xs sm:text-sm font-semibold text-slate-900 mb-0.5 line-clamp-1 transition-colors",
                         doc.url ? "group-hover:text-brand" : ""
                       )}>
                         {doc.title}
                       </h3>
-                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-2 leading-relaxed">
                         {doc.description}
                       </p>
                     </div>

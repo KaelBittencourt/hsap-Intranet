@@ -127,15 +127,15 @@ export default function TransfusionReactionsModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden print:bg-white">
       {/* Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-5 md:px-8 z-10 shadow-sm shrink-0">
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-5">
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-4 py-3.5 pr-14 md:px-8 md:py-5 md:pr-16 z-10 shadow-xs shrink-0">
+        <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
             {viewState !== "landing" && (
               <button
                 onClick={handleBackToLanding}
-                className="p-2 rounded-xl hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
+                className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             )}
             <div className="relative group">

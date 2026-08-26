@@ -24,23 +24,23 @@ export default function CidModal() {
 
   return (
     <div className="flex flex-col h-full bg-slate-50">
-      <DialogHeader className="bg-white border-b px-6 py-5 shadow-sm sticky top-0 z-10 shrink-0">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-brand-light text-brand rounded-xl">
-            <BookOpen className="w-6 h-6" />
+      <DialogHeader className="bg-white border-b px-4 py-3.5 pr-14 md:px-6 md:py-5 md:pr-16 shadow-xs sticky top-0 z-10 shrink-0">
+        <div className="flex items-center gap-3">
+          <div className="p-2 sm:p-2.5 bg-brand-light text-brand rounded-xl shrink-0">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div>
-            <DialogTitle className="text-2xl font-black text-slate-800 tracking-tight uppercase">
+            <DialogTitle className="text-base sm:text-lg md:text-xl font-bold text-slate-800 tracking-tight uppercase">
               CIDs e Procedimentos
             </DialogTitle>
-            <DialogDescription className="text-sm font-medium text-slate-500 mt-0.5">
+            <DialogDescription className="text-xs sm:text-sm font-medium text-slate-500 mt-0.5">
               Tabelas de faturamento SUS, códigos e diretrizes
             </DialogDescription>
           </div>
         </div>
       </DialogHeader>
 
-      <ScrollArea className="flex-grow p-6">
+      <ScrollArea className="flex-grow p-4 sm:p-6">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {resources.map((resource, index) => (

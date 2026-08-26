@@ -100,35 +100,35 @@ export default function MedicationDilutionModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden rounded-xl">
       {/* Header */}
-      <div className="bg-white border-b px-6 py-6 shadow-sm z-10 shrink-0">
-        <div className="max-w-[1000px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-5 w-full md:w-auto">
-            <div className="relative group">
-              <div className="absolute -inset-2 bg-emerald-500/20 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-500" />
-              <div className="relative bg-emerald-50 p-3.5 rounded-2xl border border-emerald-100 shadow-sm text-emerald-600">
-                <Pill className="w-7 h-7" />
+      <div className="bg-white border-b px-4 py-3.5 pr-14 md:px-6 md:py-5 md:pr-16 shadow-xs z-10 shrink-0">
+        <div className="max-w-[1000px] mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="relative group shrink-0">
+              <div className="absolute -inset-1 bg-emerald-500/20 rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-500" />
+              <div className="relative bg-emerald-50 p-2 sm:p-2.5 rounded-xl border border-emerald-100 text-emerald-600">
+                <Pill className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
             
-            <div className="flex-grow">
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-balance mb-1.5">
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase truncate">
                 Diluição de Medicamentos
               </h2>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-widest border border-emerald-200">
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700 uppercase tracking-widest border border-emerald-200">
                   Rotinas Assistenciais
                 </span>
-                <span className="text-xs text-slate-400 font-medium tracking-wide">Guia Rápido</span>
+                <span className="text-[11px] text-slate-400 font-medium tracking-wide hidden sm:inline">Guia Rápido</span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-1/3 shrink-0">
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:flex-1 sm:max-w-xs md:max-w-sm">
             <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
               <Input 
-                placeholder="Buscar medicamento ou indicação..." 
-                className="pl-9 h-11 bg-white border-slate-200 rounded-xl focus:ring-emerald-500/20 shadow-sm"
+                placeholder="Buscar..." 
+                className="pl-8 sm:pl-9 h-8 sm:h-9 md:h-10 bg-white border-slate-200 rounded-lg sm:rounded-xl focus:ring-emerald-500/20 shadow-none text-xs sm:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoComplete="off"
@@ -137,11 +137,11 @@ export default function MedicationDilutionModal() {
             <Button 
               variant="outline" 
               size="icon" 
-              className="h-11 w-11 rounded-xl bg-white shrink-0"
+              className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-lg sm:rounded-xl bg-white shrink-0"
               onClick={fetchData}
               disabled={loading}
             >
-              <RefreshCw className={`w-4 h-4 text-slate-500 ${loading ? 'animate-spin text-emerald-500' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500 ${loading ? 'animate-spin text-emerald-500' : ''}`} />
             </Button>
           </div>
         </div>

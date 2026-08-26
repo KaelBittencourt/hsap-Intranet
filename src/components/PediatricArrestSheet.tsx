@@ -344,16 +344,16 @@ export default function PediatricArrestSheet() {
 
   return (
     <div className="space-y-4 w-full m-0 p-0 print:p-0" id="pediatric-arrest-sheet">
-      <Card className="border-none shadow-none bg-transparent print:bg-white pt-4 px-[5px] m-0">
-        <CardHeader className="pt-0 pb-2">
-          <div className="flex items-center justify-between mb-1">
+      <Card className="border-none shadow-none bg-transparent print:bg-white pt-2 px-[5px] m-0">
+        <CardHeader className="pt-0 pb-2 pr-14 md:pr-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-1">
             <div className="flex items-center gap-2">
-              <div className="bg-emerald-100 p-1.5 rounded-lg print:hidden">
-                <Activity className="w-5 h-5 text-emerald-600" />
+              <div className="bg-emerald-100 p-1.5 rounded-lg print:hidden shrink-0">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
               </div>
               <div>
-                <CardTitle className="text-xl font-bold">Intubação e Parada Cardíaca</CardTitle>
-                <CardDescription className="text-xs">Cálculos automáticos baseados em PALS/APLS</CardDescription>
+                <CardTitle className="text-base sm:text-lg md:text-xl font-bold">Intubação e Parada Cardíaca</CardTitle>
+                <CardDescription className="text-[11px] sm:text-xs">Cálculos automáticos baseados em PALS/APLS</CardDescription>
               </div>
             </div>
             {calculations && (

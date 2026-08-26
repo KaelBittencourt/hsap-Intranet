@@ -68,31 +68,29 @@ export default function FormsModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Premium Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-8 py-6 z-10 shadow-sm">
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-brand to-emerald-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-brand p-3 rounded-2xl shadow-xl shadow-brand/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-                <ClipboardList className="w-7 h-7 text-white" />
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-4 py-3.5 pr-14 md:px-8 md:py-5 md:pr-16 z-10 shadow-xs">
+        <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="relative group shrink-0">
+              <div className="absolute -inset-1 bg-gradient-to-r from-brand to-emerald-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
+              <div className="relative bg-brand p-2 sm:p-2.5 rounded-xl shadow-md text-white">
+                <ClipboardList className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </div>
             
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Formulários</h2>
-              </div>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase">Formulários</h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full max-w-md">
+          <div className="flex items-center gap-2 w-full sm:w-auto sm:max-w-xs md:max-w-sm">
             <div className="relative flex-grow group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 group-focus-within:text-brand transition-colors" />
               <Input 
                 type="text" 
-                placeholder="Pesquisar formulário..." 
+                placeholder="Pesquisar..." 
                 autoComplete="off"
-                className="pl-10 bg-slate-50 border-slate-200 focus:bg-white focus:ring-brand/20 focus:border-brand h-11 rounded-xl transition-all"
+                className="pl-8 sm:pl-9 bg-slate-50 border-slate-200 focus:bg-white focus:ring-brand/20 focus:border-brand h-8 sm:h-9 md:h-10 rounded-lg sm:rounded-xl transition-all text-xs sm:text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -102,9 +100,9 @@ export default function FormsModal() {
       </div>
 
       {/* Forms List */}
-      <div className="flex-grow overflow-y-auto p-6 md:p-8">
+      <div className="flex-grow overflow-y-auto p-3.5 sm:p-6 md:p-8">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
             <AnimatePresence mode="popLayout">
               {filteredForms.map((form, index) => (
                 <motion.div
@@ -114,33 +112,25 @@ export default function FormsModal() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: index * 0.05 }}
                   onClick={() => window.open(form.url, "_blank")}
-                  className="group relative bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md hover:border-brand/30 transition-all duration-300 cursor-pointer overflow-hidden"
+                  className="group relative bg-white rounded-xl sm:rounded-2xl border border-slate-200 p-3.5 sm:p-5 shadow-xs hover:shadow-md hover:border-brand/30 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col justify-between"
                 >
-                  <div className="absolute inset-0 bg-brand-light/0 group-hover:bg-brand-light/10 transition-colors" />
-
-                  <div className="relative flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-brand group-hover:text-white transition-all duration-300 shrink-0">
-                      <FileEdit className="w-6 h-6" />
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-medium text-slate-400 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {form.date}
+                      </span>
+                      <div className="p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-brand-light text-brand hidden sm:block">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </div>
                     </div>
                     
-                    <div className="flex-grow min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] font-medium text-slate-400 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {form.date}
-                        </span>
-                        <div className="p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 bg-brand-light text-brand">
-                          <ExternalLink className="w-3 h-3" />
-                        </div>
-                      </div>
-                      
-                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-brand transition-colors mb-1 line-clamp-1">
-                        {form.title}
-                      </h3>
-                      <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                        {form.description}
-                       </p>
-                    </div>
+                    <h3 className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-brand transition-colors line-clamp-2 leading-snug mb-1">
+                      {form.title}
+                    </h3>
+                    <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                      {form.description}
+                    </p>
                   </div>
                 </motion.div>
               ))}

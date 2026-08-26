@@ -30,19 +30,19 @@ export default function LabTermsModal() {
   return (
     <div className="flex flex-col h-full bg-slate-50 overflow-hidden">
       {/* Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-6 py-6 md:px-8 z-10 shadow-sm shrink-0">
-        <div className="relative flex items-center gap-5">
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-violet-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-            <div className="relative bg-purple-500 p-3 rounded-2xl shadow-xl shadow-purple-500/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-500">
-              <FileText className="w-7 h-7 text-white" />
+      <div className="relative overflow-hidden bg-white border-b border-slate-200 px-4 py-3.5 pr-14 md:px-8 md:py-5 md:pr-16 z-10 shadow-xs shrink-0">
+        <div className="relative flex items-center gap-3">
+          <div className="relative group shrink-0">
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-violet-500 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
+            <div className="relative bg-purple-500 p-2 sm:p-2.5 rounded-xl shadow-md text-white">
+              <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase">
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase">
               Termos
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
               Termos de responsabilidade e consentimento
             </p>
           </div>

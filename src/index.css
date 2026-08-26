@@ -188,3 +188,7 @@
   border-radius: 0.25rem;
   font-family: monospace;
 }
+
+/* ===== Dialog Mobile — Segurança de estilos ===== */
+/* As classes responsivas são controladas diretamente no dialog.tsx via Tailwind */
+

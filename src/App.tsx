@@ -83,6 +83,7 @@ import TransfusionReactionsModal from "@/src/components/laboratory/TransfusionRe
 import EducationalSlidesModal from "@/src/components/laboratory/EducationalSlidesModal";
 import LabTermsModal from "@/src/components/laboratory/LabTermsModal";
 import SystemLoginTrainingModal from "@/src/components/SystemLoginTrainingModal";
+import PedDilutionSelectorModal from "@/src/components/PedDilutionSelectorModal";
 
 const SECTORS = [
   {
@@ -116,7 +117,7 @@ const SECTORS = [
         items: [
           { title: "Manejo Clínico para casos de Dengue", icon: Activity, isDengueFeature: true },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
-          { title: "Folha de Diluição de Medicamentos PED", icon: Pill, url: "https://drive.google.com/file/d/1fyy39wjeWZOJhmvqL_0q2B2HPQUAqRzD/view?usp=sharing" },
+          { title: "Diluição de Medicamentos PED", icon: Pill, isPedDilutionFeature: true },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
         ]
       },
@@ -167,7 +168,7 @@ const SECTORS = [
         items: [
           { title: "Tomografia com Contraste", icon: Activity, isTomographyPrepFeature: true },
           { title: "Diluição de Medicamentos", icon: Pill, isMedicationDilutionFeature: true },
-          { title: "Folha de Diluição de Medicamentos PED", icon: Pill, url: "https://drive.google.com/file/d/1fyy39wjeWZOJhmvqL_0q2B2HPQUAqRzD/view?usp=sharing" },
+          { title: "Diluição de Medicamentos PED", icon: Pill, isPedDilutionFeature: true },
           { title: "Intubação e Parada Cardíaca", icon: Activity, isCustomFeature: true },
           { title: "Grupo de Pele", icon: Activity, isSkinGroupFeature: true },
         ]
@@ -410,6 +411,7 @@ export default function App() {
   const [isEducationalSlidesOpen, setIsEducationalSlidesOpen] = useState(false);
   const [isLabTermsOpen, setIsLabTermsOpen] = useState(false);
   const [isSystemLoginTrainingOpen, setIsSystemLoginTrainingOpen] = useState(false);
+  const [isPedDilutionOpen, setIsPedDilutionOpen] = useState(false);
 
   // Keyboard shortcut for search
   React.useEffect(() => {
@@ -468,7 +470,7 @@ export default function App() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
               <DialogTrigger nativeButton={true} render={
                 <Button
@@ -482,13 +484,23 @@ export default function App() {
                   </kbd>
                 </Button>
               } />
-              <DialogContent className="sm:max-w-[600px] w-full p-0 overflow-hidden border-none shadow-2xl">
-                <div className="flex flex-col h-[500px]">
-                  <div className="p-4 border-b bg-white flex items-center gap-3">
-                    <Search className="w-5 h-5 text-slate-400" />
+              {/* Botão mobile de busca (só ícone) */}
+              <DialogTrigger nativeButton={true} render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="flex md:hidden w-9 h-9 rounded-xl text-slate-500 hover:text-brand hover:bg-brand/5"
+                >
+                  <Search className="w-4 h-4" />
+                </Button>
+              } />
+              <DialogContent className="sm:max-w-[600px] w-full p-0 overflow-hidden border-none shadow-2xl sm:rounded-2xl">
+                <div className="flex flex-col h-[70dvh] sm:h-[500px]">
+                  <div className="p-3.5 pr-14 sm:p-4 sm:pr-14 border-b bg-white flex items-center gap-2.5 sm:gap-3">
+                    <Search className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 shrink-0" />
                     <Input
                       placeholder="Pesquisar sistemas, protocolos ou setores..."
-                      className="border-none shadow-none focus-visible:ring-0 text-lg p-0 h-auto"
+                      className="border-none shadow-none focus-visible:ring-0 text-sm sm:text-base md:text-lg p-0 h-auto"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       autoFocus
@@ -565,6 +577,9 @@ export default function App() {
                               } else if (item.isSystemLoginTrainingFeature) {
                                 setSelectedSector(item.sectorId);
                                 setTimeout(() => setIsSystemLoginTrainingOpen(true), 350);
+                              } else if (item.isPedDilutionFeature) {
+                                setSelectedSector(item.sectorId);
+                                setTimeout(() => setIsPedDilutionOpen(true), 350);
                               } else {
                                 setSelectedSector(item.sectorId);
                               }
@@ -601,21 +616,21 @@ export default function App() {
                   </Button>
                 }
               />
-              <DialogContent className="sm:max-w-[500px] w-full h-[85vh] max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-white sm:rounded-2xl">
+              <DialogContent className="sm:max-w-[500px] w-full h-[90dvh] sm:h-[85vh] max-h-[90dvh] sm:max-h-[85vh] flex flex-col overflow-hidden p-0 border-none shadow-2xl bg-white sm:rounded-2xl">
                 <div className="flex flex-col h-full">
-                  <div className="px-6 py-5 border-b border-slate-100 bg-white">
-                    <DialogHeader className="mb-4">
-                      <DialogTitle className="text-xl font-semibold text-slate-800">
+                  <div className="px-4 py-3.5 pr-14 md:px-6 md:py-5 md:pr-16 border-b border-slate-100 bg-white">
+                    <DialogHeader className="mb-2.5 sm:mb-4">
+                      <DialogTitle className="text-base sm:text-lg md:text-xl font-bold text-slate-800">
                         Contatos
                       </DialogTitle>
                       <DialogDescription className="hidden">Lista de contatos da intranet</DialogDescription>
                     </DialogHeader>
 
                     <div className="relative group">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand transition-colors" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 group-focus-within:text-brand transition-colors" />
                       <Input
                         placeholder="Pesquisar..."
-                        className="pl-9 h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-sm rounded-lg shadow-none"
+                        className="pl-8 sm:pl-9 h-8 sm:h-9 md:h-10 bg-slate-50 border-transparent hover:bg-slate-100 focus:bg-white focus:ring-2 focus:ring-brand/20 focus:border-brand/40 transition-all text-xs sm:text-sm rounded-lg shadow-none"
                         value={contactSearchQuery}
                         onChange={(e) => setContactSearchQuery(e.target.value)}
                         autoComplete="off"
@@ -705,17 +720,17 @@ export default function App() {
                 <Badge variant="secondary" className="mb-4 bg-brand-light text-brand-hover hover:bg-brand-light border-none px-3 py-1">
                   Intranet do Colaborador
                 </Badge>
-                <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-4 sm:mb-6 leading-[1.1]">
                   Bem-vindo à Intranet do <span className="text-brand">HSAP</span>
                 </h1>
-                <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+                <p className="text-base sm:text-lg md:text-xl text-slate-600 leading-relaxed mb-6 sm:mb-8">
                   Sua central de ferramentas e informações. Escolha seu setor abaixo para acessar
                   atalhos dedicados e informações pertinentes à sua rotina hospitalar.
                 </p>
               </div>
 
               {/* Sectors Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-20">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 mb-16 sm:mb-20">
                 {SECTORS.map((sector, index) => (
                   <motion.div
                     key={sector.id}
@@ -821,7 +836,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-6xl w-full max-h-[98vh] overflow-hidden pt-10 pb-5 px-5 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-6xl w-full h-[80dvh] sm:max-h-[98vh] overflow-hidden pt-10 pb-5 px-5 border-none shadow-2xl sm:rounded-2xl">
                                 <PediatricArrestSheet />
                               </DialogContent>
                             </Dialog>
@@ -846,7 +861,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-5xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-5xl w-full h-[80dvh] sm:h-[95vh] sm:max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <DengueManagementModal />
                               </DialogContent>
                             </Dialog>
@@ -871,7 +886,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-2xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <CCIHModal />
                               </DialogContent>
                             </Dialog>
@@ -896,7 +911,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-6xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-6xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <FormsModal />
                               </DialogContent>
                             </Dialog>
@@ -921,7 +936,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-2xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-2xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <SinanModal />
                               </DialogContent>
                             </Dialog>
@@ -946,7 +961,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <NursingProtocolsModal />
                               </DialogContent>
                             </Dialog>
@@ -971,7 +986,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <NotificationsAndDocsModal mode="notificacoes" />
                               </DialogContent>
                             </Dialog>
@@ -996,7 +1011,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <NotificationsAndDocsModal mode="documentos" />
                               </DialogContent>
                             </Dialog>
@@ -1021,7 +1036,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <TomographyPreparationModal />
                               </DialogContent>
                             </Dialog>
@@ -1047,7 +1062,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <SkinGroupModal />
                               </DialogContent>
                             </Dialog>
@@ -1073,7 +1088,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <MedicationDilutionModal />
                               </DialogContent>
                             </Dialog>
@@ -1098,7 +1113,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[90vh] max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[90vh] sm:max-h-[90vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <CidModal />
                               </DialogContent>
                             </Dialog>
@@ -1124,7 +1139,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-6xl w-full h-[95vh] max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-6xl w-full h-[80dvh] sm:h-[95vh] sm:max-h-[95vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <TransfusionReactionsModal />
                               </DialogContent>
                             </Dialog>
@@ -1150,7 +1165,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[85vh] sm:max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <EducationalSlidesModal />
                               </DialogContent>
                             </Dialog>
@@ -1176,7 +1191,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-2xl w-full h-[70vh] max-h-[70vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-2xl w-full h-[70dvh] sm:h-[70vh] sm:max-h-[70vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <LabTermsModal />
                               </DialogContent>
                             </Dialog>
@@ -1202,8 +1217,34 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-xl w-full h-[85vh] max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl">
+                              <DialogContent className="sm:max-w-xl w-full h-[80dvh] sm:h-[85vh] sm:max-h-[85vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                                 <SystemLoginTrainingModal />
+                              </DialogContent>
+                            </Dialog>
+                          ) : item.isPedDilutionFeature ? (
+                            <Dialog open={isPedDilutionOpen} onOpenChange={setIsPedDilutionOpen}>
+                              <DialogTrigger
+                                nativeButton={false}
+                                render={
+                                  <Card className="group hover:border-sky-400/30 transition-colors cursor-pointer border-slate-100 shadow-sm hover:shadow-md h-full relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-r from-sky-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 relative">
+                                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-sky-100 transition-colors">
+                                        <item.icon className="w-5 h-5 text-slate-400 group-hover:text-sky-600" />
+                                      </div>
+                                      <div className="flex-1">
+                                        <CardTitle className="text-lg flex items-center justify-between">
+                                          {item.title}
+                                          <Zap className="w-3 h-3 text-sky-500" />
+                                        </CardTitle>
+                                        <CardDescription>Folha e Manual de Diluição — Pediatria</CardDescription>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                }
+                              />
+                              <DialogContent className="sm:max-w-lg w-full h-auto overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
+                                <PedDilutionSelectorModal />
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
@@ -1234,7 +1275,7 @@ export default function App() {
                                   </Card>
                                 }
                               />
-                              <DialogContent className="sm:max-w-4xl w-full h-[85vh] max-h-[85vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl bg-[#f8fafc] sm:rounded-2xl">
+                              <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[85vh] sm:max-h-[85vh] flex flex-col p-0 overflow-hidden border-none shadow-2xl bg-[#f8fafc] sm:rounded-2xl">
                                 {!isDashboardsAuthenticated ? (
                                   <div className="flex flex-col items-center justify-center p-8 h-full bg-white">
                                     <div className="p-4 bg-brand/10 text-brand rounded-full mb-4">
@@ -1426,7 +1467,7 @@ export default function App() {
                     </Button>
                   }
                 />
-                <DialogContent className="sm:max-w-4xl w-full h-[80vh] max-h-[80vh] overflow-hidden p-0 border-none shadow-2xl">
+                <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[80vh] sm:max-h-[80vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
                   <AnnouncementsModal />
                 </DialogContent>
               </Dialog>

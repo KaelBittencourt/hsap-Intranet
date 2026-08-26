@@ -8,17 +8,19 @@ export default function DengueManagementModal() {
   
   return (
     <div className="flex flex-col h-full bg-white overflow-hidden">
-      <div className="flex items-center justify-between p-4 border-b bg-slate-50 print:hidden z-10">
-        <div className="flex items-center gap-2">
-          <div className="bg-brand p-1.5 rounded-lg">
-            <FileText className="w-5 h-5 text-white" />
+      <div className="flex items-center justify-between px-4 py-3.5 pr-14 md:px-6 md:py-4 md:pr-16 border-b bg-slate-50 print:hidden z-10">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="bg-brand p-1.5 rounded-lg shrink-0">
+            <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-none uppercase text-center md:text-left text-balance">Manejo Clínico para Casos de Dengue</h2>
+          <h2 className="text-sm sm:text-base md:text-xl font-bold text-slate-900 tracking-tight leading-tight uppercase truncate">
+            Manejo Clínico — Dengue
+          </h2>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center bg-white border rounded-lg p-1 shadow-sm">
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="hidden sm:flex items-center bg-white border rounded-lg p-1 shadow-xs">
             <span className="text-xs font-medium text-slate-400 px-2 border-r mr-1 uppercase tracking-wider">Zoom</span>
-            <p className="text-[10px] text-slate-400 px-2">Use os botões de controle</p>
+            <p className="text-[10px] text-slate-400 px-2">Use os botões</p>
           </div>
         </div>
       </div>
