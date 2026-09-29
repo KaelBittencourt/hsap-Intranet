@@ -49,7 +49,8 @@ import {
   Wrench,
   Monitor,
   BellRing,
-  FolderOpen
+  FolderOpen,
+  Ambulance
 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -101,6 +102,7 @@ const SECTORS = [
         items: [
           { title: "Portal Qualis", icon: LogIn, url: "https://portalqualis.com.br/login" },
           { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "SAPH", icon: Ambulance, url: "https://saph.rs.true.com.br/login" },
           { title: "Sigtap", icon: Table, url: "http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp" },
           { title: "CID", icon: BookOpen, isCidFeature: true },
         ]
@@ -149,6 +151,7 @@ const SECTORS = [
         name: "Sistemas e Exames",
         items: [
           { title: "Gerint", icon: Network, url: "https://gerint.procempa.com.br/gerintweb/" },
+          { title: "SAPH", icon: Ambulance, url: "https://saph.rs.true.com.br/login" },
           { title: "Documento Contrarreferência Gerint", icon: FileText, url: "https://drive.google.com/file/d/1xV8-CyJqEFZsz3oQ7VEMDDr2-fSkYZAm/view?usp=sharing" },
           { title: "Exames CDI", icon: Microscope, url: "http://192.168.0.200/login" },
           { title: "Exames LAB", icon: FlaskConical, url: "https://madyaweb1.com.br/hsap/#/" },
