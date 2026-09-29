@@ -226,7 +226,7 @@ const SECTORS = [
       {
         name: "Rotinas Administrativas",
         items: [
-          { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/tVGbAGvNBuNxEP6C8" },
+          { title: "Solicitar Prontuário", icon: ClipboardList, url: "https://forms.gle/fYH3FmzaFpsNDucQA" },
           { title: "Melhor em Casa", icon: Home, url: "https://docs.google.com/forms/d/e/1FAIpQLSc4ZBzYYtFp88b7svbOJr6RmilQ6qmZU6QaPZDE0aiqLS4xwA/viewform" },
           { title: "Justificativa de Ponto", icon: FileText, url: "https://drive.google.com/file/d/1gzX3wZ0fpqorF-9IJN_wUBejwJ4nGVnr/view?usp=sharing", isHighlighted: true },
           { title: "Engenharia Clínica - Chamados", icon: Wrench, url: "https://crjardim.neovero.com/" },
