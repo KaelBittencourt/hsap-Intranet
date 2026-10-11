@@ -35,7 +35,6 @@ import {
   Baby,
   Wind,
   Home,
-  MessageSquare,
   Pill,
   ClipboardList,
   ShieldCheck,
@@ -52,7 +51,7 @@ import {
   FolderOpen,
   Ambulance
 } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -77,7 +76,6 @@ import NotificationsAndDocsModal from "@/src/components/NotificationsAndDocsModa
 import TomographyPreparationModal from "@/src/components/TomographyPreparationModal";
 import SkinGroupModal from "@/src/components/SkinGroupModal";
 import MedicationDilutionModal from "@/src/components/MedicationDilutionModal";
-import AnnouncementsModal from "@/src/components/AnnouncementsModal";
 import AIChatBalloon from "@/src/components/AIChatBalloon";
 import CidModal from "@/src/components/CidModal";
 import TransfusionReactionsModal from "@/src/components/laboratory/TransfusionReactionsModal";
@@ -1438,45 +1436,6 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Info Section (Only on Home) */}
-        {!selectedSector && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-8 items-center mt-12"
-          >
-            <div className="flex-1">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">Mantenha-se Atualizado</h2>
-              <p className="text-slate-600 mb-6 max-w-xl">
-                A intranet é atualizada semanalmente com novos protocolos, escalas e avisos importantes
-                da diretoria e coordenação de cada setor.
-              </p>
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Sistemas Online
-                </div>
-
-              </div>
-            </div>
-            <div className="w-full md:w-auto">
-              <Dialog>
-                <DialogTrigger
-                  nativeButton={true}
-                  render={
-                    <Button variant="outline" className="w-full md:w-auto px-8 py-6 rounded-xl border-slate-200">
-                      Ver Últimos Comunicados
-                    </Button>
-                  }
-                />
-                <DialogContent className="sm:max-w-4xl w-full h-[80dvh] sm:h-[80vh] sm:max-h-[80vh] overflow-hidden p-0 border-none shadow-2xl sm:rounded-2xl">
-                  <AnnouncementsModal />
-                </DialogContent>
-              </Dialog>
-            </div>
-          </motion.div>
-        )}
       </main>
 
       {/* Footer */}
@@ -1491,21 +1450,6 @@ export default function App() {
               <p className="text-sm text-slate-500 max-w-xs">
                 Hospital Santo Antônio da Patrulha. Cuidando da sua saúde com excelência e humanização.
               </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeOy9cnx7N_BgLibedV_zuagztVTDdec9QzI0-K899VSM_LHA/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants({ variant: "default" }),
-                  "bg-brand hover:bg-brand-hover text-white rounded-xl px-6 h-10 shadow-md shadow-brand/10 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 border-none"
-                )}
-              >
-                <MessageSquare className="w-4 h-4" />
-                Ouvidoria
-              </a>
             </div>
           </div>
 
