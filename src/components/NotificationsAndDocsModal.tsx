@@ -45,7 +45,8 @@ const documentos: ItemDoc[] = [
   { id: "d4", title: "Lista de Presença", url: "https://drive.google.com/file/d/1SJkpPE9vRVCLfHZBV20XYf-1DLn-ikli/view?usp=sharing" },
   { id: "d5", title: "Termo de Ciência de Alta Assistida", url: "https://drive.google.com/file/d/1wQwQONE63k-1uw8NHp6pLR53FkJLHU8V/view?usp=sharing" },
   { id: "d6", title: "Termo de Validação de Medicamento Extra Hospitalar", url: "https://drive.google.com/file/d/1glPav-qtr1W68RZpglbvVQrbNENw6PNW/view?usp=sharing" },
-  { id: "d7", title: "Formulário Intraóssea - Alto Custo", url: "https://drive.google.com/file/d/1-pU0iAHZLZLPk2X6C2VqBP59Nhornag8/view?usp=sharing" }
+  { id: "d7", title: "Formulário Intraóssea - Alto Custo", url: "https://drive.google.com/file/d/1-pU0iAHZLZLPk2X6C2VqBP59Nhornag8/view?usp=sharing" },
+  { id: "d8", title: "Balanço Hídrico", url: "https://drive.google.com/file/d/1yEnwewt2qbaeRMxHMWPh8sYH377xvPyQ/view?usp=drive_link" }
 ];
 
 export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocsModalProps) {
