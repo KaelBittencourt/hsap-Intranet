@@ -41,12 +41,12 @@ const notificacoes: ItemDoc[] = [
 const documentos: ItemDoc[] = [
   { id: "d1", title: "Acidente de Trabalho Com Material Biológico", url: "https://drive.google.com/file/d/11ePUa632TnRAC3OjcZHlvwKsJ8HHkxQA/view?usp=sharing" },
   { id: "d2", title: "Acidente de Trabalho SEM Material Biológico", url: "https://drive.google.com/file/d/1-KZrJL-YENT9DVXwExyTZagRWJY_qgvN/view?usp=sharing" },
+  { id: "d8", title: "Balanço Hídrico", url: "https://drive.google.com/file/d/1yEnwewt2qbaeRMxHMWPh8sYH377xvPyQ/view?usp=drive_link" },
   { id: "d3", title: "Guia de Encaminhamento ao DML Necropsia", url: "https://drive.google.com/file/d/1zqptiQfG41CrB1xW5OAdhxny-iI_lS3E/view?usp=sharing" },
   { id: "d4", title: "Lista de Presença", url: "https://drive.google.com/file/d/1SJkpPE9vRVCLfHZBV20XYf-1DLn-ikli/view?usp=sharing" },
   { id: "d5", title: "Termo de Ciência de Alta Assistida", url: "https://drive.google.com/file/d/1wQwQONE63k-1uw8NHp6pLR53FkJLHU8V/view?usp=sharing" },
   { id: "d6", title: "Termo de Validação de Medicamento Extra Hospitalar", url: "https://drive.google.com/file/d/1glPav-qtr1W68RZpglbvVQrbNENw6PNW/view?usp=sharing" },
-  { id: "d7", title: "Formulário Intraóssea - Alto Custo", url: "https://drive.google.com/file/d/1-pU0iAHZLZLPk2X6C2VqBP59Nhornag8/view?usp=sharing" },
-  { id: "d8", title: "Balanço Hídrico", url: "https://drive.google.com/file/d/1yEnwewt2qbaeRMxHMWPh8sYH377xvPyQ/view?usp=drive_link" }
+  { id: "d7", title: "Formulário Intraóssea - Alto Custo", url: "https://drive.google.com/file/d/1-pU0iAHZLZLPk2X6C2VqBP59Nhornag8/view?usp=sharing" }
 ];
 
 export default function NotificationsAndDocsModal({ mode }: NotificationsAndDocsModalProps) {
