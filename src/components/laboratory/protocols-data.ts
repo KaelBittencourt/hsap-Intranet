@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Conteúdo assistencial separado da interface. Ao alterar steps, revise também classificação, fluxograma e checklistLabel; mantenha IDs de etapas únicos.
+ */
 import type { ProtocolData } from "./types";
 
 // ============================================================

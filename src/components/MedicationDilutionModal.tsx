@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Consulta de diluições vinda de planilha CSV. Os nomes das colunas precisam corresponder ao mapeamento em fetchData; este módulo exibe dados, não calcula doses.
+ */
 import React, { useState, useEffect, useMemo } from "react";
 import { 
   Pill, 
@@ -13,6 +16,7 @@ import Papa from "papaparse";
 import { motion, AnimatePresence } from "motion/react";
 import { normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface MedicationData {
   medicamento: string;
   via: string;
@@ -26,6 +30,7 @@ interface MedicationData {
   paraFarmaceuticos: string;
 }
 
+// Fonte CSV acessada pelo navegador. Ao trocar a planilha, confira permissões de leitura e os cabeçalhos esperados no mapeamento abaixo.
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/1J2kw3mL9Zivx_uJVXdGZ6r0OApE0NBMbR-LrRbYJ1g4/export?format=csv";
 
 export default function MedicationDilutionModal() {
@@ -35,6 +40,7 @@ export default function MedicationDilutionModal() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
+  // Carrega e converte o CSV. Os textos row["..."] são os cabeçalhos exatos da planilha, inclusive a variante antiga Obervações.
   const fetchData = async () => {
     setLoading(true);
     setError(null);
@@ -84,6 +90,7 @@ export default function MedicationDilutionModal() {
     fetchData();
   }, []);
 
+  // Pesquisa local por medicamento, indicação e prática assistencial, ignorando acentos.
   const filteredData = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return data.filter(med => 
@@ -93,6 +100,7 @@ export default function MedicationDilutionModal() {
     );
   }, [searchQuery, data]);
 
+  // Apenas um cartão permanece expandido; o valor guardado é o índice recebido pela lista.
   const toggleExpand = (index: number) => {
     setExpandedId(expandedId === index ? null : index);
   };

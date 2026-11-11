@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Catálogo de orientações para tomografia com contraste. documents define os materiais externos exibidos e pesquisados.
+ */
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { 
@@ -10,12 +13,14 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface TomographyDocument {
   id: string;
   title: string;
   url: string;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const documents: TomographyDocument[] = [
   { id: "1", title: "PREPARO PARA TOMOGRAFIA COM CONTRASTE", url: "https://drive.google.com/file/d/1rCRjE5ZswsYV-SQZjuDhTK6ZELgEoEgr/view?usp=sharing" },
   { id: "2", title: "FICHA DE ANAMNESE TOMOGRAFIA", url: "https://drive.google.com/file/d/1Fz1CjiMWLfOMoaX60FMiecsjp8xUam3J/view?usp=sharing" },
@@ -26,6 +31,7 @@ const documents: TomographyDocument[] = [
 export default function TomographyPreparationModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (document.activeElement instanceof HTMLInputElement) {
@@ -35,6 +41,7 @@ export default function TomographyPreparationModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return documents.filter(doc => 

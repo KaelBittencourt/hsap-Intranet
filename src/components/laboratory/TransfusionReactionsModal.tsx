@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Controlador do protocolo transfusional: alterna início, execução e conclusão. Índices dos arrays identificam as etapas nos conjuntos locais; não há gravação de ocorrências no servidor.
+ */
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -34,6 +37,7 @@ function formatTime(seconds: number): string {
 export default function TransfusionReactionsModal() {
   const protocol = TRANSFUSION_REACTIONS_PROTOCOL;
 
+  // checkedSteps registra marcações ainda em execução; completedSteps registra avanços confirmados, ambos por índice.
   const [viewState, setViewState] = useState<ViewState>("landing");
   const [activeTab, setActiveTab] = useState<TabType>("protocolo");
   const [currentStep, setCurrentStep] = useState(0);
@@ -55,6 +59,7 @@ export default function TransfusionReactionsModal() {
     };
   }, [viewState]);
 
+  // Inicia uma execução limpa em memória; não cria registro persistente.
   const handleStartProtocol = useCallback(() => {
     setViewState("wizard");
     setCurrentStep(0);
@@ -63,6 +68,7 @@ export default function TransfusionReactionsModal() {
     setActiveTab("protocolo");
   }, []);
 
+  // Copia o Set antes de atualizar para que o React reconheça a mudança de estado.
   const handleCheckStep = useCallback(
     (stepIndex: number, checked: boolean) => {
       setCheckedSteps((prev) => {
@@ -75,6 +81,7 @@ export default function TransfusionReactionsModal() {
     []
   );
 
+  // Confirma a etapa atual, limpa sua marcação e avança; a última etapa encerra o cronômetro.
   const handleNextStep = useCallback(() => {
     setCompletedSteps((prev) => new Set(prev).add(currentStep));
     setCheckedSteps((prev) => {
@@ -92,6 +99,7 @@ export default function TransfusionReactionsModal() {
     }
   }, [currentStep, protocol.steps.length]);
 
+  // Abre a impressão do navegador; salvar em PDF depende do destino escolhido pelo usuário.
   const handleGeneratePDF = useCallback(() => {
     window.print();
   }, []);
@@ -100,6 +108,7 @@ export default function TransfusionReactionsModal() {
     window.print();
   }, []);
 
+  // Voltar ao início descarta as marcações e o tempo desta execução.
   const handleFinish = useCallback(() => {
     setViewState("landing");
     setCurrentStep(0);

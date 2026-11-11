@@ -4,6 +4,9 @@
 // ============================================================
 
 /** Representa uma etapa individual de um protocolo */
+/**
+ * MANUTENÇÃO: Contratos do módulo laboratorial. ProtocolOccurrence e ProtocolMetrics descrevem uma integração futura; declarar esses tipos não implementa persistência ou indicadores.
+ */
 export interface ProtocolStep {
   id: number;
   title: string;

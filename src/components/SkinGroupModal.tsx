@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Catálogo pesquisável de documentos do Grupo de Pele. Edite documents para atualizar os materiais e seus endereços.
+ */
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { 
@@ -10,6 +13,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { cn, normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface SkinGroupDocument {
   id: string;
   title: string;
@@ -17,6 +21,7 @@ interface SkinGroupDocument {
   type: "document" | "spreadsheet" | "folder";
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const documents: SkinGroupDocument[] = [
   { id: "1", title: "Instruções - TABELA CLASSIFICAÇÃO ESTÁGIO LPP", url: "https://drive.google.com/file/d/1MSnO3dlqG74a5iAx_oa_3l1GqRzviThe/view", type: "document" },
   { id: "2", title: "Instruções de USO / Tutorial - FERRAMENTA TIME", url: "https://drive.google.com/file/d/1cxK-stPrqCceBnGIbY2B9YFjUeqbzDC9/view", type: "document" },
@@ -29,6 +34,7 @@ const documents: SkinGroupDocument[] = [
 export default function SkinGroupModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (document.activeElement instanceof HTMLInputElement) {
@@ -38,6 +44,7 @@ export default function SkinGroupModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return documents.filter(doc => 

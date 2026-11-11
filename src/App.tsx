@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * MANUTENÇÃO: Central da intranet: reúne os setores, a busca, os contatos e a abertura das ferramentas. Para cadastrar atalhos, comece por SECTORS e confira os dois fluxos de abertura: busca global e cartões do setor.
+ */
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -84,6 +87,8 @@ import LabTermsModal from "@/src/components/laboratory/LabTermsModal";
 import SystemLoginTrainingModal from "@/src/components/SystemLoginTrainingModal";
 import PedDilutionSelectorModal from "@/src/components/PedDilutionSelectorModal";
 
+// Cadastro central: id identifica o setor; categories organiza os cartões. url abre um destino externo; flags is...Feature selecionam ferramentas internas.
+// Uma ferramenta nova precisa também de estado, componente importado e tratamento na busca global e na renderização dos cartões.
 const SECTORS = [
   {
     id: "medicos",
@@ -343,6 +348,7 @@ const SECTORS = [
   },
 ];
 
+// Painéis exibidos após a liberação da janela de dashboards. Atualize aqui os títulos e endereços.
 const DASHBOARDS_LIST = [
   { title: "Evento Adverso", icon: LayoutDashboard, url: "https://dashboard-evento-adverso.vercel.app/" },
   { title: "Contenções Psiquiátricas", icon: LayoutDashboard, url: "https://dashboard-contencoes-psiquiatricas.vercel.app/" },
@@ -355,6 +361,7 @@ const DASHBOARDS_LIST = [
   { title: "Indicadores Faturamento HSAP", icon: LayoutDashboard, url: "https://dashboard-indicadores-faturamento-h.vercel.app/" },
 ];
 
+// Agenda local: type separa contatos Interno/Externo; sector, ramal e info participam da pesquisa.
 const CONTACTS = [
   { sector: "Recepção Emergência", ramal: "7600", type: "Interno" },
   { sector: "Lavanderia", ramal: "7601", type: "Interno" },
@@ -387,6 +394,7 @@ const CONTACTS = [
 ];
 
 export default function App() {
+  // Navegação e janelas são estados locais: não há roteador por URL nem persistência ao recarregar a página.
   const [selectedSector, setSelectedSector] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [contactSearchQuery, setContactSearchQuery] = useState("");
@@ -403,6 +411,7 @@ export default function App() {
   const [isSkinGroupOpen, setIsSkinGroupOpen] = useState(false);
   const [isMedicationDilutionOpen, setIsMedicationDilutionOpen] = useState(false);
   const [isDashboardsOpen, setIsDashboardsOpen] = useState(false);
+  // Esta liberação ocorre somente no navegador; não representa autenticação no servidor nem protege os links de destino.
   const [isDashboardsAuthenticated, setIsDashboardsAuthenticated] = useState(false);
   const [dashboardPassword, setDashboardPassword] = useState("");
   const [dashboardPasswordError, setDashboardPasswordError] = useState(false);
@@ -428,6 +437,7 @@ export default function App() {
 
   const currentSector = SECTORS.find(s => s.id === selectedSector);
 
+  // Filtra a agenda sem diferenciar maiúsculas; em seguida separa os resultados em internos e externos.
   const filteredContacts = CONTACTS.filter(c =>
     c.sector.toLowerCase().includes(contactSearchQuery.toLowerCase()) ||
     (c.ramal && c.ramal.toLowerCase().includes(contactSearchQuery.toLowerCase())) ||
@@ -437,10 +447,12 @@ export default function App() {
   const internalContacts = filteredContacts.filter(c => c.type === "Interno");
   const externalContacts = filteredContacts.filter(c => c.type === "Externo");
 
+  // Achata os atalhos dos setores para a busca global, mantendo os dados necessários para navegar até o setor de origem.
   const allSystems = SECTORS.flatMap(sector =>
     sector.categories.flatMap(cat => cat.items.map(item => ({ ...item, sectorId: sector.id, sectorTitle: sector.title, category: cat.name })))
   );
 
+  // Busca vazia não mostra resultados. Título + URL removem duplicatas entre setores; revise esse critério ao criar atalhos homônimos.
   const filteredSystems = searchQuery.trim() === ""
     ? []
     : allSystems.filter((item, index, self) =>
@@ -706,6 +718,7 @@ export default function App() {
         </div>
       </nav>
 
+      {/* Sem setor selecionado, mostra a página inicial; com seleção, renderiza as categorias e ferramentas daquele setor. */}
       <main className="relative z-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20 flex-grow">
         <AnimatePresence mode="wait">
           {!selectedSector ? (
@@ -1249,6 +1262,7 @@ export default function App() {
                               </DialogContent>
                             </Dialog>
                           ) : item.isDashboardsFeature ? (
+                              /* Ao fechar, a janela limpa a liberação e os dados do formulário; a senha é conferida localmente abaixo. */
                             <Dialog open={isDashboardsOpen} onOpenChange={(open) => {
                               setIsDashboardsOpen(open);
                               if (!open) {

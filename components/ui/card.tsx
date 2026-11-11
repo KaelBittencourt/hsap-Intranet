@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Estrutura compartilhada de cartões: contêiner, cabeçalho, título, descrição, ação, conteúdo e rodapé. Ajustes nas classes afetam os cartões de toda a aplicação.
+ */
 import * as React from "react"
 
 import { cn } from "@/lib/utils"

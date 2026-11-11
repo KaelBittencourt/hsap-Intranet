@@ -1,13 +1,18 @@
+/**
+ * MANUTENÇÃO: Catálogo de termos laboratoriais. termDocuments define os documentos externos; este componente não armazena termos preenchidos.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { ExternalLink, FileText } from "lucide-react";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface TermDocument {
   id: string;
   title: string;
   url: string;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const termDocuments: TermDocument[] = [
   {
     id: "1",

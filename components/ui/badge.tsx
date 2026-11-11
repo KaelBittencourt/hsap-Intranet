@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Etiqueta compartilhada. badgeVariants define as variações visuais; preserve as propriedades encaminhadas ao elemento renderizado.
+ */
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"

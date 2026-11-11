@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Visualizador do fluxograma de dengue com zoom. O conteúdo vem da imagem em imageUrl; alterações clínicas devem ser feitas no documento de origem.
+ */
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { FileText, ZoomIn, ZoomOut, RotateCcw, Maximize } from "lucide-react";

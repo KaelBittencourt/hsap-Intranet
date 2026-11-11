@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Lista pesquisável de protocolos de enfermagem. Atualize protocolDocuments para mudar os materiais disponíveis.
+ */
 import React, { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { 
@@ -10,12 +13,14 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface ProtocolDocument {
   id: string;
   title: string;
   url: string;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const protocolDocuments: ProtocolDocument[] = [
   { id: "1", title: "ACOLHIMENTO E CLASSIFICAÇÃO DE RISCO HSAP", url: "https://drive.google.com/file/d/1nSdK_d84SFkDchAoeydH0OdlAhAnyKGX/view?usp=sharing" },
   { id: "2", title: "AGENCIA TRANSFUSIONAL PRONTO", url: "https://drive.google.com/file/d/1ulLxQO0aYoX0ptWCRFZtu4eN7rv5RQT7/view?usp=sharing" },
@@ -32,6 +37,7 @@ const protocolDocuments: ProtocolDocument[] = [
 export default function NursingProtocolsModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (document.activeElement instanceof HTMLInputElement) {
@@ -41,6 +47,7 @@ export default function NursingProtocolsModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return protocolDocuments.filter(doc => 

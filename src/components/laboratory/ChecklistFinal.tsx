@@ -1,8 +1,12 @@
+/**
+ * MANUTENÇÃO: Resumo final do protocolo. Recebe etapas, tempo e ações do componente pai; os botões apenas chamam os callbacks recebidos.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { Check, FileDown, Printer, X } from "lucide-react";
 import type { ProtocolStep } from "./types";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface ChecklistFinalProps {
   steps: ProtocolStep[];
   elapsedFormatted: string;

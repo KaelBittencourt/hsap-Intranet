@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Treinamento de acesso em etapas. IMAGES centraliza capturas do Drive e steps define instruções, imagens e soluções de problemas.
+ */
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -22,6 +25,7 @@ function driveUrl(fileId: string) {
 }
 
 // Imagens reais do documento
+// Centraliza IDs/imagens das capturas; os arquivos do Drive precisam permitir leitura pelos usuários.
 const IMAGES = {
   iconeAreaTrabalho: driveUrl("1IqCr1LrG-X8viRXumk6U3TnYmrxW8mAc"),
   telaAplicativo: driveUrl("172zIC5MVF-m6mN2LQ8GSJRdDZ566b7N4"),
@@ -31,12 +35,14 @@ const IMAGES = {
   telaLogin: driveUrl("1g1d7MySpnNktLcWbFYyy8p0-esclu9nl"),
 };
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface TroubleshootItem {
   title: string;
   description: string;
   images: { src: string; caption: string }[];
 }
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface Step {
   id: number;
   icon: React.ElementType;
@@ -52,6 +58,7 @@ interface Step {
   troubleshoot?: TroubleshootItem;
 }
 
+// Conteúdo e ordem do treinamento. A navegação usa a posição no array; confira imagens e detalhes ao inserir etapas.
 const steps: Step[] = [
   {
     id: 1,
@@ -177,6 +184,7 @@ const steps: Step[] = [
 ];
 
 // Carrossel de imagens para cada passo
+// Carrossel com índice local e tratamento de falha de imagem; não altera a etapa do treinamento.
 function ImageCarousel({ images }: { images: { src: string; caption: string }[] }) {
   const [current, setCurrent] = useState(0);
   const [imgError, setImgError] = useState<boolean[]>(images.map(() => false));
@@ -290,6 +298,7 @@ function ImageCarousel({ images }: { images: { src: string; caption: string }[] 
 }
 
 // Painel colapsível para resolução de problemas eventuais
+// Expande uma solução de problema e permite percorrer as imagens correspondentes.
 function TroubleshootPanel({ item }: { item: TroubleshootItem }) {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -401,6 +410,7 @@ function TroubleshootPanel({ item }: { item: TroubleshootItem }) {
   );
 }
 
+// Traduz o tipo de instrução em ícone e cores; tipos desconhecidos usam a configuração info.
 function DetailItem({ type, text }: { type: string; text: string }) {
   const configs = {
     info: {
@@ -459,6 +469,7 @@ export default function SystemLoginTrainingModal() {
   const isFirst = currentStep === 0;
   const isLast = currentStep === steps.length - 1;
 
+  // A direção orienta a animação; os limites impedem avançar além da última etapa.
   const goNext = () => {
     if (!isLast) {
       setDirection(1);

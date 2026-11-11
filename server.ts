@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 
+// Carrega .env no processo Node. A chave OPENROUTER_API_KEY fica no servidor, fora do código enviado ao navegador.
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +17,7 @@ async function startServer() {
   app.use(express.json());
 
   // OpenRouter API Proxy
+  // Proxy do chat no servidor Express. api/chat.ts implementa a mesma rota em hospedagem serverless; mantenha modelo e instruções alinhados.
   app.post("/api/chat", async (req, res) => {
     const { messages } = req.body;
     const apiKey = process.env.OPENROUTER_API_KEY;
@@ -55,6 +57,7 @@ async function startServer() {
   });
 
   // Vite middleware for development
+  // Desenvolvimento usa o middleware Vite; produção serve dist e devolve index.html para rotas da aplicação.
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },

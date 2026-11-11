@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Separador compartilhado. orientation escolhe o eixo e decorative define sua participação na acessibilidade.
+ */
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 
 import { cn } from "@/lib/utils"

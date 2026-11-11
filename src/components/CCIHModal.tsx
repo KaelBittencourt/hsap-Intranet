@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Catálogo de documentos do SCIH. Atualize a lista documents para alterar títulos, descrições e links; o filtro e a apresentação usam essa lista.
+ */
 import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +18,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { cn, normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface Document {
   id: string;
   title: string;
@@ -25,6 +29,7 @@ interface Document {
   isInternal?: boolean;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const documents: Document[] = [
   {
     id: "antirrabico-oficina",
@@ -151,6 +156,7 @@ const documents: Document[] = [
 export default function CCIHModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     // Small delay to ensure the focus trap has finished its work
     const timer = setTimeout(() => {
@@ -161,6 +167,7 @@ export default function CCIHModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     const filtered = documents.filter(doc => 

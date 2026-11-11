@@ -1,8 +1,12 @@
+/**
+ * MANUTENÇÃO: Cartão de uma etapa do protocolo. O pai controla seleção e conclusão; este componente emite onCheck e onNext e oculta etapas futuras.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import type { ProtocolStep } from "./types";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface StepCardProps {
   step: ProtocolStep;
   isActive: boolean;

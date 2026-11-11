@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Peças compartilhadas de tabelas HTML. Preserve a hierarquia table/thead/tbody/tr/th/td ao compor tabelas nas telas.
+ */
 "use client"
 
 import * as React from "react"

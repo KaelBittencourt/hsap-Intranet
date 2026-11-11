@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Catálogo de formulários externos com pesquisa. Edite forms para cadastrar ou atualizar formulários; o envio das respostas acontece no serviço de destino.
+ */
 import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +15,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { cn, normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface FormItem {
   id: string;
   title: string;
@@ -20,6 +24,7 @@ interface FormItem {
   url: string;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const forms: FormItem[] = [
   {
     id: "solicitacao-treinamentos",
@@ -47,6 +52,7 @@ const forms: FormItem[] = [
 export default function FormsModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     // Small delay to ensure the focus trap has finished its work
     const timer = setTimeout(() => {
@@ -57,6 +63,7 @@ export default function FormsModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredForms = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return forms.filter(form => 

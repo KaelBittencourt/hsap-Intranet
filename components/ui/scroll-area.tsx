@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Área de rolagem compartilhada com viewport e barra do Base UI. Altura e limites externos são definidos pelos componentes consumidores.
+ */
 import * as React from "react"
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
 

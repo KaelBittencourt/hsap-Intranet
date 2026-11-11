@@ -5,6 +5,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Tema Tailwind: fontes, cores brand e aliases compartilhados. Alterar estes tokens afeta todas as telas que os utilizam. */
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: 'Geist Variable', sans-serif;
@@ -51,6 +52,7 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Valores padrão do tema claro usados pelos componentes de interface. */
 :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -86,6 +88,7 @@
     --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Valores para quando um ancestral recebe a classe dark. Este bloco não cria um seletor de tema. */
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -120,6 +123,7 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Estilos base aplicados a toda a página e aos elementos. */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -132,6 +136,7 @@
     }
 }
 
+/* Regras globais de impressão. A ficha pediátrica também possui CSS próprio no HTML gerado por handlePrint. */
 @media print {
   /* Utility classes for print visibility */
   .print\:hidden {

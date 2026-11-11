@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Janelas compartilhadas baseadas no Base UI. Raiz e gatilho controlam abertura; portal, fundo e conteúdo compõem a janela. Preserve a gestão de foco e os atributos de acessibilidade da biblioteca.
+ */
 import * as React from "react"
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
 

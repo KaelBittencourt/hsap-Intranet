@@ -1,7 +1,11 @@
+/**
+ * MANUTENÇÃO: Apresentação da classificação de reações e sua ressalva. Os textos vêm das propriedades, alimentadas por protocols-data.ts.
+ */
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 import type { ClassificationItem } from "./types";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface ClassificationTableProps {
   items: ClassificationItem[];
   disclaimer: string;

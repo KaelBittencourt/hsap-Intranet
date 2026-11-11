@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Campo de entrada compartilhado. Encaminha type e demais propriedades ao input; preserve eventos e estados controlados recebidos das telas.
+ */
 import * as React from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
 

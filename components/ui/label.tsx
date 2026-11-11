@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Rótulo compartilhado de formulário. Preserve htmlFor para manter a associação com o campo correspondente.
+ */
 import * as React from "react"
 
 import { cn } from "@/lib/utils"

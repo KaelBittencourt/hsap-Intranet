@@ -1,7 +1,11 @@
+/**
+ * MANUTENÇÃO: Fluxograma visual na ordem do array steps. Para mudar a sequência assistencial, altere os dados de origem em protocols-data.ts.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowDown } from "lucide-react";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface FlowChartProps {
   steps: string[];
 }

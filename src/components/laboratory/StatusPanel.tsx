@@ -1,6 +1,10 @@
+/**
+ * MANUTENÇÃO: Painel visual com contador de etapas e cronômetro próprio. O tempo é local e independente do cronômetro do TransfusionReactionsModal.
+ */
 import React, { useState, useEffect } from "react";
 import { Clock, CheckCircle2, Activity } from "lucide-react";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface StatusPanelProps {
   isRunning: boolean;
   completedSteps: number;

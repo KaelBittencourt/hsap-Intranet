@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Botão compartilhado. buttonVariants concentra aparência e tamanhos; className permite ajustes em uma tela. Mudanças aqui atingem todos os consumidores.
+ */
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 

@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Atalhos externos para consulta de CID. Edite resources para trocar serviços e endereços; este componente não consulta uma base local de códigos.
+ */
 import React from "react";
 import { BookOpen, ExternalLink, FileText, HeartPulse, BrainCircuit } from "lucide-react";
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";

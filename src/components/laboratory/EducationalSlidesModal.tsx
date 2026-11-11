@@ -1,7 +1,11 @@
+/**
+ * MANUTENÇÃO: Galeria de materiais educativos. slides define os links e getDriveThumbnail obtém a miniatura a partir do endereço do Drive.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { ExternalLink, GraduationCap } from "lucide-react";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface Slide {
   id: string;
   title: string;
@@ -18,6 +22,7 @@ function getDriveThumbnail(driveUrl: string): string {
   return driveUrl;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const slides: Slide[] = [
   {
     id: "1",

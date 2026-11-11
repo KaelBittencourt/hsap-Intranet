@@ -1,6 +1,10 @@
+/**
+ * MANUTENÇÃO: Indicador visual de avanço: currentStep representa a quantidade usada no cálculo percentual e totalSteps o total. Mantenha o total maior que zero.
+ */
 import React from "react";
 import { motion } from "motion/react";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface ProgressBarProps {
   currentStep: number;
   totalSteps: number;

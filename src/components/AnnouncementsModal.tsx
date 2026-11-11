@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Mural de comunicados carregado de uma planilha CSV. Este componente existe no projeto, mas não está importado no App.tsx; editar aqui não adiciona o mural à navegação.
+ */
 import React, { useState, useEffect } from "react";
 import { 
   Bell, 
@@ -21,6 +24,7 @@ import { format, parse } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface Announcement {
   timestamp: string;
   message: string;
@@ -29,6 +33,7 @@ interface Announcement {
   id: string;
 }
 
+// Fonte CSV acessada pelo navegador. Ao trocar a planilha, confira permissões de leitura e os cabeçalhos esperados no mapeamento abaixo.
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/1x2C_Ho2NNK8qB3UCViPP29q1eFTFa5WrwOwzwSgKQus/export?format=csv";
 
 export default function AnnouncementsModal() {
@@ -46,6 +51,7 @@ export default function AnnouncementsModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Mapeia cabeçalhos do formulário para os campos do mural. reverse inverte a ordem das linhas, sem ordenar por data.
   const fetchAnnouncements = async () => {
     setLoading(true);
     setError(null);
@@ -93,6 +99,7 @@ export default function AnnouncementsModal() {
            normalizeString(ann.timestamp).includes(normalizedQuery);
   });
 
+  // Espera data/hora no formato brasileiro; em caso de erro, devolve o texto original da planilha.
   const formatTimestamp = (ts: string) => {
     try {
       // Input format: 16/04/2026 13:59:20

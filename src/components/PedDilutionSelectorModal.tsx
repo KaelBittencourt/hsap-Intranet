@@ -3,10 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * MANUTENÇÃO: Seletor de documentos de diluição pediátrica. DILUTION_DOCS define os cartões e seus destinos externos.
+ */
 import React from "react";
 import { motion } from "motion/react";
 import { ExternalLink, FileText, Baby, Pill } from "lucide-react";
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const DILUTION_DOCS = [
   {
     id: "folha-diluicao",

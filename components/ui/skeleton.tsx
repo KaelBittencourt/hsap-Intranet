@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Marcador visual de carregamento. className ajusta as dimensões ao conteúdo que será exibido.
+ */
 import { cn } from "@/lib/utils"
 
 function Skeleton({

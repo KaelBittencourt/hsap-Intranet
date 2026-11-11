@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * MANUTENÇÃO: Assistente flutuante: mantém a conversa apenas no estado do componente e envia o histórico para /api/chat. Modelo, instruções e chave do provedor são configurados no servidor.
+ */
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -20,6 +23,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/ui/input";
 import ReactMarkdown from "react-markdown";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface Message {
   role: "user" | "model";
   text: string;
@@ -35,12 +39,15 @@ export default function AIChatBalloon() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Mantém a mensagem mais recente visível quando o histórico muda.
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
+  // Bloqueia envio vazio/concorrente, acrescenta a mensagem atual e traduz model para assistant no contrato da API.
+  // A resposta esperada segue choices[0].message.content; mudar o provedor exige revisar este acesso.
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 

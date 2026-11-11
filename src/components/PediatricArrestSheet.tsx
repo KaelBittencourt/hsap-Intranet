@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * MANUTENÇÃO: Ficha pediátrica: dados locais do paciente alimentam cálculos por idade/peso e uma versão própria para impressão. Alterações de fórmulas exigem conferir também unidades, concentrações e o conteúdo impresso.
+ */
 import { useState, useMemo } from "react";
 import { motion } from "motion/react";
 import {
@@ -31,6 +34,8 @@ export default function PediatricArrestSheet() {
   const [weight, setWeight] = useState<number>(0);
   const [printOrientation, setPrintOrientation] = useState<"landscape" | "portrait">("landscape");
 
+  // Recalcula idade, peso efetivo, equipamentos, medicamentos e energia quando nascimento ou peso mudam.
+  // Sem nascimento não há resultado; peso positivo substitui a estimativa por idade. Confira as unidades antes de alterar fatores.
   const calculations = useMemo(() => {
     if (!dob) return null;
 
@@ -46,6 +51,7 @@ export default function PediatricArrestSheet() {
     }
 
     const totalMonths = ageYears * 12 + ageMonths;
+    // Peso em kg: usa o informado; caso contrário estima por meses no primeiro ano e por anos nas demais idades.
     const effectiveWeight = weight > 0 ? weight : (ageYears < 1 ? (totalMonths / 2) + 4 : (ageYears * 2) + 8);
 
     // Equipment
@@ -102,6 +108,8 @@ export default function PediatricArrestSheet() {
     };
   }, [dob, weight]);
 
+  // A impressão cria outro documento HTML, com CSS e tabelas próprios. Mudanças no JSX da tela não atualizam esse modelo automaticamente.
+  // Revise ambas as apresentações ao mudar campos, unidades, títulos ou resultados.
   const handlePrint = () => {
     const orientation = printOrientation;
     const printWindow = window.open('', '_blank', 'width=800,height=600');

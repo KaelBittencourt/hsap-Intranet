@@ -1,3 +1,6 @@
+/**
+ * MANUTENÇÃO: Catálogo pesquisável de fichas SINAN. A lista sinanDocuments reúne os links; este módulo não transmite notificações ao SINAN.
+ */
 import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,12 +16,14 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { normalizeString } from "@/lib/utils";
 
+// Contrato dos campos usados neste módulo. Ao mudar um campo, revise os dados de origem e os componentes que o consomem.
 interface SinanDocument {
   id: string;
   title: string;
   url: string;
 }
 
+// Cadastro de conteúdo: adicione ou altere os itens aqui. Preserve IDs únicos quando presentes e confira os links e as permissões de leitura dos arquivos externos.
 const sinanDocuments: SinanDocument[] = [
   { id: "1", title: "Acidente por Animal Peconhento", url: "https://drive.google.com/file/d/1gIS_CFNSKv_xpL_DrSJ03Mi9EKLHYgG2/view?usp=sharing" },
   { id: "2", title: "Acidente de Trabalho com exposição a material Biologico", url: "https://drive.google.com/file/d/1EfavV101V5YUv3Cnt9oXOa73y7XU6Y0E/view?usp=sharing" },
@@ -73,6 +78,7 @@ const sinanDocuments: SinanDocument[] = [
 export default function SinanModal() {
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Remove o foco automático do campo após a abertura do modal. Preserve a limpeza do timer ao desmontar.
   React.useEffect(() => {
     const timer = setTimeout(() => {
       if (document.activeElement instanceof HTMLInputElement) {
@@ -82,6 +88,7 @@ export default function SinanModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Filtro derivado da lista e da consulta: normalizeString permite pesquisar sem diferenciar acentos e maiúsculas.
   const filteredDocuments = useMemo(() => {
     const normalizedQuery = normalizeString(searchQuery);
     return sinanDocuments.filter(doc => 

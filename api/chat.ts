@@ -1,9 +1,12 @@
+// Entrada serverless de /api/chat. No servidor Express, a implementação equivalente está em server.ts.
+// Recebe messages e devolve a resposta do OpenRouter; mantenha o contrato usado por AIChatBalloon.tsx.
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { messages } = req.body;
+  // Configure OPENROUTER_API_KEY no ambiente da hospedagem; não coloque a chave no frontend.
   const apiKey = process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
